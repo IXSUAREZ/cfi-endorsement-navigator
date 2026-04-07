@@ -239,6 +239,10 @@ body.is-sidebar-open {
   overflow: hidden;
 }
 
+.nav-group.is-active {
+  border-color: #c8dbff;
+}
+
 .nav-trigger {
   width: 100%;
   border: 0;
@@ -289,12 +293,16 @@ body.is-sidebar-open {
 }
 
 .nav-group.is-active .category-button {
-  background: var(--accent-soft);
   color: var(--accent-ink);
   font-weight: 600;
 }
 
-.nav-group.is-open.is-active .category-button {
+.nav-group.is-active:not(.is-view-active) .category-button {
+  background: #f7fbff;
+}
+
+.nav-group.is-open.is-active .category-button,
+.nav-group.is-view-active .category-button {
   background: var(--accent-soft);
   color: var(--accent-ink);
   font-weight: 600;
@@ -346,11 +354,12 @@ body.is-sidebar-open {
 .subcategory-list {
   border-top: 1px solid var(--line);
   display: grid;
-  gap: 2px;
+  gap: 4px;
   padding: 8px 6px 8px 10px;
   background: #fcfdff;
 }
 
+.view-category-link,
 .subcategory-link {
   appearance: none;
   border: 1px solid transparent;
@@ -366,11 +375,27 @@ body.is-sidebar-open {
   align-items: center;
 }
 
+.view-category-link {
+  border-style: dashed;
+  border-color: #c7d9ff;
+  background: #fff;
+  color: #1f4fb4;
+  font-weight: 600;
+}
+
+.view-category-link:hover,
 .subcategory-link:hover {
   background: var(--surface-soft);
   color: var(--text);
 }
 
+.view-category-link:hover {
+  border-color: var(--accent);
+  background: #eef5ff;
+  color: var(--accent-ink);
+}
+
+.view-category-link.is-active,
 .subcategory-link.is-active {
   background: var(--accent-soft);
   border-color: var(--accent);
@@ -378,6 +403,10 @@ body.is-sidebar-open {
   font-weight: 600;
   border-left-width: 2px;
   padding-left: 6px;
+}
+
+.view-category-link.is-active {
+  border-style: solid;
 }
 
 .content-area {
@@ -393,6 +422,47 @@ body.is-sidebar-open {
   padding: 12px 14px;
   display: grid;
   gap: 7px;
+}
+
+.selection-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.selection-breadcrumbs:empty,
+.selection-actions:empty {
+  display: none;
+}
+
+.breadcrumb-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0;
+}
+
+.breadcrumb-button:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.breadcrumb-separator {
+  color: #7a8aa2;
+  font-size: 0.8rem;
 }
 
 .selection-eyebrow {
@@ -413,6 +483,33 @@ body.is-sidebar-open {
   margin: 0;
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+.selection-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selection-reset {
+  appearance: none;
+  border: 1px solid #bfd4ff;
+  background: #fff;
+  color: #1f4fb4;
+  border-radius: 999px;
+  min-height: 34px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.selection-reset:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .status-row p {
@@ -660,10 +757,14 @@ body.is-sidebar-open {
 }
 
 .category-button:focus-visible,
+.view-category-link:focus-visible,
 .subcategory-link:focus-visible,
 .all-button:focus-visible,
+.breadcrumb-button:focus-visible,
 .bundle-toggle:focus-visible,
 .inline-action:focus-visible,
+.selection-reset:focus-visible,
+.rail-close:focus-visible,
 .icon-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;

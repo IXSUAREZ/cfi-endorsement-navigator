@@ -121,9 +121,12 @@
     categoryNav: document.getElementById("categoryNav"),
     endorsementList: document.getElementById("endorsementList"),
     resultsSummary: document.getElementById("resultsSummary"),
+    selectionSummary: document.getElementById("selectionSummary"),
+    selectionBreadcrumbs: document.getElementById("selectionBreadcrumbs"),
     selectionEyebrow: document.getElementById("selectionEyebrow"),
     selectionTitle: document.getElementById("selectionTitle"),
     selectionDescription: document.getElementById("selectionDescription"),
+    selectionActions: document.getElementById("selectionActions"),
     bundleBar: document.getElementById("bundleBar"),
     acVersionText: document.getElementById("acVersionText"),
     footerMeta: document.getElementById("footerMeta"),
@@ -155,6 +158,21 @@
       clearTimeout(timeoutId);
       timeoutId = window.setTimeout(() => fn.apply(null, args), delay);
     };
+  }
+
+  function syncSearchInput() {
+    if (dom.searchInput) {
+      dom.searchInput.value = state.query;
+    }
+  }
+
+  function setSearchQuery(value) {
+    state.query = String(value || "");
+    syncSearchInput();
+  }
+
+  function clearSearch() {
+    setSearchQuery("");
   }
 
   function buildSearchIndex(item) {
@@ -212,6 +230,69 @@
       return null;
     }
     return entry.subcategories.find((item) => item.id === state.subcategory) || null;
+  }
+
+  function activateAllEndorsements(options = {}) {
+    if (!options.preserveQuery) {
+      clearSearch();
+    }
+
+    state.category = "all";
+    state.subcategory = null;
+    state.includeSupplemental = false;
+    state.expandedId = null;
+    state.openCategory = null;
+
+    if (options.closeSidebar !== false) {
+      closeSidebar();
+    }
+
+    refresh();
+  }
+
+  function activateCategory(categoryId, options = {}) {
+    if (!categoryId || categoryId === "all") {
+      activateAllEndorsements(options);
+      return;
+    }
+
+    if (!options.preserveQuery) {
+      clearSearch();
+    }
+
+    state.category = categoryId;
+    state.subcategory = null;
+    state.includeSupplemental = false;
+    state.expandedId = null;
+    state.openCategory = categoryId;
+
+    if (options.closeSidebar !== false) {
+      closeSidebar();
+    }
+
+    refresh();
+  }
+
+  function activateSubcategory(categoryId, subcategoryId, options = {}) {
+    if (!categoryId || !subcategoryId) {
+      return;
+    }
+
+    if (!options.preserveQuery) {
+      clearSearch();
+    }
+
+    state.category = categoryId;
+    state.subcategory = subcategoryId;
+    state.includeSupplemental = false;
+    state.expandedId = null;
+    state.openCategory = categoryId;
+
+    if (options.closeSidebar !== false) {
+      closeSidebar();
+    }
+
+    refresh();
   }
 
   function getBundleIds(subcategory) {
@@ -435,42 +516,49 @@
         const subcategories = entry && Array.isArray(entry.subcategories) ? entry.subcategories : [];
         const isOpen = state.openCategory === category.id;
         const isActive = state.category === category.id;
+        const isCategoryActive = isActive && !state.subcategory;
         const groupId = "subcategories-" + category.id;
         const matchDot = state.query && matchMap[category.id]
           ? '<span class="match-dot" aria-hidden="true"></span>'
           : "";
 
-        const subcategoryMarkup = subcategories.length
-          ? (
-            '<div id="' +
-            escapeHtml(groupId) +
-            '" class="subcategory-list"' +
-            (isOpen ? "" : " hidden") +
-            ">" +
-            subcategories.map((subcategory) => {
-              const isSubActive = isActive && state.subcategory === subcategory.id;
-              return (
-                '<button type="button" class="subcategory-link' +
-                (isSubActive ? " is-active" : "") +
-                '" data-action="subcategory" data-category="' +
-                escapeHtml(category.id) +
-                '" data-subcategory="' +
-                escapeHtml(subcategory.id) +
-                '">' +
-                escapeHtml(subcategory.label) +
-                "</button>"
-              );
-            }).join("") +
-            "</div>"
-          )
-          : "";
+        const subcategoryMarkup =
+          '<div id="' +
+          escapeHtml(groupId) +
+          '" class="subcategory-list"' +
+          (isOpen ? "" : " hidden") +
+          ">" +
+          '<button type="button" class="view-category-link' +
+          (isCategoryActive ? " is-active" : "") +
+          '" data-action="view-category" data-category="' +
+          escapeHtml(category.id) +
+          '">' +
+          "View all " +
+          escapeHtml(category.label) +
+          "</button>" +
+          subcategories.map((subcategory) => {
+            const isSubActive = isActive && state.subcategory === subcategory.id;
+            return (
+              '<button type="button" class="subcategory-link' +
+              (isSubActive ? " is-active" : "") +
+              '" data-action="subcategory" data-category="' +
+              escapeHtml(category.id) +
+              '" data-subcategory="' +
+              escapeHtml(subcategory.id) +
+              '">' +
+              escapeHtml(subcategory.label) +
+              "</button>"
+            );
+          }).join("") +
+          "</div>";
 
         return (
           '<section class="nav-group' +
           (isActive ? " is-active" : "") +
+          (isCategoryActive ? " is-view-active" : "") +
           (isOpen ? " is-open" : "") +
           '">' +
-          '<button type="button" class="category-button" data-action="category" data-category="' +
+          '<button type="button" class="category-button" data-action="toggle-category" data-category="' +
           escapeHtml(category.id) +
           '" aria-expanded="' +
           String(isOpen) +
@@ -483,7 +571,7 @@
           '<span class="category-count">' + escapeHtml(String(counts[category.id] || 0)) + "</span>" +
           "</span>" +
           '<span class="category-caret" aria-hidden="true">' +
-          (subcategories.length ? (isOpen ? "▾" : "›") : "") +
+          (isOpen ? "▾" : "›") +
           "</span>" +
           "</button>" +
           subcategoryMarkup +
@@ -495,12 +583,58 @@
     dom.categoryNav.innerHTML = allButton + groups;
   }
 
+  function renderSelectionBreadcrumbs(category, subcategory) {
+    if (!dom.selectionBreadcrumbs) {
+      return;
+    }
+
+    const crumbs = [];
+    if (state.category === "all" && !subcategory) {
+      crumbs.push('<span class="breadcrumb-current" aria-current="page">All Endorsements</span>');
+    } else {
+      crumbs.push('<button type="button" class="breadcrumb-button" data-action="all">All Endorsements</button>');
+    }
+
+    if (state.category !== "all") {
+      if (subcategory) {
+        crumbs.push(
+          '<button type="button" class="breadcrumb-button" data-action="view-category" data-category="' +
+          escapeHtml(category.id) +
+          '">' +
+          escapeHtml(category.label) +
+          "</button>",
+        );
+        crumbs.push('<span class="breadcrumb-current" aria-current="page">' + escapeHtml(subcategory.label) + "</span>");
+      } else {
+        crumbs.push('<span class="breadcrumb-current" aria-current="page">' + escapeHtml(category.label) + "</span>");
+      }
+    }
+
+    dom.selectionBreadcrumbs.innerHTML = crumbs.join('<span class="breadcrumb-separator" aria-hidden="true">›</span>');
+  }
+
+  function renderSelectionActions() {
+    if (!dom.selectionActions) {
+      return;
+    }
+
+    if (state.category === "all") {
+      dom.selectionActions.innerHTML = "";
+      return;
+    }
+
+    dom.selectionActions.innerHTML =
+      '<button type="button" class="selection-reset" data-action="all">Back to All Endorsements</button>';
+  }
+
   function renderSelectionSummary() {
     const category = CATEGORY_MAP.get(state.category) || CATEGORY_MAP.get("all");
     const subcategory = getSelectedSubcategory();
 
+    renderSelectionBreadcrumbs(category, subcategory);
+
     if (dom.selectionEyebrow) {
-      dom.selectionEyebrow.textContent = subcategory ? category.label : (state.category === "all" ? "Browse" : "Category");
+      dom.selectionEyebrow.textContent = subcategory ? "Subcategory" : (state.category === "all" ? "Browse" : "Category");
     }
     if (dom.selectionTitle) {
       dom.selectionTitle.textContent = subcategory ? subcategory.label : category.label;
@@ -517,6 +651,7 @@
       }
     }
 
+    renderSelectionActions();
     renderBundleBar(subcategory);
   }
 
@@ -555,17 +690,14 @@
 
     const category = CATEGORY_MAP.get(state.category) || CATEGORY_MAP.get("all");
     const subcategory = getSelectedSubcategory();
-    
-    let scopePrefix = "";
-    if (state.category === "all" && !subcategory) {
-      scopePrefix = "Searching: All Endorsements — ";
-    } else if (subcategory) {
-      scopePrefix = "Searching: " + category.label + " / " + subcategory.label + " — ";
-    } else {
-      scopePrefix = "Searching: " + category.label + " — ";
-    }
-
-    const parts = [visibleCount + " of " + scopeCount + " endorsements"];
+    const scopeLabel = subcategory
+      ? category.label + " / " + subcategory.label
+      : category.label;
+    const scopePrefix = (state.query ? "Searching " : "Viewing ") + scopeLabel + " — ";
+    const countLabel = state.query
+      ? visibleCount + " of " + scopeCount + " endorsements"
+      : visibleCount + " endorsements";
+    const parts = [countLabel];
 
     if (state.query) {
       parts.push('search "' + state.query + '"');
@@ -685,13 +817,10 @@
         if (sub.featured === true) {
           const btn = document.createElement("button");
           btn.type = "button";
+          btn.className = "featured-shortcut";
           btn.textContent = sub.label;
           btn.addEventListener("click", () => {
-            state.category = entry.categoryId;
-            state.subcategory = sub.id;
-            state.includeSupplemental = false;
-            state.expandedId = null;
-            refresh();
+            activateSubcategory(entry.categoryId, sub.id, { closeSidebar: false });
           });
           strip.appendChild(btn);
         }
@@ -865,37 +994,46 @@
 
         const action = button.getAttribute("data-action");
         if (action === "all") {
-          state.category = "all";
-          state.subcategory = null;
-          state.includeSupplemental = false;
-          state.openCategory = null;
-          state.expandedId = null;
-          closeSidebar();
-          refresh();
+          activateAllEndorsements();
           return;
         }
 
-        if (action === "category") {
+        if (action === "toggle-category") {
           const categoryId = button.getAttribute("data-category") || "all";
-          const collapseActive = state.category === categoryId && state.subcategory === null && state.openCategory === categoryId;
-          state.category = categoryId;
-          state.subcategory = null;
-          state.includeSupplemental = false;
-          state.openCategory = collapseActive ? null : categoryId;
-          state.expandedId = null;
-          closeSidebar();
-          refresh();
+          state.openCategory = state.openCategory === categoryId ? null : categoryId;
+          renderCategoryNav();
+          return;
+        }
+
+        if (action === "view-category") {
+          activateCategory(button.getAttribute("data-category") || "all");
           return;
         }
 
         if (action === "subcategory") {
-          state.category = button.getAttribute("data-category") || "all";
-          state.subcategory = button.getAttribute("data-subcategory");
-          state.includeSupplemental = false;
-          state.openCategory = state.category;
-          state.expandedId = null;
-          closeSidebar();
-          refresh();
+          activateSubcategory(
+            button.getAttribute("data-category") || "all",
+            button.getAttribute("data-subcategory"),
+          );
+        }
+      });
+    }
+
+    if (dom.selectionSummary) {
+      dom.selectionSummary.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-action]");
+        if (!button) {
+          return;
+        }
+
+        const action = button.getAttribute("data-action");
+        if (action === "all") {
+          activateAllEndorsements();
+          return;
+        }
+
+        if (action === "view-category") {
+          activateCategory(button.getAttribute("data-category") || "all");
         }
       });
     }
@@ -930,14 +1068,7 @@
 
         const searchAllBtn = event.target.closest('[data-action="search-all"]');
         if (searchAllBtn) {
-          state.category = "all";
-          state.subcategory = null;
-          state.includeSupplemental = false;
-          state.expandedId = null;
-          if (dom.searchInput) {
-            dom.searchInput.value = state.query;
-          }
-          refresh();
+          activateAllEndorsements({ preserveQuery: true, closeSidebar: false });
           return;
         }
       });
