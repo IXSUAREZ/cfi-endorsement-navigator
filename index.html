@@ -53,6 +53,14 @@
 
       <div class="layout">
         <aside id="filterRail" class="filter-rail" aria-label="Endorsement filters">
+          <button
+            type="button"
+            class="rail-close"
+            id="railCloseBtn"
+            aria-label="Close navigation"
+          >
+            ✕ Close
+          </button>
           <section class="rail-section">
             <div class="rail-heading">
               <h2>Browse</h2>
@@ -80,6 +88,9 @@
 
           <section class="status-row">
             <p id="resultsSummary">Loading endorsements...</p>
+          </section>
+
+          <section id="featuredStrip" class="featured-strip" hidden aria-label="Common starting points">
           </section>
 
           <section

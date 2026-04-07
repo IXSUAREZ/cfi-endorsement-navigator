@@ -483,7 +483,7 @@
           '<span class="category-count">' + escapeHtml(String(counts[category.id] || 0)) + "</span>" +
           "</span>" +
           '<span class="category-caret" aria-hidden="true">' +
-          (subcategories.length ? (isOpen ? "−" : "+") : "") +
+          (subcategories.length ? (isOpen ? "▾" : "›") : "") +
           "</span>" +
           "</button>" +
           subcategoryMarkup +
@@ -555,13 +555,17 @@
 
     const category = CATEGORY_MAP.get(state.category) || CATEGORY_MAP.get("all");
     const subcategory = getSelectedSubcategory();
-    const parts = [visibleCount + " of " + scopeCount + " endorsements"];
-
-    if (subcategory) {
-      parts.push(category.label + " / " + subcategory.label);
-    } else if (state.category !== "all") {
-      parts.push(category.label);
+    
+    let scopePrefix = "";
+    if (state.category === "all" && !subcategory) {
+      scopePrefix = "Searching: All Endorsements — ";
+    } else if (subcategory) {
+      scopePrefix = "Searching: " + category.label + " / " + subcategory.label + " — ";
+    } else {
+      scopePrefix = "Searching: " + category.label + " — ";
     }
+
+    const parts = [visibleCount + " of " + scopeCount + " endorsements"];
 
     if (state.query) {
       parts.push('search "' + state.query + '"');
@@ -571,7 +575,7 @@
       parts.push("full bundle");
     }
 
-    dom.resultsSummary.textContent = parts.join("  |  ");
+    dom.resultsSummary.textContent = scopePrefix + parts.join("  |  ");
   }
 
   function renderEndorsementCard(item) {
@@ -641,6 +645,60 @@
     );
   }
 
+  function renderBundleSections(primaryItems, supplementalItems, supplementalLabel) {
+    const sectionA = 
+      '<div class="bundle-section-label"><h3>Primary endorsements</h3></div>' +
+      primaryItems.map((item) => renderEndorsementCard(item)).join("");
+      
+    const sectionBNote = supplementalLabel ? '<p>' + escapeHtml(supplementalLabel) + '</p>' : "";
+    const sectionB = 
+      '<div class="bundle-section-label is-supplemental"><h3>Also commonly included</h3>' + sectionBNote + '</div>' +
+      supplementalItems.map((item) => renderEndorsementCard(item)).join("");
+      
+    return sectionA + sectionB;
+  }
+
+  function renderFeaturedStrip() {
+    if (!dom.endorsementList) {
+      return;
+    }
+
+    let strip = document.getElementById("featuredStrip");
+    if (!strip) {
+      strip = document.createElement("section");
+      strip.id = "featuredStrip";
+      strip.className = "featured-strip";
+      dom.endorsementList.parentNode.insertBefore(strip, dom.endorsementList);
+    }
+
+    if (state.category !== "all" || state.query !== "") {
+      strip.hidden = true;
+      return;
+    }
+
+    strip.hidden = false;
+    strip.innerHTML = "";
+
+    BROWSE_STRUCTURE.forEach((entry) => {
+      if (!Array.isArray(entry.subcategories)) return;
+      entry.subcategories.forEach((sub) => {
+        if (sub.featured === true) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = sub.label;
+          btn.addEventListener("click", () => {
+            state.category = entry.categoryId;
+            state.subcategory = sub.id;
+            state.includeSupplemental = false;
+            state.expandedId = null;
+            refresh();
+          });
+          strip.appendChild(btn);
+        }
+      });
+    });
+  }
+
   function renderEndorsements() {
     if (!dom.endorsementList) {
       return;
@@ -656,18 +714,32 @@
         ? "Try Show full bundle or clear the search."
         : "Try a broader keyword or switch to a different category.";
 
+      let additionalButton = "";
+      if (state.query !== "" && state.category !== "all") {
+        additionalButton = '<button type="button" data-action="search-all" data-query="' + escapeHtml(state.query) + '">Search all endorsements for "' + escapeHtml(state.query) + '"</button>';
+      }
+
       dom.endorsementList.innerHTML =
         '<article class="placeholder-card empty-state">' +
         "<h2>No endorsements match this view</h2>" +
         "<p>" + escapeHtml(emptyHint) + "</p>" +
+        additionalButton +
         "</article>";
       return;
     }
 
-    dom.endorsementList.innerHTML = visible.map((item) => renderEndorsementCard(item)).join("");
+    const subcategory = getSelectedSubcategory();
+    if (state.includeSupplemental && subcategory && Array.isArray(subcategory.supplementalIds) && subcategory.supplementalIds.length) {
+      const primaryItems = visible.filter((item) => subcategory.primaryIds.includes(item.id));
+      const supplementalItems = visible.filter((item) => subcategory.supplementalIds.includes(item.id) && !subcategory.primaryIds.includes(item.id));
+      dom.endorsementList.innerHTML = renderBundleSections(primaryItems, supplementalItems, subcategory.supplementalLabel || "");
+    } else {
+      dom.endorsementList.innerHTML = visible.map((item) => renderEndorsementCard(item)).join("");
+    }
   }
 
   function refresh() {
+    renderFeaturedStrip();
     renderCategoryNav();
     renderSelectionSummary();
     renderEndorsements();
@@ -712,7 +784,7 @@
   }
 
   function isMobileLayout() {
-    return window.innerWidth <= 980;
+    return window.innerWidth < 900;
   }
 
   function syncSidebarAccessibility() {
@@ -747,6 +819,17 @@
     }
 
     syncSidebarAccessibility();
+
+    if (isOpen) {
+      window.requestAnimationFrame(() => {
+        const closeBtn = dom.filterRail && dom.filterRail.querySelector('.rail-close');
+        if (closeBtn) closeBtn.focus();
+      });
+    } else {
+      window.requestAnimationFrame(() => {
+        if (dom.sidebarToggleBtn) dom.sidebarToggleBtn.focus();
+      });
+    }
   }
 
   function closeSidebar() {
@@ -842,6 +925,20 @@
         const copyButton = event.target.closest("[data-copy-id]");
         if (copyButton) {
           handleCopy(copyButton.getAttribute("data-copy-id"), copyButton);
+          return;
+        }
+
+        const searchAllBtn = event.target.closest('[data-action="search-all"]');
+        if (searchAllBtn) {
+          state.category = "all";
+          state.subcategory = null;
+          state.includeSupplemental = false;
+          state.expandedId = null;
+          if (dom.searchInput) {
+            dom.searchInput.value = state.query;
+          }
+          refresh();
+          return;
         }
       });
     }
@@ -853,7 +950,7 @@
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 900) {
+      if (window.innerWidth >= 900) {
         closeSidebar();
       }
       syncSidebarAccessibility();
