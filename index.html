@@ -39,13 +39,24 @@
 
         <div class="search-wrap">
           <label class="sr-only" for="searchInput">Search endorsements</label>
-          <input
-            id="searchInput"
-            class="search-input"
-            type="search"
-            placeholder="Search by ID, CFR, keyword, or alias..."
-            autocomplete="off"
-          >
+          <div class="search-field">
+            <input
+              id="searchInput"
+              class="search-input"
+              type="search"
+              placeholder="Search by ID, CFR, keyword, or alias..."
+              autocomplete="off"
+            >
+            <button
+              id="clearSearchBtn"
+              class="search-clear"
+              type="button"
+              aria-label="Clear search"
+              hidden
+            >
+              Clear
+            </button>
+          </div>
         </div>
       </header>
 
@@ -77,7 +88,7 @@
         </aside>
 
         <main class="content-area">
-          <section id="selectionSummary" class="selection-summary" aria-live="polite">
+          <section id="selectionSummary" class="selection-summary" aria-live="polite" tabindex="-1">
             <nav id="selectionBreadcrumbs" class="selection-breadcrumbs" aria-label="Current browse path">
             </nav>
             <p id="selectionEyebrow" class="selection-eyebrow">Browse</p>
@@ -85,6 +96,7 @@
             <p id="selectionDescription" class="selection-description">
               Loading endorsement library...
             </p>
+            <div id="selectionMeta" class="selection-meta"></div>
             <div id="selectionActions" class="selection-actions"></div>
             <div id="bundleBar" class="bundle-bar" hidden></div>
           </section>

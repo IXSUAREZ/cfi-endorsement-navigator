@@ -83,6 +83,17 @@
   const CATEGORY_MAP = new Map(CATEGORY_DEFS.map((item) => [item.id, item]));
   const BROWSE_MAP = new Map(BROWSE_STRUCTURE.map((item) => [item.categoryId, item]));
   const ENDORSEMENT_MAP = new Map(ENDORSEMENTS.map((item) => [item.id, item]));
+  const FEATURED_SUBCATEGORIES = BROWSE_STRUCTURE.flatMap((entry) => (
+    Array.isArray(entry.subcategories)
+      ? entry.subcategories
+        .filter((subcategory) => subcategory.featured === true)
+        .map((subcategory) => ({
+          categoryId: entry.categoryId,
+          subcategoryId: subcategory.id,
+          subcategory,
+        }))
+      : []
+  ));
 
   const ISSUER_LABELS = {
     "standard-cfi": "Standard CFI signoff",
@@ -117,6 +128,7 @@
   };
 
   const dom = {
+    clearSearchBtn: document.getElementById("clearSearchBtn"),
     searchInput: document.getElementById("searchInput"),
     categoryNav: document.getElementById("categoryNav"),
     endorsementList: document.getElementById("endorsementList"),
@@ -126,13 +138,16 @@
     selectionEyebrow: document.getElementById("selectionEyebrow"),
     selectionTitle: document.getElementById("selectionTitle"),
     selectionDescription: document.getElementById("selectionDescription"),
+    selectionMeta: document.getElementById("selectionMeta"),
     selectionActions: document.getElementById("selectionActions"),
     bundleBar: document.getElementById("bundleBar"),
+    featuredStrip: document.getElementById("featuredStrip"),
     acVersionText: document.getElementById("acVersionText"),
     footerMeta: document.getElementById("footerMeta"),
     filterRail: document.getElementById("filterRail"),
     sidebarToggleBtn: document.getElementById("sidebarToggleBtn"),
     sidebarBackdrop: document.getElementById("sidebarBackdrop"),
+    railCloseBtn: document.getElementById("railCloseBtn"),
   };
 
   function escapeHtml(value) {
@@ -163,6 +178,9 @@
   function syncSearchInput() {
     if (dom.searchInput) {
       dom.searchInput.value = state.query;
+    }
+    if (dom.clearSearchBtn) {
+      dom.clearSearchBtn.hidden = state.query === "";
     }
   }
 
@@ -232,6 +250,32 @@
     return entry.subcategories.find((item) => item.id === state.subcategory) || null;
   }
 
+  function getBundleCount(subcategory) {
+    const ids = new Set(Array.isArray(subcategory.primaryIds) ? subcategory.primaryIds : []);
+    if (Array.isArray(subcategory.supplementalIds)) {
+      subcategory.supplementalIds.forEach((id) => ids.add(id));
+    }
+    return ids.size;
+  }
+
+  function focusSelectionSummary() {
+    if (dom.selectionSummary && typeof dom.selectionSummary.focus === "function") {
+      dom.selectionSummary.focus({ preventScroll: true });
+    }
+  }
+
+  function scrollToSelectionSummary() {
+    const target = dom.selectionSummary;
+    if (!target) {
+      return;
+    }
+
+    const topbar = document.querySelector(".topbar");
+    const topOffset = topbar ? topbar.offsetHeight + 18 : 18;
+    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - topOffset);
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+
   function activateAllEndorsements(options = {}) {
     if (!options.preserveQuery) {
       clearSearch();
@@ -244,10 +288,17 @@
     state.openCategory = null;
 
     if (options.closeSidebar !== false) {
-      closeSidebar();
+      closeSidebar({ returnFocus: false });
     }
 
     refresh();
+
+    if (options.scroll !== false) {
+      window.requestAnimationFrame(() => {
+        focusSelectionSummary();
+        scrollToSelectionSummary();
+      });
+    }
   }
 
   function activateCategory(categoryId, options = {}) {
@@ -267,10 +318,17 @@
     state.openCategory = categoryId;
 
     if (options.closeSidebar !== false) {
-      closeSidebar();
+      closeSidebar({ returnFocus: false });
     }
 
     refresh();
+
+    if (options.scroll !== false) {
+      window.requestAnimationFrame(() => {
+        focusSelectionSummary();
+        scrollToSelectionSummary();
+      });
+    }
   }
 
   function activateSubcategory(categoryId, subcategoryId, options = {}) {
@@ -289,10 +347,17 @@
     state.openCategory = categoryId;
 
     if (options.closeSidebar !== false) {
-      closeSidebar();
+      closeSidebar({ returnFocus: false });
     }
 
     refresh();
+
+    if (options.scroll !== false) {
+      window.requestAnimationFrame(() => {
+        focusSelectionSummary();
+        scrollToSelectionSummary();
+      });
+    }
   }
 
   function getBundleIds(subcategory) {
@@ -618,13 +683,67 @@
       return;
     }
 
-    if (state.category === "all") {
-      dom.selectionActions.innerHTML = "";
+    const actions = [];
+    const category = CATEGORY_MAP.get(state.category);
+
+    if (state.subcategory && category) {
+      actions.push(
+        '<button type="button" class="selection-reset" data-action="view-category" data-category="' +
+        escapeHtml(category.id) +
+        '">' +
+        "View " +
+        escapeHtml(category.label) +
+        "</button>",
+      );
+    }
+
+    if (state.category !== "all") {
+      actions.push('<button type="button" class="selection-reset" data-action="all">Back to All Endorsements</button>');
+    }
+
+    if (state.query) {
+      actions.push('<button type="button" class="selection-reset" data-action="clear-search">Clear search</button>');
+    }
+
+    dom.selectionActions.innerHTML = actions.join("");
+  }
+
+  function renderSelectionMeta() {
+    if (!dom.selectionMeta) {
       return;
     }
 
-    dom.selectionActions.innerHTML =
-      '<button type="button" class="selection-reset" data-action="all">Back to All Endorsements</button>';
+    const scopedCount = getScopedEndorsements().length;
+    const subcategory = getSelectedSubcategory();
+    const chips = [
+      '<span class="selection-chip">' + escapeHtml(String(scopedCount)) + " endorsements in scope</span>",
+    ];
+
+    if (state.category === "all") {
+      chips.push(
+        '<span class="selection-chip">' +
+        escapeHtml(String(CATEGORY_DEFS.filter((category) => category.id !== "all").length)) +
+        " browse categories</span>",
+      );
+    }
+
+    if (state.query) {
+      chips.push('<span class="selection-chip selection-chip-accent">Search: "' + escapeHtml(state.query) + '"</span>');
+    }
+
+    if (subcategory) {
+      chips.push(
+        '<span class="selection-chip">' +
+        escapeHtml(String(getBundleCount(subcategory))) +
+        " endorsements in this path</span>",
+      );
+    }
+
+    if (state.includeSupplemental && subcategory) {
+      chips.push('<span class="selection-chip selection-chip-accent">Showing full bundle</span>');
+    }
+
+    dom.selectionMeta.innerHTML = chips.join("");
   }
 
   function renderSelectionSummary() {
@@ -651,6 +770,7 @@
       }
     }
 
+    renderSelectionMeta();
     renderSelectionActions();
     renderBundleBar(subcategory);
   }
@@ -713,6 +833,7 @@
   function renderEndorsementCard(item) {
     const expanded = state.expandedId === item.id;
     const badges = [];
+    const category = CATEGORY_MAP.get(item.category) || {};
 
     if (EXPIRATION_LABELS[item.expiration]) {
       badges.push('<span class="chip chip-warn">Time limit: ' + escapeHtml(EXPIRATION_LABELS[item.expiration]) + "</span>");
@@ -720,6 +841,10 @@
     if (item.perFlight) {
       badges.push('<span class="chip chip-warn">Every XC flight</span>');
     }
+    if (category.label) {
+      badges.push('<span class="chip chip-soft">' + escapeHtml(category.label) + "</span>");
+    }
+    badges.push('<span class="chip chip-ghost mono">Page ' + escapeHtml(item.sourcePage) + "</span>");
 
     const details = expanded
       ? (
@@ -759,19 +884,14 @@
       '<span class="endorsement-id mono">' + escapeHtml(item.id) + "</span>" +
       '<div class="chip-row">' + badges.join("") + "</div>" +
       "</div>" +
-      '<button type="button" class="inline-action" data-toggle-id="' + escapeHtml(item.id) + '" aria-expanded="' + String(expanded) + '">' +
-      (expanded ? "Collapse" : "Expand") +
+      '<button type="button" class="detail-toggle" data-toggle-id="' + escapeHtml(item.id) + '" aria-expanded="' + String(expanded) + '">' +
+      '<span>' + (expanded ? "Hide details" : "View details") + "</span>" +
+      '<span class="detail-toggle-caret" aria-hidden="true">' + (expanded ? "−" : "+") + "</span>" +
       "</button>" +
       "</div>" +
       "<h2>" + escapeHtml(item.title) + "</h2>" +
       '<p class="card-explanation">' + escapeHtml(item.explanation) + "</p>" +
-      '<p class="card-meta mono">' +
-      escapeHtml((CATEGORY_MAP.get(item.category) || {}).label || item.category) +
-      " | " +
-      escapeHtml(item.cfr.join(" | ")) +
-      " | " +
-      escapeHtml(item.sourcePage) +
-      "</p>" +
+      '<p class="card-meta mono">' + escapeHtml(item.cfr.join(" | ")) + "</p>" +
       details +
       "</article>"
     );
@@ -782,7 +902,9 @@
       '<div class="bundle-section-label"><h3>Primary endorsements</h3></div>' +
       primaryItems.map((item) => renderEndorsementCard(item)).join("");
       
-    const sectionBNote = supplementalLabel ? '<p>' + escapeHtml(supplementalLabel) + '</p>' : "";
+    const sectionBNote = supplementalLabel
+      ? '<p class="bundle-section-note">' + escapeHtml(supplementalLabel) + "</p>"
+      : "";
     const sectionB = 
       '<div class="bundle-section-label is-supplemental"><h3>Also commonly included</h3>' + sectionBNote + '</div>' +
       supplementalItems.map((item) => renderEndorsementCard(item)).join("");
@@ -791,41 +913,47 @@
   }
 
   function renderFeaturedStrip() {
-    if (!dom.endorsementList) {
+    if (!dom.featuredStrip) {
       return;
     }
 
-    let strip = document.getElementById("featuredStrip");
-    if (!strip) {
-      strip = document.createElement("section");
-      strip.id = "featuredStrip";
-      strip.className = "featured-strip";
-      dom.endorsementList.parentNode.insertBefore(strip, dom.endorsementList);
-    }
+    const strip = dom.featuredStrip;
 
     if (state.category !== "all" || state.query !== "") {
       strip.hidden = true;
       return;
     }
 
-    strip.hidden = false;
-    strip.innerHTML = "";
+    if (!FEATURED_SUBCATEGORIES.length) {
+      strip.hidden = true;
+      strip.innerHTML = "";
+      return;
+    }
 
-    BROWSE_STRUCTURE.forEach((entry) => {
-      if (!Array.isArray(entry.subcategories)) return;
-      entry.subcategories.forEach((sub) => {
-        if (sub.featured === true) {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "featured-shortcut";
-          btn.textContent = sub.label;
-          btn.addEventListener("click", () => {
-            activateSubcategory(entry.categoryId, sub.id, { closeSidebar: false });
-          });
-          strip.appendChild(btn);
-        }
-      });
-    });
+    strip.hidden = false;
+    strip.innerHTML =
+      '<div class="featured-intro">' +
+      '<p class="featured-strip-label">Quick Starts</p>' +
+      "<h3>Jump into the endorsement paths instructors reach for most often.</h3>" +
+      "<p>Use a curated path instead of scanning the entire library.</p>" +
+      "</div>" +
+      '<div class="featured-grid">' +
+      FEATURED_SUBCATEGORIES.map((item) => {
+        const category = CATEGORY_MAP.get(item.categoryId) || {};
+        return (
+          '<button type="button" class="featured-card" data-featured-category="' +
+          escapeHtml(item.categoryId) +
+          '" data-featured-subcategory="' +
+          escapeHtml(item.subcategoryId) +
+          '">' +
+          '<span class="featured-card-category">' + escapeHtml(category.label || item.categoryId) + "</span>" +
+          '<span class="featured-card-title">' + escapeHtml(item.subcategory.label) + "</span>" +
+          '<span class="featured-card-description">' + escapeHtml(item.subcategory.description) + "</span>" +
+          '<span class="featured-card-meta">' + escapeHtml(String(getBundleCount(item.subcategory))) + ' endorsements in path</span>' +
+          "</button>"
+        );
+      }).join("") +
+      "</div>";
   }
 
   function renderEndorsements() {
@@ -931,7 +1059,7 @@
     dom.filterRail.inert = false;
   }
 
-  function setSidebarOpen(isOpen) {
+  function setSidebarOpen(isOpen, options = {}) {
     state.sidebarOpen = Boolean(isOpen);
     document.body.classList.toggle("is-sidebar-open", state.sidebarOpen);
 
@@ -954,30 +1082,46 @@
         const closeBtn = dom.filterRail && dom.filterRail.querySelector('.rail-close');
         if (closeBtn) closeBtn.focus();
       });
-    } else {
+    } else if (options.returnFocus !== false) {
       window.requestAnimationFrame(() => {
         if (dom.sidebarToggleBtn) dom.sidebarToggleBtn.focus();
       });
     }
   }
 
-  function closeSidebar() {
+  function closeSidebar(options = {}) {
     if (state.sidebarOpen) {
-      setSidebarOpen(false);
+      setSidebarOpen(false, options);
     }
   }
 
   function attachEvents() {
     if (dom.searchInput) {
       dom.searchInput.addEventListener("input", debounce((event) => {
-        state.query = event.target.value || "";
+        setSearchQuery(event.target.value || "");
         refresh();
       }, 150));
+    }
+
+    if (dom.clearSearchBtn) {
+      dom.clearSearchBtn.addEventListener("click", () => {
+        clearSearch();
+        refresh();
+        if (dom.searchInput) {
+          dom.searchInput.focus();
+        }
+      });
     }
 
     if (dom.sidebarToggleBtn) {
       dom.sidebarToggleBtn.addEventListener("click", () => {
         setSidebarOpen(!state.sidebarOpen);
+      });
+    }
+
+    if (dom.railCloseBtn) {
+      dom.railCloseBtn.addEventListener("click", () => {
+        closeSidebar();
       });
     }
 
@@ -1034,6 +1178,15 @@
 
         if (action === "view-category") {
           activateCategory(button.getAttribute("data-category") || "all");
+          return;
+        }
+
+        if (action === "clear-search") {
+          clearSearch();
+          refresh();
+          if (dom.searchInput) {
+            dom.searchInput.focus();
+          }
         }
       });
     }
@@ -1074,6 +1227,21 @@
       });
     }
 
+    if (dom.featuredStrip) {
+      dom.featuredStrip.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-featured-subcategory]");
+        if (!button) {
+          return;
+        }
+
+        activateSubcategory(
+          button.getAttribute("data-featured-category"),
+          button.getAttribute("data-featured-subcategory"),
+          { closeSidebar: false },
+        );
+      });
+    }
+
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         closeSidebar();
@@ -1092,6 +1260,7 @@
     validateData();
     validateBrowseStructure();
     renderMeta();
+    syncSearchInput();
     refresh();
     syncSidebarAccessibility();
     attachEvents();
