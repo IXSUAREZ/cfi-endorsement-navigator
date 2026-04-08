@@ -1,4 +1,4 @@
-# CFI Endorsement Navigator
+# Simply Endorsed
 
 Static single-page reference tool for AC 61-65K endorsements with curated browse subcategories for common instructor use cases.
 

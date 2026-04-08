@@ -21,8 +21,8 @@
   --category-soft: var(--accent-soft);
   --category-line: #bfd4ff;
   --category-ink: var(--accent-ink);
-  --warn: #4a5568;
-  --warn-soft: #f1f5f9;
+  --warn: #e60000;
+  --warn-soft: #ffeaeb;
   --display: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
   --sans: "Inter", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --mono: "JetBrains Mono", "SFMono-Regular", "Menlo", "Monaco", monospace;
@@ -43,7 +43,7 @@
   --shadow-inset:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     inset 0 -1px 0 rgba(255, 255, 255, 0.18);
-  --panel-blur: 22px;
+  --panel-blur: 20px;
   --max-width: 1440px;
 }
 
@@ -1019,7 +1019,7 @@ p {
 }
 
 .chip-warn {
-  border-color: rgba(180, 83, 9, 0.12);
+  border-color: rgba(230, 0, 0, 0.15);
   background: var(--warn-soft);
   color: var(--warn);
 }

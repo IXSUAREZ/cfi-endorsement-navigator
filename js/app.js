@@ -327,11 +327,16 @@
     setSearchQuery("");
   }
 
+  function getCardExplanation(item) {
+    return item.cardExplanation || item.explanation || "";
+  }
+
   function buildSearchIndex(item) {
     return normalizeText(
       [
         item.id,
         item.title,
+        getCardExplanation(item),
         item.explanation,
         item.verbatimText,
         item.acRef,
@@ -637,13 +642,24 @@
       if (!Array.isArray(item.tags)) {
         errors.push(item.id + " has non-array tags.");
       }
+      if (
+        typeof item.cardExplanation !== "undefined" &&
+        typeof item.cardExplanation !== "string"
+      ) {
+        errors.push(item.id + " has non-string cardExplanation.");
+      }
+      if (typeof item.cardExplanation === "undefined") {
+        warnings.push(
+          item.id + " is missing cardExplanation; condensed cards will fall back to explanation.",
+        );
+      }
     });
 
     if (errors.length) {
-      console.error("[CFI Endorsement Navigator] Validation errors:", errors);
+      console.error("[Simply Endorsed] Validation errors:", errors);
     }
     if (warnings.length) {
-      console.warn("[CFI Endorsement Navigator] Validation warnings:", warnings);
+      console.warn("[Simply Endorsed] Validation warnings:", warnings);
     }
   }
 
@@ -716,10 +732,10 @@
     });
 
     if (errors.length) {
-      console.error("[CFI Endorsement Navigator] Browse validation errors:", errors);
+      console.error("[Simply Endorsed] Browse validation errors:", errors);
     }
     if (warnings.length) {
-      console.warn("[CFI Endorsement Navigator] Browse validation warnings:", warnings);
+      console.warn("[Simply Endorsed] Browse validation warnings:", warnings);
     }
   }
 
@@ -1032,6 +1048,7 @@
     const badges = [];
     const category = CATEGORY_MAP.get(item.category) || {};
     const displayTags = getDisplayTags(item);
+    const cardExplanation = getCardExplanation(item);
 
     if (EXPIRATION_LABELS[item.expiration]) {
       badges.push('<span class="chip chip-warn">Time limit: ' + escapeHtml(EXPIRATION_LABELS[item.expiration]) + "</span>");
@@ -1095,7 +1112,7 @@
       "</button>" +
       "</div>" +
       "<h2>" + escapeHtml(item.title) + "</h2>" +
-      '<p class="card-explanation">' + escapeHtml(item.explanation) + "</p>" +
+      '<p class="card-explanation">' + escapeHtml(cardExplanation) + "</p>" +
       '<p class="card-meta mono">' + escapeHtml(item.cfr.join(" | ")) + "</p>" +
       details +
       "</article>"

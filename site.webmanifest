@@ -1,6 +1,6 @@
 {
-  "name": "CFI Endorsement Navigator",
-  "short_name": "CFI Navigator",
+  "name": "Simply Endorsed",
+  "short_name": "Simply Endorsed",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
