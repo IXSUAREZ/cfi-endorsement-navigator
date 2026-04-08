@@ -20,52 +20,29 @@
   </head>
   <body>
     <div class="app-shell">
-      <header class="topbar">
+      <!-- Slim sticky topbar: designer credit + browse button only -->
+      <div class="topbar-sticky">
         <div class="designer-header">
           <div class="designer-credit">Designed by</div>
           <div class="designer-name">Diego Suarez</div>
         </div>
+        <button
+          id="sidebarToggleBtn"
+          class="icon-btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="filterRail"
+          aria-label="Open browse navigation"
+        >
+          ☰ Browse
+        </button>
+      </div>
 
-        <div class="topbar-main">
-          <div class="brand">
-            <h1>CFI Endorsement Navigator</h1>
-            <p id="acVersionText">AC source loading...</p>
-          </div>
-
-          <button
-            id="sidebarToggleBtn"
-            class="icon-btn"
-            type="button"
-            aria-expanded="false"
-            aria-controls="filterRail"
-            aria-label="Open browse navigation"
-          >
-            Browse
-          </button>
-        </div>
-
-        <div class="search-wrap">
-          <label class="sr-only" for="searchInput">Search endorsements</label>
-          <div class="search-field">
-            <input
-              id="searchInput"
-              class="search-input"
-              type="search"
-              placeholder="Search by ID, CFR, keyword, or alias..."
-              autocomplete="off"
-            >
-            <button
-              id="clearSearchBtn"
-              class="search-clear"
-              type="button"
-              aria-label="Clear search"
-              hidden
-            >
-              Clear
-            </button>
-          </div>
-        </div>
-      </header>
+      <!-- Scroll-away brand block -->
+      <div class="brand-block">
+        <h1 class="brand-title">CFI Endorsement Navigator</h1>
+        <p id="acVersionText" class="brand-sub">AC source loading...</p>
+      </div>
 
       <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
 
@@ -79,6 +56,30 @@
           >
             ✕ Close
           </button>
+
+          <!-- Search lives inside the rail -->
+          <div class="rail-search">
+            <label class="sr-only" for="searchInput">Search endorsements</label>
+            <div class="search-field">
+              <input
+                id="searchInput"
+                class="search-input"
+                type="search"
+                placeholder="Search endorsements..."
+                autocomplete="off"
+              >
+              <button
+                id="clearSearchBtn"
+                class="search-clear"
+                type="button"
+                aria-label="Clear search"
+                hidden
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+
           <section class="rail-section">
             <div class="rail-heading">
               <h2>Browse</h2>
