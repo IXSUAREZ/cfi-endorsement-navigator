@@ -80,6 +80,109 @@
     },
   ];
 
+  const CATEGORY_THEMES = {
+    all: {
+      accent: "#1f5ed6",
+      soft: "#e8f0ff",
+      line: "#bfd4ff",
+      ink: "#163b84",
+    },
+    "practical-test-prereqs": {
+      accent: "#2f6fed",
+      soft: "#eaf2ff",
+      line: "#bfd3ff",
+      ink: "#1d4ba8",
+    },
+    "student-pilot": {
+      accent: "#1f77c7",
+      soft: "#e7f5ff",
+      line: "#b9def7",
+      ink: "#155184",
+    },
+    "sport-pilot": {
+      accent: "#0f8a83",
+      soft: "#e7faf7",
+      line: "#ade5df",
+      ink: "#0d5f5a",
+    },
+    "recreational-pilot": {
+      accent: "#2c9b6a",
+      soft: "#eaf9ef",
+      line: "#bfe6cb",
+      ink: "#1f6a49",
+    },
+    "private-pilot": {
+      accent: "#4867d6",
+      soft: "#eef1ff",
+      line: "#c8d2ff",
+      ink: "#2f46a8",
+    },
+    "commercial-pilot": {
+      accent: "#265f9f",
+      soft: "#ebf4fd",
+      line: "#bdd4ee",
+      ink: "#1a4677",
+    },
+    atp: {
+      accent: "#5b6b88",
+      soft: "#eef2f8",
+      line: "#ccd7e6",
+      ink: "#3b4a63",
+    },
+    "instrument-rating": {
+      accent: "#0f7ea8",
+      soft: "#e8f7fc",
+      line: "#b7e4f1",
+      ink: "#0d5875",
+    },
+    "flight-instructor": {
+      accent: "#b7791f",
+      soft: "#fff5e8",
+      line: "#f1d1aa",
+      ink: "#8a5610",
+    },
+    "sport-pilot-instructor": {
+      accent: "#c46a35",
+      soft: "#fff1e8",
+      line: "#f2c8ad",
+      ink: "#8c4720",
+    },
+    "additional-recurrent": {
+      accent: "#4d8b46",
+      soft: "#edf7eb",
+      line: "#c7e2c3",
+      ink: "#2d6128",
+    },
+    "robinson-sfar73": {
+      accent: "#b14e6b",
+      soft: "#fff0f4",
+      line: "#efc2cf",
+      ink: "#7d3148",
+    },
+    "specialty-operations": {
+      accent: "#7a5aa6",
+      soft: "#f4effb",
+      line: "#d8c7ef",
+      ink: "#53377a",
+    },
+  };
+
+  const TAG_PRIORITY = [
+    "checkride",
+    "practical test",
+    "knowledge test",
+    "solo",
+    "cross country",
+    "night",
+    "instrument",
+    "flight review",
+    "ipc",
+    "airspace",
+    "spin",
+    "tailwheel",
+    "tsa",
+  ];
+
   const CATEGORY_MAP = new Map(CATEGORY_DEFS.map((item) => [item.id, item]));
   const BROWSE_MAP = new Map(BROWSE_STRUCTURE.map((item) => [item.categoryId, item]));
   const ENDORSEMENT_MAP = new Map(ENDORSEMENTS.map((item) => [item.id, item]));
@@ -166,6 +269,37 @@
       .trim();
   }
 
+  function getCategoryTheme(categoryId) {
+    return CATEGORY_THEMES[categoryId] || CATEGORY_THEMES.all;
+  }
+
+  function getCategoryThemeStyle(categoryId) {
+    const theme = getCategoryTheme(categoryId);
+    return (
+      ' style="--category-accent: ' +
+      theme.accent +
+      "; --category-soft: " +
+      theme.soft +
+      "; --category-line: " +
+      theme.line +
+      "; --category-ink: " +
+      theme.ink +
+      ';"'
+    );
+  }
+
+  function applyCategoryTheme(element, categoryId) {
+    if (!element) {
+      return;
+    }
+
+    const theme = getCategoryTheme(categoryId);
+    element.style.setProperty("--category-accent", theme.accent);
+    element.style.setProperty("--category-soft", theme.soft);
+    element.style.setProperty("--category-line", theme.line);
+    element.style.setProperty("--category-ink", theme.ink);
+  }
+
   function debounce(fn, delay) {
     let timeoutId = null;
     return function debounced() {
@@ -206,6 +340,61 @@
         Array.isArray(item.tags) ? item.tags.join(" ") : "",
       ].join(" "),
     );
+  }
+
+  function getTagPriority(tag) {
+    const normalizedTag = normalizeText(tag);
+    const index = TAG_PRIORITY.findIndex((priority) => normalizedTag.indexOf(priority) !== -1);
+    return index === -1 ? TAG_PRIORITY.length : index;
+  }
+
+  function tagRepeatsCategory(normalizedTag, categoryLabel) {
+    const tagTokens = normalizedTag.split(" ").filter(Boolean);
+    const categoryTokens = categoryLabel.split(" ").filter(Boolean);
+
+    if (!tagTokens.length || !categoryTokens.length) {
+      return false;
+    }
+
+    const overlapCount = tagTokens.filter((token) => categoryTokens.includes(token)).length;
+    return overlapCount === tagTokens.length || (overlapCount / tagTokens.length) >= 0.66;
+  }
+
+  function getDisplayTags(item) {
+    const category = CATEGORY_MAP.get(item.category);
+    const categoryLabel = normalizeText(category ? category.label : "");
+
+    return (Array.isArray(item.tags) ? item.tags : [])
+      .map((tag) => String(tag || "").trim())
+      .filter(Boolean)
+      .filter((tag, index, tags) => (
+        tags.findIndex((candidate) => normalizeText(candidate) === normalizeText(tag)) === index
+      ))
+      .filter((tag) => {
+        const normalizedTag = normalizeText(tag);
+
+        if (!normalizedTag || !categoryLabel) {
+          return Boolean(normalizedTag);
+        }
+
+        return (
+          normalizedTag !== categoryLabel &&
+          normalizedTag.indexOf(categoryLabel) === -1 &&
+          categoryLabel.indexOf(normalizedTag) === -1 &&
+          !tagRepeatsCategory(normalizedTag, categoryLabel)
+        );
+      })
+      .sort((left, right) => {
+        const leftPriority = getTagPriority(left);
+        const rightPriority = getTagPriority(right);
+
+        if (leftPriority !== rightPriority) {
+          return leftPriority - rightPriority;
+        }
+
+        return left.localeCompare(right);
+      })
+      .slice(0, 2);
   }
 
   function getCategoryCounts() {
@@ -622,7 +811,9 @@
           (isActive ? " is-active" : "") +
           (isCategoryActive ? " is-view-active" : "") +
           (isOpen ? " is-open" : "") +
-          '">' +
+          '"' +
+          getCategoryThemeStyle(category.id) +
+          ">" +
           '<button type="button" class="category-button" data-action="toggle-category" data-category="' +
           escapeHtml(category.id) +
           '" aria-expanded="' +
@@ -631,6 +822,7 @@
           escapeHtml(groupId) +
           '">' +
           '<span class="category-label-wrap">' +
+          '<span class="category-swatch" aria-hidden="true"></span>' +
           '<span class="category-label">' + escapeHtml(category.label) + "</span>" +
           matchDot +
           '<span class="category-count">' + escapeHtml(String(counts[category.id] || 0)) + "</span>" +
@@ -716,12 +908,14 @@
     const scopedCount = getScopedEndorsements().length;
     const subcategory = getSelectedSubcategory();
     const chips = [
-      '<span class="selection-chip">' + escapeHtml(String(scopedCount)) + " endorsements in scope</span>",
+      '<span class="selection-chip selection-chip-category">' +
+      escapeHtml(String(scopedCount)) +
+      " endorsements in scope</span>",
     ];
 
     if (state.category === "all") {
       chips.push(
-        '<span class="selection-chip">' +
+        '<span class="selection-chip selection-chip-category">' +
         escapeHtml(String(CATEGORY_DEFS.filter((category) => category.id !== "all").length)) +
         " browse categories</span>",
       );
@@ -733,7 +927,7 @@
 
     if (subcategory) {
       chips.push(
-        '<span class="selection-chip">' +
+        '<span class="selection-chip selection-chip-category">' +
         escapeHtml(String(getBundleCount(subcategory))) +
         " endorsements in this path</span>",
       );
@@ -749,6 +943,9 @@
   function renderSelectionSummary() {
     const category = CATEGORY_MAP.get(state.category) || CATEGORY_MAP.get("all");
     const subcategory = getSelectedSubcategory();
+    const themeCategoryId = category && category.id ? category.id : "all";
+
+    applyCategoryTheme(dom.selectionSummary, themeCategoryId);
 
     renderSelectionBreadcrumbs(category, subcategory);
 
@@ -834,6 +1031,7 @@
     const expanded = state.expandedId === item.id;
     const badges = [];
     const category = CATEGORY_MAP.get(item.category) || {};
+    const displayTags = getDisplayTags(item);
 
     if (EXPIRATION_LABELS[item.expiration]) {
       badges.push('<span class="chip chip-warn">Time limit: ' + escapeHtml(EXPIRATION_LABELS[item.expiration]) + "</span>");
@@ -842,8 +1040,11 @@
       badges.push('<span class="chip chip-warn">Every XC flight</span>');
     }
     if (category.label) {
-      badges.push('<span class="chip chip-soft">' + escapeHtml(category.label) + "</span>");
+      badges.push('<span class="chip chip-category">' + escapeHtml(category.label) + "</span>");
     }
+    displayTags.forEach((tag) => {
+      badges.push('<span class="chip chip-tag">' + escapeHtml(tag) + "</span>");
+    });
     badges.push('<span class="chip chip-ghost mono">Page ' + escapeHtml(item.sourcePage) + "</span>");
 
     const details = expanded
@@ -878,7 +1079,11 @@
       : "";
 
     return (
-      '<article class="endorsement-card" data-endorsement-id="' + escapeHtml(item.id) + '">' +
+      '<article class="endorsement-card" data-endorsement-id="' +
+      escapeHtml(item.id) +
+      '"' +
+      getCategoryThemeStyle(item.category) +
+      ">" +
       '<div class="endorsement-head">' +
       '<div class="endorsement-id-row">' +
       '<span class="endorsement-id mono">' + escapeHtml(item.id) + "</span>" +
@@ -945,7 +1150,9 @@
           escapeHtml(item.categoryId) +
           '" data-featured-subcategory="' +
           escapeHtml(item.subcategoryId) +
-          '">' +
+          '"' +
+          getCategoryThemeStyle(item.categoryId) +
+          ">" +
           '<span class="featured-card-category">' + escapeHtml(category.label || item.categoryId) + "</span>" +
           '<span class="featured-card-title">' + escapeHtml(item.subcategory.label) + "</span>" +
           '<span class="featured-card-description">' + escapeHtml(item.subcategory.description) + "</span>" +
