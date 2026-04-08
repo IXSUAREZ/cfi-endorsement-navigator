@@ -1200,20 +1200,31 @@ body.is-sidebar-open {
 
   .filter-rail {
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
+    top: 66px; /* Just below the sticky nav */
+    left: 12px;
+    right: 12px;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    max-height: calc(100dvh - 84px);
     z-index: 90;
-    width: min(88vw, 320px);
-    height: 100dvh;
-    border-radius: 0 16px 16px 0;
-    border-left: 0;
-    transform: translateX(-105%);
-    transition: transform 180ms ease;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.98);
+    /* Soft, large-spread shadows from Orbai inspiration */
+    box-shadow: 0 40px 80px rgba(17, 34, 59, 0.12), 0 10px 24px rgba(17, 34, 59, 0.06); 
+    transform-origin: top center;
+    transform: translateY(-20px) scale(0.98);
+    opacity: 0;
+    visibility: hidden;
+    /* Spring-like ease out matching Framer dropdowns */
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms ease, visibility 400ms ease;
   }
 
   .filter-rail.is-open {
-    transform: translateX(0);
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
   }
 
   .featured-grid {
