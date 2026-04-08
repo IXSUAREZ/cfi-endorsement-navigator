@@ -94,6 +94,19 @@ body.is-sidebar-open {
   gap: 4px;
 }
 
+.designer-credit {
+  margin: 0 0 -2px 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.designer-name {
+  color: #eab308;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
 .brand h1 {
   margin: 0;
   font-size: clamp(1.12rem, 1.2vw, 1.35rem);
