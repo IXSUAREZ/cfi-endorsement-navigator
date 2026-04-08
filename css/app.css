@@ -80,7 +80,7 @@ body.is-sidebar-open {
   z-index: 80;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   padding: 8px 18px;
   border-bottom: 1px solid rgba(191, 208, 230, 0.7);
@@ -91,12 +91,15 @@ body.is-sidebar-open {
 }
 
 .designer-header {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 1px;
-  flex: 1;
+  pointer-events: none;
 }
 
 .designer-credit {
@@ -198,29 +201,31 @@ body.is-sidebar-open {
 
 .icon-btn {
   appearance: none;
-  border: 1px solid rgba(191, 208, 230, 0.95);
+  border: 1.5px solid rgba(191, 208, 230, 0.95);
   background: rgba(255, 255, 255, 0.9);
   color: var(--text);
-  min-height: 44px;
-  border-radius: 999px;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 700;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  padding: 0 16px;
-  box-shadow: 0 8px 22px rgba(17, 34, 59, 0.05);
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(17, 34, 59, 0.08);
+  transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
 }
 
-.icon-btn:hover,
-.bundle-toggle:hover,
-.inline-action:hover {
-  text-decoration: none;
-}
-
-.icon-btn:hover,
-.rail-close:hover {
-  border-color: var(--line-strong);
+.icon-btn:hover {
   background: var(--surface-raised);
+  border-color: var(--line-strong);
+  transform: scale(1.06);
+}
+
+.icon-btn:active {
+  transform: scale(0.96);
 }
 
 .sidebar-backdrop[hidden] {
@@ -1239,11 +1244,9 @@ body.is-sidebar-open {
   }
 
   .icon-btn {
-    min-height: 38px;
-    padding: 0 13px;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
   }
 
   .search-input {
