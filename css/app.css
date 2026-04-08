@@ -21,8 +21,8 @@
   --category-soft: var(--accent-soft);
   --category-line: #bfd4ff;
   --category-ink: var(--accent-ink);
-  --warn: #b45309;
-  --warn-soft: #ffedd5;
+  --warn: #4a5568;
+  --warn-soft: #f1f5f9;
   --display: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
   --sans: "Inter", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --mono: "JetBrains Mono", "SFMono-Regular", "Menlo", "Monaco", monospace;
@@ -69,11 +69,7 @@ body {
   font-family: var(--sans);
   color: var(--text);
   line-height: 1.56;
-  background:
-    radial-gradient(circle at 8% 10%, rgba(31, 94, 214, 0.08) 0%, transparent 30%),
-    radial-gradient(circle at 86% 12%, rgba(72, 103, 214, 0.06) 0%, transparent 24%),
-    radial-gradient(circle at 50% 0%, rgba(180, 83, 9, 0.04) 0%, transparent 26%),
-    linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -91,19 +87,11 @@ body::after {
 }
 
 body::before {
-  top: 72px;
-  left: -100px;
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(31, 94, 214, 0.14) 0%, rgba(31, 94, 214, 0) 72%);
+  display: none;
 }
 
 body::after {
-  right: -80px;
-  bottom: 10%;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(72, 103, 214, 0.12) 0%, rgba(72, 103, 214, 0) 72%);
+  display: none;
 }
 
 body.sidebar-open,
@@ -179,9 +167,7 @@ p {
   z-index: 0;
   pointer-events: none;
   border-radius: inherit;
-  background:
-    radial-gradient(circle at top right, rgba(255, 255, 255, 0.78) 0%, transparent 34%),
-    radial-gradient(circle at bottom left, rgba(31, 94, 214, 0.05) 0%, transparent 30%);
+  background: none;
 }
 
 .topbar-sticky > *,
@@ -229,7 +215,7 @@ p {
   font-size: clamp(1.25rem, 2.1vw, 1.7rem);
   line-height: 1;
   letter-spacing: -0.04em;
-  color: #a47725;
+  color: var(--text-strong);
 }
 
 .icon-btn {
@@ -550,9 +536,7 @@ p {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(circle at top right, rgba(255, 255, 255, 0.68) 0%, transparent 34%),
-    radial-gradient(circle at bottom left, rgba(31, 94, 214, 0.04) 0%, transparent 30%);
+  background: none;
 }
 
 .nav-group.is-active {
