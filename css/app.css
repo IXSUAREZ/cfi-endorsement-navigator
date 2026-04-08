@@ -200,7 +200,7 @@ body.is-sidebar-open {
   border: none;
   background: transparent;
   color: var(--text);
-  padding: 8px;
+  padding: 0;
   font-size: 2rem;
   line-height: 1;
   display: flex;
@@ -209,6 +209,33 @@ body.is-sidebar-open {
   cursor: pointer;
   flex-shrink: 0;
   transition: opacity 120ms ease, transform 120ms ease;
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.icon-burger,
+.icon-close {
+  position: absolute;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1), transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+.icon-btn[aria-expanded="true"] .icon-burger {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+.icon-btn[aria-expanded="true"] .icon-close {
+  opacity: 1;
+  transform: rotate(0) scale(1);
 }
 
 .icon-btn:hover {
