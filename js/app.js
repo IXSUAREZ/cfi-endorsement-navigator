@@ -1074,7 +1074,7 @@
         "</section>" +
         '<div class="details-grid">' +
         '<section class="detail-section">' +
-        "<h4>Plain-English explanation</h4>" +
+        "<h4>Why This Matters</h4>" +
         "<p>" + escapeHtml(item.explanation) + "</p>" +
         "</section>" +
         '<section class="detail-section">' +
