@@ -1,0 +1,313 @@
+
+7
+
+Automatic Zoom
+II.K. Endorsements & Logbook Entries
+References: 14 CFR part 61, Certification: Pilots and Flight and Ground Instructors (AC 61-65), Currency Requirements
+and Guidance for the Flight Review and Instrument Proficiency Check (AC 61-98), Flight Instructor Refresher Course (AC
+61-83), WINGS Pilot Proficiency Program (AC 61-91), FAA Order 8900.1 (FSIMS)
+Objectives The learner should develop knowledge of the elements related to logbook entries and
+endorsements as required by the appropriate ACS.
+Key Elements
+Elements
+1. AC 61-65
+2. Endorsements
+3. Required Records
+1. Logbook Entries
+2. Student Pilot Certificate Endorsements
+3. Preparation of a Practical Test Recommendation
+4. Additional Ratings
+5. Reapplying for a Practical Test
+6. Time Limits
+7. Flight Review Endorsements
+8. Flight Instructor Responsibilities
+9. Maintaining your CFI Certificate
+Schedule 1. Discuss Objectives
+2. Review material
+3. Development
+4. Conclusion
+Equipment 1. White board and markers
+2. References
+IP’s Actions 1. Discuss lesson objectives
+2. Present Lecture
+3. Ask and Answer Questions
+4. Assign homework
+SP’s Actions 1. Participate in discussion
+2. Take notes
+3. Ask and respond to questions
+Completion
+Standards
+The learner understands what is necessary in learner’s logbooks, what is necessary for student pilot
+certificates and preparing a learner for a practical test, as well as the requirements for flight review
+endorsements and flight instructor records.
+II.K. Endorsements & Logbook Entries
+2
+Instructor Notes:
+Introduction:
+Attention
+Interesting fact or attention-grabbing story
+Don’t get stuck with your student at a check ride without the proper endorsements! And don’t get stuck not retaining
+the necessary records in the case that the FAA comes knocking!
+Overview
+Review Objectives and Elements/Key ideas
+What
+The necessary entries instructors must make in their learner’s logbooks as well as the endorsements required for
+different practical tests, reviews, etc.
+Why
+It is important that the instructor understands the requirements to keep the learner’s logbook and training in order,
+not only for the learner’s well-being, but also to comply with the FARs.
+How:
+1. Logbook Entries (FAR 61.189) AI.II.K.K1
+A. A flight instructor must sign the logbook of each person that instructor has given flight/ground training
+B. Logbook entries must include (FAR 61.51):
+• Date • Aircraft Identification
+• Airplane Make and Model • Type of Experience (Solo, PIC, etc.)
+• Total Flight Time • Flight Conditions (Day, Night, Instrument, etc.)
+• Location of Departure and Arrival • Name of safety pilot, if required
+2. Student Pilot Certificate Endorsements (Including appropriate logbook entries) AI.II.K.K2, AI.II.K.K3
+A. Student Pilot Endorsements (Examples shown in AC 61-65)
+Solo Flight Endorsements XC Endorsements
+• Pre-solo Aeronautical Knowledge: 61.87(b) • Solo XC Training: 61.93(c)(1) and (2)
+• Pre-solo Flight Training: 61.87(c) • Solo XC Planning: 61.93(c)(3)
+• Pre-solo Flight Training at Night: 61.87(c) & (o) • Repeated Solo XCs not > 50 nm from the departure: 61.93(b)(2)
+• Solo Flt (1st 90-days): 61.87(n) / Additional 90 days: 61.87(p) Class B Endorsements
+• Solo T/O & LDGs at an Airport within 25 nm: 61.93(b)(1) • Solo Flight in Class B Airspace: 61.95(a)
+• TSA US Citizenship: 49 CFR 1552.15(c) • Solo Flight, to/from/at a Class B airport: 61.95(b) & 91.131(b)(1)
+B. Pre-Solo
+i. AC 61-65 A.3: Pre-solo Aeronautical Knowledge: 61.87(b)
+ii. AC 61-65 A.4 Pre-solo Flight Training: 61.87(c)(1) & (2)
+iii. AC 61.65 A.5 Pre-solo Flight Training at Night 61.87(o)
+C. Solo Flight
+i. Endorsement for the specific make & model aircraft by the instructor who gave the training within the
+preceding 90 days
+a. AC 61-65 A.6: Solo Flight (first 90 calendar-day period): 61.87(n)
+b. AC 61-65 A.7: Solo Flight (each additional 90 calendar0day period): 61.87(p)
+D. Cross Country
+i. AC 61-65 A.8: Solo Takeoffs and Landings at another Airport withing 25 NM: 61.93(b)(1)
+ii. FAR 61.93(c): Solo Cross Country
+II.K. Endorsements & Logbook Entries
+3
+a. Must have a solo cross-country endorsement from the authorized instructor who conducted the training
+that is placed in the person’s logbook for the specific category of aircraft to be flown
+b. Must have a solo cross-country endorsement from an authorized instructor that is placed in that
+person’s logbook for the specific make and model of aircraft to be flown
+c. For each cross-country flight, the authorized instructor who reviews the cross-country planning must
+make an endorsement in the person's logbook after reviewing that person's planning
+d. AC 61-65 A.9: Solo Cross Country Flight: 61.93(c)(1) & (2)
+e. AC 61-65 A.10: Solo Cross-Country Flight: 61.93(c)(3)
+• Required for each cross-country flight
+E. TSA US Citizenship
+i. Instructor must keep a copy of the documents used to provide proof of citizenship for 5 years, or
+ii. Make the following endorsement:
+a. AC 61-65 A.14: Endorsement of US Citizenship recommended by the TSA: 49 CFR 1552.3(h)
+F. Special Federal Aviation Regulation (SFAR)
+i. Mentioned in the ACS – Included here in case it comes up (discuss at your own risk)
+ii. Temporary regulations issued by the FAA that apply to specific people and aircraft
+a. Often issued with an expiration date that can be amended, extended or rescinded as needed
+b. Ex: In 2020, the FAA issued an SFAR to provide regulatory relief to people/schools who were unable to
+comply with training, experience, testing, and checking requirements due to Covid
+• Extended expiration dates for medical certificates, instructor certificates, practical tests, etc.
+iii. Part 61 SFARs
+a. SFAR 73: Robinson R-22/R-44 Special Training & Experience Requirements
+• Not applicable to airplanes, but you can see sample endorsement requirements (also in AC 61-65)
+b. SFAR 100-2: Relief for US Military/Civilians assigned outside the US in Support of Armed Forces Ops
+iv. The only SFARs listed in the part 91 SFARs prohibit flight in other parts of the world
+a. Ex: Damascus, Somalia, Pyongyang, Tehran, and more
+3. Preparation of a Practical Test Recommendation AI.II.K.K4
+A. Endorsements AI.II.K.K4a
+i. AC 61-65 A.1: Prerequisites for a Practical Test: 61.39(a)(6)(i) & (ii)
+a. Except as provided by 61.39, each applicant must have received an endorsement from an authorized
+instructor who certified that the applicant received and logged the required flight time/training in
+preparation for the practical test within 2 calendar months preceding the month of application of the
+test and is prepared for the practical test
+ii. AC 61-65 A.2: Review of Deficiencies Identified on Airman Knowledge Test: 61.39(a)(6)(iii)
+a. As required
+b. Endorsement stating the applicant has satisfactory knowledge of the subject areas they were deficient
+in as shown by the Knowledge Test Report
+c. Sometimes included in the above endorsement (Ex. AC 61-65 A.44: Instrument rating)
+iii. Part 61 required endorsements for the category, class, rating, or privilege of certification sought
+a. Vary by rating, shown below
+B. Example Endorsement – Single Engine Private Pilot
+i. AC 61-65 A.1: Prerequisite for a Practical Test: § 61.39(a)(6)(i) & (ii)
+ii. AC 61.-65 A.2: Review of Deficiencies Identified on Airman Knowledge Test: § 61.39(a)(6)(iii)
+iii. AC 61-65 A.36: Aeronautical Knowledge Test: §§ 61.35(a)(1), 61.103(d), and 61.105
+a. Part 61 required endorsement specific to the private pilot required knowledge training
+iv. AC 61-65 A.37: Flight Proficiency/Practical Test: §§ 61.103(f), 61.107(b), and 61.109
+a. Part 61 required endorsement specific to the private pilot certificate
+C. Endorsement References
+II.K. Endorsements & Logbook Entries
+4
+D. The instructor and student must complete the IACRA rating application online (iacra.faa.gov)
+i. Or the instructor/student must complete and sign a Form 8710-1
+a. This is given to the examiner at the practical test
+b. Most examiners no longer use this method, IACRA is heavily preferred
+E. Except in certain instances, applicant must hold at least a current 3rd class medical: FAR 61.23(a)(3)(iii)
+4. Additional Ratings (FAR 61.63) AI.II.K.K4b, AI.II.K.K4c
+A. Category and Class Ratings
+i. Additional category and/or class (other than ATP), must have:
+a. Instructor recommendations
+b. Appropriate endorsements
+• Vary by specific FAR 61 requirements
+ii. Applicant must:
+a. Comply with the requirements of FAR 61.63 (described below)
+b. Pass the practical test appropriate for the aircraft category, and if applicable, class rating sought
+B. Additional Class Requirements – FAR 61.63(c)
+i. Endorsement stating competence in knowledge areas and proficient in areas of operation
+a. AC 61-65 A.78: Additional Aircraft Category or Class Rating (other than ATP)
+b. AC 61-65 A.1: Practical test endorsement
+c. Other endorsement(s) as required, see example
+ii. Pass practical test
+iii. No need to meet the time requirements that apply to the class rating (see FAR for exception)
+iv. No knowledge test, provided applicant holds a rating at the certificate level
+C. Additional Category Requirements – FAR 61.63(b)
+i. Complete training and have the applicable aeronautical experience required by FAR part 61
+ii. Endorsement stating competence in knowledge areas and proficient in areas of operation
+a. AC 61-65 A.78: Additional aircraft category or class rating (other than ATP)
+b. AC 61-65 A.1: Practical Test Endorsement
+Sport Pilot Flight Instructors (w/o Sport Rating)
+Knowledge Test - 61.307(a) FOI Knowledge Test - 61.183(d), 61.185(a)(1)
+Practical Test - 61.307(b) CFI Aeronautical Test – 61.183(f), 61.185(a)(2)
+Recreational Pilot Practical Test - 61.183(g), 61.187(a) & (b)
+Knowledge Test - 61.35(a)(1), 61.96(b)(3), 61.97(b) Spin Training - 61.183(i)(1)
+Practical Test - 61.96(b)(5), 61.98(a) & (b), 61.99 Flight Instructors (with Sport Rating)
+Private Pilot FOI Knowledge Test - 61.405(a)(1)
+Knowledge Test - 61.35(a)(1), 61.103(d), 61.105 Sport Pilot Knowledge Test - 61.35(a)(1), 61.405(a)
+Practical Test - 61.103(f), 61.107(b), 61.109 Practical Test - 61.409, 61.411
+Instrument Rating (CFII is Required) Spin Training - 61.405(b)(1)(ii)
+Knowledge Test - 61.35(a)(1), 61.65(a) & (b) Additional Qualifications
+Practical Test - 61.65(a)(6) Additional Category/Class Rating (Not ATP) - 61.63(b) or (c)
+Commercial Pilot Additional Type Rating Only (Not ATP) - 61.63(d)(2) & (3)
+Knowledge Test - 61.35(a)(1), 61.123(c), 61.125 Type Rating & Category/Class Rating - 61.63(d)(2) & (3)
+Practical Test - 61.123(e), 61.127, 61.129 Additional Aircraft Rating (ATP) - 61.157(b)(1)
+-You may complete the endorsement in the space at the bottom
+of the computer test report in the case of a knowledge test failure.
+You must sign the block provided for the instructor’s endorsement
+on the reverse side of the 8710 for each retake of a practical test.
+An applicant may retake a practical or knowledge test after
+receiving additional instruction and an instructor’s endorsement.
+Type Rating Only (ATP) - 61.157(b)(2)
+Practical Test Prerequisites Completion - 61.39(a)(6)
+Retesting for Knowledge/Practical - 61.49
+Home Study Curriculum - 61.35(a)(1)
+Ground Instructor Experience Reqs - 61.217(b)
+II.K. Endorsements & Logbook Entries
+5
+c. Other endorsement(s), as required
+iii. Pass practical test
+iv. No additional knowledge test, provided applicant holds a rating at the certificate level
+D. Solo Flight Requirements (without the appropriate category/class rating) – FAR 61.31(d)(2)
+i. Must have received the FAR required training for the aircraft
+ii. AC 61-65 A.76 – Solo PIC when the pilot doesn’t hold appropriate category/class
+E. Additional Rating Example
+i. Single engine private pilot wants to add multiengine class rating
+ii. AC 61-65 A.1: Prerequisite for a Practical Test: 61.39(a)(6)(i) & (ii)
+iii. AC 61-65 A.78: Additional Aircraft Category or Class Rating (other than ATP): 61.63(c)
+iv. AC 61-65 A.72: To act as Pilot in Command in a Complex Aircraft: 61.31(e)
+5. Reapplying for a Practical Test
+A. Following a Notice of Disapproval
+i. A practical test, whether satisfactory or not, uses up the endorsement for that test
+ii. Must have another endorsement in accordance with FAR 61.43(f) & 61.49(a)(2) stating the necessary
+training has been given and they are prepared for the test
+a. AC 61-65 A.77 – Retesting after failure of a knowledge or practical test: 61.49
+iii. Instructor recommendation (8710/IACRA) is required for a retest
+iv. Applicant may receive credit for the Areas of Operation they passed if the remainder of the test is
+completed within 60 calendar-days after the date that the test was discontinued
+B. Following a Letter of Discontinuance
+i. No additional endorsements are required
+ii. Applicant gets credit for the areas of operation that were passed if the test is completed within 60 calendar-
+days after the discontinuation date
+a. If more than 60 calendar-days has passed, the entire practical test must be accomplished
+6. Time Limits (Two Calendar Months vs 60 Calendar-Days)
+A. 60 Calendar-Day Time Limit
+i. FAR 61.43(e) – Practical test can be discontinued for 4 reasons:
+a. Fail one or more areas of operation
+b. Inclement weather
+c. Airworthiness
+d. Safety of flight concern
+ii. FAR 61.43(f) – If a test is discontinued per 61.43(e), the applicant gets credit for the areas that they already
+passed, but
+a. FAR 61.43(f)(1) – the remainder of the test must be completed within 60 calendar days
+• After 60 calendar days, all areas of operation must be tested
+B. 2 Calendar Month Time Limit
+i. FAR 61.39(g): If all increments of a practical test are not completed on the same date, all remaining
+increments must be completed within 2 calendar months
+a. Increment may be because the test was discontinued for reasons stated in 61.43(e), or because it was
+planned to be conducted in increments
+b. FAR 61.39(h): After 2 calendar months, the entire test must be accomplished
+c. Separate time limit from the 60 calendar-day limit
+7. Flight Review Endorsements AI.II.K.K5
+A. After a satisfactory completion of a flight review, the instructor must endorse the pilot’s logbook
+i. AC 61-65 A.69: Completion of a Flight Review: 61.56(a) & (c)
+B. Instrument Proficiency Checks (IPC)
+i. CFII is required to perform an IPC for instrument rated pilots
+II.K. Endorsements & Logbook Entries
+6
+ii. AC 61-65 A.71: Completion of an Instrument Proficiency Check: 61.57(d)
+C. No logbook entry reflecting unsatisfactory performance on either flight review is necessary
+i. But a logbook entry for the instruction given should be made
+8. Flight Instructor Responsibilities
+A. Records (FAR 61.189) AI.II.K.K6
+i. Must maintain a record in a logbook or a separate document that contains the following:
+a. Name of each person endorsed for solo flight privileges, and the date of the endorsement
+b. Name of each person endorsed for a knowledge or practical test, with the kind of test, date, results
+ii. Must retain the records required for at least 3 years
+B. RM: Limitations & Expiration Dates AI.II.K.R1
+i. Failure to ensure proper endorsements is a serious deficiency in performance
+a. Depending on the situation, the FAA could hold the instructor accountable
+ii. Required limitations & expiration dates are implemented for safety
+a. Ensure proper endorsements and learner understanding of those endorsements
+C. Training Initial Flight Instructor Applicants (reflects new requirements effective December 1, 2024)
+i. Ground Training Options
+a. Held the appropriate instructor certificate for 24+ months and given 40+ hours of ground training
+b. Hold appropriate instructor certificate & given 100+ hours of ground training in an FAA-approved course
+ii. Flight Training Options
+a. Have held a flight instructor certificate for at least 24 months & given at least 200 hours of flight training
+b. 80% practical test pass rate for at least 5 applicants in the last 24 months
+c. 200 hrs. flight training & completed a FIEQTP (flight instructor enhanced qualification training program)
+• FIEQTP must be under Part 141 - training described in FAR 61.95(h)(3) & AC 61-145
+9. Maintaining your CFI Certificate AI.II.K.K7
+Reflects removal of expiration date on CFI certificates & recent experience requirements effective December 1, 2024
+A. Duration
+i. FAR 61.19(d)
+a. A flight instructor certificate issued before December 1, 2024, expires 24 calendar months from the
+month in which it was issued, renewed, or reinstated, as appropriate (Exception: FAR 61.197(b))
+b. A flight instructor certificate issued on or after December 1, 2024, is issued without an expiration date
+B. Recent Experience Requirements (FAR 61.197)
+i. Must satisfy one of the following recent experience requirements within the previous 24 calendar months:
+a. Pass a practical test for:
+• One of the ratings listed on your flight instructor certificate
+• An additional flight instructor rating
+b. Submit documentation with the FAA for one of the following:
+• Endorsed 5 or more applicants for a checkride with an 80% or better pass rate on their first attempt
+a Gold Seal Instructor Certificate (apply for renewal/gold seal together if desired)
+• Served as a company check pilot or check airman, chief flight instructor, Part 121 or 135 instructor,
+or in a position involving the regular eval of pilots in the past 24 calendar months
+• Completion of an approved instructor refresher course in the past 3 calendar months
+a AC 61-83: Flight Instructor Refresher Course
+• Passed a military instructor pilot or pilot examiner proficiency check in an aircraft in the past 24
+calendar months (considerably more detail to this - reference FAR 61.197(4))
+• FAA-sponsored pilot proficiency program (i.e., WINGS) meeting the following requirements:
+a Hold a current flight instructor certificate
+b Complete at least 1 phase of an FAA-sponsored pilot proficiency program in the last 12 months
+II.K. Endorsements & Logbook Entries
+7
+c Evaluate & endorse 15 flight activities (at least 5 pilots) under the pilot proficiency program
+c. WINGS Program
+• AC 61-91: WINGS – Pilot Proficiency Programs. See page 5, paragraph 6(e)
+• FAAST Team Notice – WINGS CFI Renewal Opportunity
+ii. Reinstatement of Flight Instructor Privileges (FAR 61.199)
+a. Effective December 1, 2024 - If within 3 calendar months of the expiration date:
+• Privileges can be reinstated via an approved FIRC (flight instructor refresher course)
+• No instructional privileges during this reinstatement period
+b. If more than 3 months have passed, the instructor must complete one of the following:
+• An instructor practical test for one of the ratings on the expired certificate per 61.183(h)
+• A practical test for an additional flight instructor rating
+• Passed a military instructor pilot or pilot examiner proficiency check
+• Completed a military instructor pilot/pilot examiner training course and received an additional
+rating appropriate to the flight instructor rating sought
+C. Documentation
+i. Submit an Airman Certificate and/or Rating Application (8710-1 or 8710-11) to validate recent experience
+Conclusion:
+Brief review of the main points
+It is important to know the necessary endorsement and logbook requirements for many common situations. This way,
+the instructor has an idea of what is necessary prior to sending a student to take a test

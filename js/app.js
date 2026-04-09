@@ -228,6 +228,7 @@
     expandedId: null,
     openCategory: null,
     sidebarOpen: false,
+    view: "browse",
   };
 
   const dom = {
@@ -251,6 +252,9 @@
     sidebarToggleBtn: document.getElementById("sidebarToggleBtn"),
     sidebarBackdrop: document.getElementById("sidebarBackdrop"),
     railCloseBtn: document.getElementById("railCloseBtn"),
+    guidanceView: document.getElementById("guidanceView"),
+    preSoloView: document.getElementById("preSoloView"),
+    statusRow: document.querySelector(".status-row"),
   };
 
   function escapeHtml(value) {
@@ -475,6 +479,7 @@
       clearSearch();
     }
 
+    state.view = "browse";
     state.category = "all";
     state.subcategory = null;
     state.includeSupplemental = false;
@@ -505,6 +510,7 @@
       clearSearch();
     }
 
+    state.view = "browse";
     state.category = categoryId;
     state.subcategory = null;
     state.includeSupplemental = false;
@@ -530,10 +536,20 @@
       return;
     }
 
+    // Detect informational subcategories (isInfo: true) and route to their view
+    var catEntry = getCategoryEntry(categoryId);
+    var subEntry = catEntry && catEntry.subcategories && catEntry.subcategories.find(function(s) { return s.id === subcategoryId; });
+    if (subEntry && subEntry.isInfo) {
+      state.openCategory = categoryId;
+      activatePreSolo(options);
+      return;
+    }
+
     if (!options.preserveQuery) {
       clearSearch();
     }
 
+    state.view = "browse";
     state.category = categoryId;
     state.subcategory = subcategoryId;
     state.includeSupplemental = false;
@@ -550,6 +566,55 @@
       window.requestAnimationFrame(() => {
         focusSelectionSummary();
         scrollToSelectionSummary();
+      });
+    }
+  }
+
+  function activateGuidance(options = {}) {
+    if (!options.preserveQuery) {
+      clearSearch();
+    }
+
+    state.view = "guidance";
+    state.category = "all";
+    state.subcategory = null;
+    state.expandedId = null;
+
+    if (options.closeSidebar !== false) {
+      closeSidebar({ returnFocus: false });
+    }
+
+    document.title = "Teaching & Guidance \u2013 Simply Endorsed";
+    refresh();
+
+    if (options.scroll !== false) {
+      window.requestAnimationFrame(() => {
+        if (dom.guidanceView) {
+          dom.guidanceView.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
+  }
+
+  function activatePreSolo(options = {}) {
+    if (!options.preserveQuery) {
+      clearSearch();
+    }
+    state.view = "pre-solo";
+    state.category = "student-pilot";
+    state.subcategory = "pre-solo";
+    state.expandedId = null;
+    state.openCategory = "student-pilot";
+    if (options.closeSidebar !== false) {
+      closeSidebar({ returnFocus: false });
+    }
+    document.title = "Student Pilot Prerequisites \u2013 Simply Endorsed";
+    refresh();
+    if (options.scroll !== false) {
+      window.requestAnimationFrame(() => {
+        if (dom.preSoloView) {
+          dom.preSoloView.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       });
     }
   }
@@ -769,7 +834,7 @@
 
     const counts = getCategoryCounts();
     const matchMap = getCategoryMatchMap();
-    const allActive = state.category === "all" && !state.subcategory;
+    const allActive = state.category === "all" && !state.subcategory && state.view !== "guidance";
 
     const allButton =
       '<button type="button" class="all-button' +
@@ -807,7 +872,12 @@
           escapeHtml(category.label) +
           "</button>" +
           subcategories.map((subcategory) => {
-            const isSubActive = isActive && state.subcategory === subcategory.id;
+            const isPreSoloSub = subcategory.id === "pre-solo";
+            const isSubActive = isActive && state.subcategory === subcategory.id &&
+              (!isPreSoloSub || state.view === "pre-solo");
+            const startHereBadge = isPreSoloSub
+              ? '<span class="start-here-badge" aria-hidden="true">Start here</span>'
+              : "";
             return (
               '<button type="button" class="subcategory-link' +
               (isSubActive ? " is-active" : "") +
@@ -817,6 +887,7 @@
               escapeHtml(subcategory.id) +
               '">' +
               escapeHtml(subcategory.label) +
+              startHereBadge +
               "</button>"
             );
           }).join("") +
@@ -853,7 +924,16 @@
       })
       .join("");
 
-    dom.categoryNav.innerHTML = allButton + groups;
+    const guidanceActive = state.view === "guidance";
+    const guidanceButton =
+      '<div class="rail-divider" aria-hidden="true"></div>' +
+      '<button type="button" class="all-button guidance-nav-btn' +
+      (guidanceActive ? " is-active" : "") +
+      '" data-action="activate-guidance">' +
+      "<span>Teaching &amp; Guidance</span>" +
+      "</button>";
+
+    dom.categoryNav.innerHTML = allButton + groups + guidanceButton;
   }
 
   function renderSelectionBreadcrumbs(category, subcategory) {
@@ -1220,10 +1300,186 @@
   }
 
   function refresh() {
-    renderFeaturedStrip();
+    const isGuidance = state.view === "guidance";
+    const isPreSolo = state.view === "pre-solo";
+    const isInfo = isGuidance || isPreSolo;
+
+    if (!isInfo) document.title = "Simply Endorsed";
+
+    if (dom.selectionSummary) dom.selectionSummary.hidden = isInfo;
+    if (dom.statusRow) dom.statusRow.hidden = isInfo;
+    if (dom.endorsementList) dom.endorsementList.hidden = isInfo;
+    if (dom.featuredStrip) dom.featuredStrip.hidden = true;
+
     renderCategoryNav();
-    renderSelectionSummary();
-    renderEndorsements();
+
+    if (!isInfo) {
+      renderFeaturedStrip();
+      renderSelectionSummary();
+      renderEndorsements();
+    }
+
+    renderGuidanceView();
+    renderPreSoloView();
+  }
+
+  function renderGuidanceContentBlock(block) {
+    var h = escapeHtml;
+    if (block.type === "p") {
+      return "<p>" + h(block.value) + "</p>";
+    }
+    if (block.type === "h3") {
+      return "<h3>" + h(block.value) + "</h3>";
+    }
+    if (block.type === "ul") {
+      return (
+        "<ul>" +
+        block.value.map(function (item) { return "<li>" + h(item) + "</li>"; }).join("") +
+        "</ul>"
+      );
+    }
+    if (block.type === "ol") {
+      return (
+        "<ol>" +
+        block.value.map(function (item) { return "<li>" + h(item) + "</li>"; }).join("") +
+        "</ol>"
+      );
+    }
+    return "";
+  }
+
+  function renderGuidanceView() {
+    if (!dom.guidanceView) return;
+
+    if (state.view !== "guidance") {
+      dom.guidanceView.hidden = true;
+      return;
+    }
+
+    dom.guidanceView.hidden = false;
+
+    if (typeof GUIDANCE_SECTIONS === "undefined") {
+      dom.guidanceView.innerHTML = "<p>Guidance content unavailable.</p>";
+      return;
+    }
+
+    var tocItems = GUIDANCE_SECTIONS.map(function (section) {
+      return (
+        '<li><a class="guidance-toc-link" href="#gs-' +
+        escapeHtml(section.id) +
+        '">' +
+        escapeHtml(section.title) +
+        "</a></li>"
+      );
+    }).join("");
+
+    var cards = GUIDANCE_SECTIONS.map(function (section) {
+      var bodyId = "gs-" + escapeHtml(section.id);
+      var bodyHtml = section.content.map(renderGuidanceContentBlock).join("");
+      return (
+        '<div class="guidance-card" id="' + escapeHtml(section.id) + '">' +
+        '<button type="button" class="guidance-toggle" aria-expanded="false" aria-controls="' + bodyId + '">' +
+        "<span>" + escapeHtml(section.title) + "</span>" +
+        '<span class="detail-toggle-caret" aria-hidden="true">+</span>' +
+        "</button>" +
+        '<div id="' + bodyId + '" class="guidance-body" hidden>' +
+        bodyHtml +
+        "</div>" +
+        "</div>"
+      );
+    }).join("");
+
+    dom.guidanceView.innerHTML =
+      '<div class="guidance-header">' +
+      '<p class="selection-eyebrow">Instructor Resource</p>' +
+      "<h2>Teaching &amp; Guidance</h2>" +
+      '<p class="selection-description">A structured reference for CFI lesson II.K &mdash; Endorsements &amp; Logbook Entries. Select a section to expand.</p>' +
+      "</div>" +
+      '<nav class="guidance-toc" aria-label="Section navigation">' +
+      "<ul>" + tocItems + "</ul>" +
+      "</nav>" +
+      '<div class="guidance-cards">' + cards + "</div>";
+  }
+
+  function renderMnemonicBlock(block) {
+    var h = escapeHtml;
+    var groupsHtml = block.groups.map(function(group) {
+      var itemsHtml = group.items.map(function(item) {
+        return (
+          '<div class="mnemonic-item">' +
+          '<div class="mnemonic-letter">' + h(item.letter) + '</div>' +
+          '<div class="mnemonic-body">' +
+          '<div class="mnemonic-label">' + h(item.label) + '</div>' +
+          '<div class="mnemonic-desc">' + h(item.description) + '</div>' +
+          '</div>' +
+          '</div>'
+        );
+      }).join("");
+      return (
+        '<div class="mnemonic-group">' +
+        '<div class="mnemonic-group-heading">' +
+        h(group.heading) +
+        ' <span class="badge ' + h(group.badgeClass) + '">' + h(group.badge) + '</span>' +
+        '</div>' +
+        itemsHtml +
+        '</div>'
+      );
+    }).join("");
+    return (
+      '<div class="mnemonic-card">' +
+      '<div class="mnemonic-title"><strong>' + h(block.heading) + '</strong></div>' +
+      '<div class="mnemonic-disclaimer">' + h(block.disclaimer) + '</div>' +
+      groupsHtml +
+      '</div>'
+    );
+  }
+
+  function renderPreSoloContentBlock(block) {
+    var h = escapeHtml;
+    if (block.type === "mnemonic") return renderMnemonicBlock(block);
+    if (block.type === "resources") {
+      var linksHtml = block.links.map(function(link) {
+        return (
+          '<li><a class="pre-solo-resource-link" href="' + h(link.url) + '" target="_blank" rel="noopener noreferrer">' +
+          h(link.label) + ' ↗</a></li>'
+        );
+      }).join("");
+      var regsHtml = block.regs.map(function(reg) {
+        return '<li>' + h(reg) + '</li>';
+      }).join("");
+      return (
+        '<ul class="pre-solo-link-list">' + linksHtml + '</ul>' +
+        '<h3>Applicable Regulations &amp; Guidance</h3>' +
+        '<ul>' + regsHtml + '</ul>'
+      );
+    }
+    return renderGuidanceContentBlock(block);
+  }
+
+  function renderPreSoloView() {
+    if (!dom.preSoloView) return;
+
+    if (state.view !== "pre-solo") {
+      dom.preSoloView.hidden = true;
+      return;
+    }
+
+    dom.preSoloView.hidden = false;
+
+    if (typeof PRE_SOLO_CONTENT === "undefined") {
+      dom.preSoloView.innerHTML = "<p>Content unavailable.</p>";
+      return;
+    }
+
+    var bodyHtml = PRE_SOLO_CONTENT.map(renderPreSoloContentBlock).join("");
+
+    dom.preSoloView.innerHTML =
+      '<div class="guidance-header">' +
+      '<p class="selection-eyebrow">Student Pilot</p>' +
+      '<h2>Student Pilot Prerequisites</h2>' +
+      '<p class="selection-description">The foundational requirements that typically come before first solo flight. Scroll down for the TIM loves BaCoN ON Pizza roadmap.</p>' +
+      '</div>' +
+      '<div class="pre-solo-body">' + bodyHtml + '</div>';
   }
 
   function handleCopy(endorsementId, button) {
@@ -1383,6 +1639,11 @@
             button.getAttribute("data-category") || "all",
             button.getAttribute("data-subcategory"),
           );
+          return;
+        }
+
+        if (action === "activate-guidance") {
+          activateGuidance();
         }
       });
     }
@@ -1463,6 +1724,42 @@
           button.getAttribute("data-featured-subcategory"),
           { closeSidebar: false },
         );
+      });
+    }
+
+    if (dom.guidanceView) {
+      dom.guidanceView.addEventListener("click", (event) => {
+        const toggle = event.target.closest(".guidance-toggle");
+        if (toggle) {
+          const expanded = toggle.getAttribute("aria-expanded") === "true";
+          const bodyId = toggle.getAttribute("aria-controls");
+          const body = bodyId ? document.getElementById(bodyId) : null;
+          const caret = toggle.querySelector(".detail-toggle-caret");
+
+          toggle.setAttribute("aria-expanded", String(!expanded));
+          if (body) body.hidden = expanded;
+          if (caret) caret.textContent = expanded ? "+" : "\u2013";
+          return;
+        }
+
+        const tocLink = event.target.closest(".guidance-toc-link");
+        if (tocLink) {
+          event.preventDefault();
+          const targetId = tocLink.getAttribute("href").replace("#gs-", "");
+          const card = dom.guidanceView.querySelector("#" + CSS.escape(targetId));
+          if (card) {
+            const toggle2 = card.querySelector(".guidance-toggle");
+            const bodyId2 = toggle2 && toggle2.getAttribute("aria-controls");
+            const body2 = bodyId2 ? document.getElementById(bodyId2) : null;
+            const caret2 = toggle2 && toggle2.querySelector(".detail-toggle-caret");
+            if (toggle2 && body2 && body2.hidden) {
+              toggle2.setAttribute("aria-expanded", "true");
+              body2.hidden = false;
+              if (caret2) caret2.textContent = "\u2013";
+            }
+            card.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
       });
     }
 

@@ -23,6 +23,12 @@
       categoryId: "student-pilot",
       subcategories: [
         {
+          id: "pre-solo",
+          label: "Pre-Solo",
+          description: "Student pilot prerequisites before first solo: certificate, medical, and the TIM BaCoN ON Pizza roadmap.",
+          isInfo: true,
+        },
+        {
           id: "first-solo",
           label: "First Solo",
           description: "Initial daytime solo package for a student pilot.",

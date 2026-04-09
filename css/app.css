@@ -1537,3 +1537,376 @@ p {
     transform: none;
   }
 }
+
+/* ─── Teaching & Guidance View ─────────────────────────────────────────────── */
+
+.rail-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 8px;
+}
+
+.guidance-nav-btn {
+  border-top: none;
+}
+
+.guidance-view {
+  padding: 0 0 40px;
+}
+
+.guidance-header {
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.guidance-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--ink);
+  margin: 4px 0 6px;
+  line-height: 1.15;
+}
+
+/* Table of Contents */
+.guidance-toc {
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.guidance-toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
+.guidance-toc-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent, #3b6fd4);
+  text-decoration: none;
+  background: rgba(59, 111, 212, 0.07);
+  padding: 3px 8px;
+  border-radius: 5px;
+  transition: background 0.15s;
+}
+
+.guidance-toc-link:hover {
+  background: rgba(59, 111, 212, 0.16);
+  text-decoration: underline;
+}
+
+/* Accordion Cards */
+.guidance-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 16px;
+}
+
+.guidance-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: var(--surface, #fff);
+  overflow: hidden;
+}
+
+.guidance-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: left;
+  line-height: 1.3;
+  transition: background 0.12s;
+}
+
+.guidance-toggle:hover {
+  background: var(--hover-bg, rgba(0,0,0,0.03));
+}
+
+.guidance-toggle[aria-expanded="true"] {
+  border-bottom: 1px solid var(--border);
+  background: var(--hover-bg, rgba(0,0,0,0.025));
+}
+
+.guidance-toggle .detail-toggle-caret {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* Guidance Body Content */
+.guidance-body {
+  padding: 20px 22px 24px;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.guidance-body h3 {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 20px 0 8px;
+}
+
+.guidance-body h3:first-child {
+  margin-top: 0;
+}
+
+.guidance-body p {
+  margin: 0 0 10px;
+}
+
+.guidance-body ul,
+.guidance-body ol {
+  margin: 0 0 12px;
+  padding-left: 1.4em;
+}
+
+.guidance-body li {
+  margin-bottom: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guidance-toggle,
+  .guidance-toc-link {
+    transition: none;
+  }
+}
+
+/* ─────────────────────────────────────────
+   Pre-Solo View (Student Pilot Prerequisites)
+   ───────────────────────────────────────── */
+
+.pre-solo-view {
+  padding: 0 0 40px;
+}
+
+.pre-solo-body {
+  max-width: 720px;
+}
+
+.pre-solo-body h3 {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 22px 0 8px;
+}
+
+.pre-solo-body h3:first-child {
+  margin-top: 0;
+}
+
+.pre-solo-body p {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.pre-solo-body ul,
+.pre-solo-body ol {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 0 0 12px;
+  padding-left: 1.4em;
+}
+
+.pre-solo-body li {
+  margin-bottom: 5px;
+}
+
+/* Mnemonic card */
+.mnemonic-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  background: var(--surface);
+}
+
+.mnemonic-title {
+  padding: 14px 18px 10px;
+  font-family: var(--font-display, var(--font-body));
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  border-bottom: 1px solid var(--border);
+}
+
+.mnemonic-disclaimer {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--muted);
+  padding: 8px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--hover-bg, rgba(0,0,0,0.02));
+}
+
+.mnemonic-group {
+  padding: 12px 18px 8px;
+  border-top: 1px solid var(--border);
+}
+
+.mnemonic-group:first-of-type {
+  border-top: none;
+}
+
+.mnemonic-group-heading {
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mnemonic-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.mnemonic-item:last-child {
+  border-bottom: none;
+}
+
+.mnemonic-letter {
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  font-size: 1.1rem;
+  min-width: 2.75rem;
+  color: var(--accent);
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.mnemonic-body {
+  flex: 1;
+}
+
+.mnemonic-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.mnemonic-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18em 0.55em;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.badge--prereq {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge--first-solo {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge--additional {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge--optional {
+  background: var(--hover-bg, rgba(0,0,0,0.05));
+  color: var(--muted);
+}
+
+/* "Start here" badge inside sidebar subcategory button */
+.start-here-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1em 0.45em;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--accent);
+  color: #fff;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Resource links */
+.pre-solo-link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pre-solo-resource-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.pre-solo-resource-link:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pre-solo-view * {
+    transition: none !important;
+  }
+}
