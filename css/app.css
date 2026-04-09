@@ -1132,6 +1132,7 @@ p {
 .detail-section pre {
   margin: 0;
   font-size: 0.87rem;
+  line-height: 1.6;
 }
 
 .detail-section-wide {

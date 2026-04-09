@@ -1075,7 +1075,7 @@
         '<div class="details-grid">' +
         '<section class="detail-section">' +
         "<h4>Why This Matters</h4>" +
-        "<p>" + escapeHtml(item.explanation) + "</p>" +
+        "<p>" + escapeHtml(item.explanation).replace(/\n/g, "<br>") + "</p>" +
         "</section>" +
         '<section class="detail-section">' +
         "<h4>CFR basis</h4>" +
