@@ -33,7 +33,7 @@
         "checkride",
         "practical test prereqs"
       ],
-      "cardExplanation": "Certifies the applicant completed checkride prep training within the past 2 calendar months and is ready for the practical test."
+      "cardExplanation": "Confirms the applicant got checkride prep within the last 2 calendar months and is ready for the practical test."
     },
     {
       "id": "A.2",
@@ -58,7 +58,7 @@
         "knowledge test",
         "practical test prereqs"
       ],
-      "cardExplanation": "Documents that the CFI reviewed the knowledge areas the applicant missed on their written test."
+      "cardExplanation": "Shows the instructor reviewed the missed knowledge-test areas listed on the Airman Knowledge Test Report."
     },
     {
       "id": "A.3",
@@ -83,7 +83,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Confirms the student passed the required pre-solo knowledge quiz for the specific make and model before their first solo."
+      "cardExplanation": "Used before first solo to confirm the student passed the required pre-solo knowledge test for that make and model."
     },
     {
       "id": "A.4",
@@ -108,7 +108,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Confirms the student has completed and is proficient in all required pre-solo flight training for the specific make and model."
+      "cardExplanation": "Shows the student received the required pre-solo flight training and is proficient in that make and model."
     },
     {
       "id": "A.5",
@@ -134,7 +134,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Required before a student solos at night. Covers night procedures at the specific airport and expires 90 calendar days after training."
+      "cardExplanation": "Required before a student solos at night. Covers night procedures at that airport and expires 90 calendar days after the night training."
     },
     {
       "id": "A.6",
@@ -159,7 +159,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Authorizes a student's first solo flights in a specific make and model. Must be given by the training instructor and expires in 90 calendar days."
+      "cardExplanation": "Authorizes the student’s first solo flights in a specific make and model. Must be given by the instructor who trained the student and expires in 90 calendar days."
     },
     {
       "id": "A.7",
@@ -184,7 +184,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Renews solo flying authority for another 90 calendar days after the initial endorsement expires."
+      "cardExplanation": "Renews solo flight authority for another 90 calendar days after the first solo period ends."
     },
     {
       "id": "A.8",
@@ -211,7 +211,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Authorizes solo takeoffs and landings at a specific airport within 25 NM. Expires in 90 calendar days."
+      "cardExplanation": "Allows solo takeoffs and landings at another airport within 25 NM. Expires in 90 calendar days."
     },
     {
       "id": "A.9",
@@ -238,7 +238,7 @@
         "solo xc",
         "student pilot"
       ],
-      "cardExplanation": "Grants the student general solo cross-country authority for a specific category, make, and model."
+      "cardExplanation": "Gives the student the initial solo cross-country endorsement package for that category, make, and model."
     },
     {
       "id": "A.10",
@@ -267,7 +267,7 @@
         "solo xc",
         "student pilot"
       ],
-      "cardExplanation": "Documents the CFI's review of a student's planning for a specific solo cross-country flight. Required before every solo XC flight."
+      "cardExplanation": "Shows the instructor reviewed and approved planning for a specific solo cross-country flight. Required before each solo XC flight."
     },
     {
       "id": "A.11",
@@ -294,7 +294,7 @@
         "solo xc",
         "student pilot"
       ],
-      "cardExplanation": "Authorizes repeated solo cross-country flights on a specific route no more than 50 NM from the departure airport."
+      "cardExplanation": "Approves repeated solo cross-country flights on a specific route within 50 NM of the departure point."
     },
     {
       "id": "A.12",
@@ -321,7 +321,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Authorizes a student to fly solo inside Class B airspace after required training. Expires in 90 calendar days."
+      "cardExplanation": "Allows a student to solo in Class B airspace after required training and proficiency. Expires in 90 calendar days."
     },
     {
       "id": "A.13",
@@ -348,7 +348,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Authorizes a student to fly solo to, from, or at a Class B airport after required training. Expires in 90 calendar days."
+      "cardExplanation": "Allows a student to solo to, from, or at a Class B airport. Expires in 90 calendar days."
     },
     {
       "id": "A.14",
@@ -401,7 +401,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Authorizes a sport or recreational student to fly solo in Class B, C, or D airspace. Expires in 90 calendar days."
+      "cardExplanation": "Allows a sport or recreational student to solo in Class B, C, or D airspace. Expires in 90 calendar days."
     },
     {
       "id": "A.16",
@@ -428,7 +428,7 @@
         "solo",
         "student pilot"
       ],
-      "cardExplanation": "Authorizes a sport or recreational student to fly solo to, from, or at a towered airport or airport within Class B, C, or D airspace. Expires in 90 calendar days."
+      "cardExplanation": "Allows a sport or recreational student to solo to, from, or at a towered airport or an airport in Class B, C, or D airspace. Expires in 90 calendar days."
     },
     {
       "id": "A.17",
@@ -453,7 +453,7 @@
         "knowledge test",
         "sport pilot"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the aeronautical knowledge test."
+      "cardExplanation": "Shows the required ground training or review is complete and the applicant is ready for the knowledge test."
     },
     {
       "id": "A.18",
@@ -478,7 +478,7 @@
         "checkride",
         "sport pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and proficiency to take a flight proficiency check for a different category or class of aircraft."
+      "cardExplanation": "Shows the applicant has the required training and proficiency to take a flight proficiency check for a different category or class."
     },
     {
       "id": "A.19",
@@ -503,7 +503,7 @@
         "checkride",
         "sport pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and proficiency to pass a flight proficiency check for a different category or class of aircraft."
+      "cardExplanation": "Shows the applicant completed the required training and proficiency for passing the flight proficiency check for a different category or class."
     },
     {
       "id": "A.20",
@@ -528,7 +528,7 @@
         "checkride",
         "sport pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and proficiency to take the sport pilot practical test."
+      "cardExplanation": "Shows the applicant has the required training and proficiency to take the sport pilot practical test."
     },
     {
       "id": "A.21",
@@ -553,7 +553,7 @@
         "checkride",
         "sport pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and proficiency to pass the sport pilot practical test."
+      "cardExplanation": "Shows the applicant completed the required training and proficiency for passing the sport pilot practical test."
     },
     {
       "id": "A.22",
@@ -578,7 +578,7 @@
         "checkride",
         "sport pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and proficiency to pass the sport pilot practical test with a simplified flight controls limitation."
+      "cardExplanation": "Shows the applicant completed the required training and proficiency for passing a sport pilot practical test with a simplified flight controls limitation."
     },
     {
       "id": "A.23",
@@ -603,7 +603,7 @@
       "tags": [
         "sport pilot"
       ],
-      "cardExplanation": "Authorizes a sport pilot to operate in Class B, C, or D airspace or at a towered airport after completing the required training."
+      "cardExplanation": "Documents the required training, qualification, or authorization for those airspace or airport privileges."
     },
     {
       "id": "A.24",
@@ -627,7 +627,7 @@
       "tags": [
         "sport pilot"
       ],
-      "cardExplanation": "Authorizes a sport pilot to act as PIC in an aircraft with a VH at or below 87 KCAS after completing the required training."
+      "cardExplanation": "Documents the required training, qualification, or authorization for aircraft with VH of 87 KCAS or less."
     },
     {
       "id": "A.25",
@@ -651,7 +651,7 @@
       "tags": [
         "sport pilot"
       ],
-      "cardExplanation": "Authorizes a sport pilot to act as PIC in an aircraft with a VH above 87 KCAS after completing the required training."
+      "cardExplanation": "Documents the required training, qualification, or authorization for aircraft with VH above 87 KCAS."
     },
     {
       "id": "A.26",
@@ -675,7 +675,7 @@
       "tags": [
         "sport pilot"
       ],
-      "cardExplanation": "Documents completion of the required flight training at night for a sport pilot."
+      "cardExplanation": "Documents the required training, qualification, or authorization for night flight training."
     },
     {
       "id": "A.27",
@@ -699,7 +699,7 @@
       "tags": [
         "sport pilot"
       ],
-      "cardExplanation": "Authorizes a sport pilot to act as PIC in an aircraft with retractable landing gear after completing the required training."
+      "cardExplanation": "Documents the required training and proficiency to act as PIC in an aircraft with retractable landing gear."
     },
     {
       "id": "A.28",
@@ -723,7 +723,7 @@
       "tags": [
         "sport pilot"
       ],
-      "cardExplanation": "Authorizes a sport pilot to act as PIC in an airplane with a manually controllable pitch propeller after completing the required training."
+      "cardExplanation": "Documents the required training and proficiency to act as PIC in an airplane with a manual controllable pitch propeller."
     },
     {
       "id": "A.29",
@@ -748,7 +748,7 @@
         "knowledge test",
         "recreational pilot"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the aeronautical knowledge test for a recreational pilot certificate."
+      "cardExplanation": "Shows the required ground training or review is complete and the applicant is ready for the knowledge test."
     },
     {
       "id": "A.30",
@@ -773,7 +773,7 @@
         "checkride",
         "recreational pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and proficiency to take the recreational pilot flight proficiency test or practical test."
+      "cardExplanation": "Shows the applicant has the required training and proficiency for the flight proficiency or practical test."
     },
     {
       "id": "A.31",
@@ -797,7 +797,7 @@
       "tags": [
         "recreational pilot"
       ],
-      "cardExplanation": "Authorizes a recreational pilot to fly within 50 NM of the airport where they received their training."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a recreational pilot to operate within 50 NM of the training airport."
     },
     {
       "id": "A.32",
@@ -821,7 +821,7 @@
       "tags": [
         "recreational pilot"
       ],
-      "cardExplanation": "Authorizes a recreational pilot to act as PIC on flights that go beyond 50 NM from the departure airport."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a recreational pilot to act as PIC beyond 50 NM from departure."
     },
     {
       "id": "A.33",
@@ -845,7 +845,7 @@
       "tags": [
         "recreational pilot"
       ],
-      "cardExplanation": "Authorizes a recreational pilot with fewer than 400 hours and no logged PIC time in the past 180 days to resume acting as PIC after completing the required training."
+      "cardExplanation": "Documents the required training, qualification, or authorization for this recreational pilot situation."
     },
     {
       "id": "A.34",
@@ -895,7 +895,7 @@
       "tags": [
         "recreational pilot"
       ],
-      "cardExplanation": "Authorizes a recreational pilot to fly in Class B, C, or D airspace or to, from, or at a towered airport after completing the required training."
+      "cardExplanation": "Documents the required training, qualification, or authorization for those airspace or airport privileges."
     },
     {
       "id": "A.36",
@@ -920,7 +920,7 @@
         "knowledge test",
         "private pilot"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the private pilot aeronautical knowledge test."
+      "cardExplanation": "Shows the applicant completed the required ground training or review and is ready for the knowledge test."
     },
     {
       "id": "A.37",
@@ -945,7 +945,7 @@
         "checkride",
         "private pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and is proficient to take the private pilot flight proficiency test or practical test."
+      "cardExplanation": "Shows the applicant completed the required training and is proficient for the flight proficiency or practical test."
     },
     {
       "id": "A.38",
@@ -970,7 +970,7 @@
         "commercial pilot",
         "knowledge test"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the instrument rating aeronautical knowledge test."
+      "cardExplanation": "Shows the applicant completed the required ground training or review and is ready for the knowledge test."
     },
     {
       "id": "A.39",
@@ -995,7 +995,7 @@
         "checkride",
         "commercial pilot"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and is proficient to take the instrument rating flight proficiency test or practical test."
+      "cardExplanation": "Shows the applicant completed the required training and is proficient for the flight proficiency or practical test."
     },
     {
       "id": "A.40",
@@ -1021,7 +1021,7 @@
       "tags": [
         "atp"
       ],
-      "cardExplanation": "Documents the training and qualification required for a restricted privileges ATP certificate with an Airplane Multiengine Land rating."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a restricted-privileges ATP AMEL certificate."
     },
     {
       "id": "A.41",
@@ -1046,7 +1046,7 @@
       "tags": [
         "atp"
       ],
-      "cardExplanation": "Documents successful completion of the ATP Certification Training Program required before taking the ATP knowledge test."
+      "cardExplanation": "Documents completion of the required ATP Certification Training Program."
     },
     {
       "id": "A.42",
@@ -1071,7 +1071,7 @@
         "instrument rating",
         "knowledge test"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the ATP aeronautical knowledge test."
+      "cardExplanation": "Shows the applicant completed the required ground training or review and is ready for the knowledge test."
     },
     {
       "id": "A.43",
@@ -1096,7 +1096,7 @@
         "checkride",
         "instrument rating"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and is proficient to take the ATP flight proficiency test or practical test."
+      "cardExplanation": "Shows the applicant completed the required training and is proficient for the flight proficiency or practical test."
     },
     {
       "id": "A.44",
@@ -1121,7 +1121,7 @@
         "checkride",
         "instrument rating"
       ],
-      "cardExplanation": "Combines the instrument practical test recommendation with documentation of knowledge test deficiency review. Valid for 2 calendar months."
+      "cardExplanation": "Combines the instrument practical-test recommendation with review of knowledge-test deficiencies. Valid for 2 calendar months."
     },
     {
       "id": "A.45",
@@ -1146,7 +1146,7 @@
         "flight instructor",
         "knowledge test"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the Fundamentals of Instructing knowledge test."
+      "cardExplanation": "Shows the applicant completed the required ground training or review and is ready for the FOI knowledge test."
     },
     {
       "id": "A.46",
@@ -1171,7 +1171,7 @@
         "flight instructor",
         "knowledge test"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the flight instructor aeronautical knowledge test."
+      "cardExplanation": "Shows the applicant completed the required ground training or review and is ready for the flight instructor knowledge test."
     },
     {
       "id": "A.47",
@@ -1196,7 +1196,7 @@
         "checkride",
         "flight instructor"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and is proficient to take the flight instructor ground and flight practical test."
+      "cardExplanation": "Shows the applicant completed the required training and is proficient for the flight instructor practical test."
     },
     {
       "id": "A.48",
@@ -1221,7 +1221,7 @@
         "checkride",
         "flight instructor"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and is proficient to take the flight instructor practical test for an instrument category or class rating."
+      "cardExplanation": "Shows the applicant completed the required training and is proficient for the CFII practical test in that category/class."
     },
     {
       "id": "A.49",
@@ -1245,7 +1245,7 @@
       "tags": [
         "flight instructor"
       ],
-      "cardExplanation": "Documents that a flight instructor applicant completed the required spin awareness and recovery training."
+      "cardExplanation": "Documents the required spin training for the applicable flight instructor applicant."
     },
     {
       "id": "A.50",
@@ -1270,7 +1270,7 @@
       "tags": [
         "flight instructor"
       ],
-      "cardExplanation": "Documents that a helicopter flight instructor applicant completed the required touchdown autorotation training."
+      "cardExplanation": "Documents the required training, qualification, or authorization for helicopter touchdown autorotation."
     },
     {
       "id": "A.51",
@@ -1295,7 +1295,7 @@
         "knowledge test",
         "sport pilot instructor"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the Fundamentals of Instructing knowledge test for a sport pilot flight instructor certificate."
+      "cardExplanation": "Shows the applicant completed the required ground training or review and is ready for the FOI knowledge test."
     },
     {
       "id": "A.52",
@@ -1320,7 +1320,7 @@
         "knowledge test",
         "sport pilot instructor"
       ],
-      "cardExplanation": "Confirms the applicant completed the required ground training and is ready to take the sport pilot flight instructor aeronautical knowledge test."
+      "cardExplanation": "Shows the applicant completed the required ground training or review and is ready for the sport pilot flight instructor knowledge test."
     },
     {
       "id": "A.53",
@@ -1345,7 +1345,7 @@
         "checkride",
         "sport pilot instructor"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and proficiency to take a flight proficiency check for an additional category or class as a sport pilot flight instructor."
+      "cardExplanation": "Shows the applicant completed the required training and is proficient for the additional category/class flight proficiency check."
     },
     {
       "id": "A.54",
@@ -1369,7 +1369,7 @@
       "tags": [
         "sport pilot instructor"
       ],
-      "cardExplanation": "Documents successful completion of a flight proficiency check for an additional category or class privilege as a sport pilot flight instructor."
+      "cardExplanation": "Shows the applicant completed the required training and proficiency for the added category or class privilege."
     },
     {
       "id": "A.55",
@@ -1394,7 +1394,7 @@
         "checkride",
         "sport pilot instructor"
       ],
-      "cardExplanation": "Confirms the applicant has the required training and is proficient to take the sport pilot flight instructor practical test."
+      "cardExplanation": "Shows the applicant completed the required training and is proficient for the practical test."
     },
     {
       "id": "A.56",
@@ -1419,7 +1419,7 @@
         "checkride",
         "sport pilot instructor"
       ],
-      "cardExplanation": "Documents successful completion of the sport pilot flight instructor practical test."
+      "cardExplanation": "Shows the applicant completed the required training and proficiency for the practical test."
     },
     {
       "id": "A.57",
@@ -1443,7 +1443,7 @@
       "tags": [
         "sport pilot instructor"
       ],
-      "cardExplanation": "Authorizes a sport pilot flight instructor to provide training in flight by reference to instruments after completing the required training."
+      "cardExplanation": "Documents the required training, qualification, or authorization to teach sport pilots instrument-reference flight."
     },
     {
       "id": "A.58",
@@ -1467,7 +1467,7 @@
       "tags": [
         "sport pilot instructor"
       ],
-      "cardExplanation": "Documents that a sport pilot flight instructor applicant completed the required spin awareness and recovery training."
+      "cardExplanation": "Documents the required spin training for the applicable flight instructor applicant."
     },
     {
       "id": "A.59",
@@ -1491,7 +1491,7 @@
       "tags": [
         "additional recurrent"
       ],
-      "cardExplanation": "Documents that a ground instructor who no longer meets the recent experience requirements has completed the refresher training needed to resume instructing."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a ground instructor who does not meet recent experience requirements."
     },
     {
       "id": "A.60",
@@ -1516,7 +1516,7 @@
         "robinson",
         "robinson sfar73"
       ],
-      "cardExplanation": "Documents completion of the required ground training for operating an R-22 or R-44 helicopter."
+      "cardExplanation": "Documents the required ground training for the R-22 or R-44."
     },
     {
       "id": "A.61",
@@ -1542,7 +1542,7 @@
         "robinson sfar73",
         "solo"
       ],
-      "cardExplanation": "Authorizes a student to fly solo in an R-22 helicopter after completing the required training."
+      "cardExplanation": "Allows solo flight in an R-22 after the required training and proficiency."
     },
     {
       "id": "A.62",
@@ -1567,7 +1567,7 @@
         "robinson",
         "robinson sfar73"
       ],
-      "cardExplanation": "Authorizes a pilot to act as PIC in an R-22 helicopter after completing the required training."
+      "cardExplanation": "Documents the required training and proficiency to act as PIC in an R-22."
     },
     {
       "id": "A.63",
@@ -1592,7 +1592,7 @@
         "robinson",
         "robinson sfar73"
       ],
-      "cardExplanation": "Authorizes a flight instructor to provide training in an R-22 helicopter after completing the required training."
+      "cardExplanation": "Documents the required training and qualification to instruct in an R-22."
     },
     {
       "id": "A.64",
@@ -1617,7 +1617,7 @@
         "robinson",
         "robinson sfar73"
       ],
-      "cardExplanation": "Documents completion of a flight review conducted in an R-22 helicopter."
+      "cardExplanation": "Documents completion of a flight review in an R-22."
     },
     {
       "id": "A.65",
@@ -1643,7 +1643,7 @@
         "robinson sfar73",
         "solo"
       ],
-      "cardExplanation": "Authorizes a student to fly solo in an R-44 helicopter after completing the required training."
+      "cardExplanation": "Allows solo flight in an R-44 after the required training and proficiency."
     },
     {
       "id": "A.66",
@@ -1668,7 +1668,7 @@
         "robinson",
         "robinson sfar73"
       ],
-      "cardExplanation": "Authorizes a pilot to act as PIC in an R-44 helicopter after completing the required training."
+      "cardExplanation": "Documents the required training and proficiency to act as PIC in an R-44."
     },
     {
       "id": "A.67",
@@ -1693,7 +1693,7 @@
         "robinson",
         "robinson sfar73"
       ],
-      "cardExplanation": "Authorizes a flight instructor to provide training in an R-44 helicopter after completing the required training."
+      "cardExplanation": "Documents the required training and qualification to instruct in an R-44."
     },
     {
       "id": "A.68",
@@ -1718,7 +1718,7 @@
         "robinson",
         "robinson sfar73"
       ],
-      "cardExplanation": "Documents completion of a flight review conducted in an R-44 helicopter."
+      "cardExplanation": "Documents completion of a flight review in an R-44."
     },
     {
       "id": "A.69",
@@ -1746,7 +1746,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents that a pilot satisfactorily completed a flight review and can safely exercise their certificate privileges."
+      "cardExplanation": "Shows a flight review is complete and the instructor found the pilot able to safely use certificate privileges."
     },
     {
       "id": "A.70",
@@ -1772,7 +1772,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents completion of a qualifying WINGS phase, which counts as a flight review."
+      "cardExplanation": "Documents completion of a qualifying WINGS phase that can substitute for a flight review."
     },
     {
       "id": "A.71",
@@ -1799,7 +1799,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents that a pilot satisfactorily completed an instrument proficiency check and may resume flying under IFR."
+      "cardExplanation": "Shows an IPC is complete and the CFII found the pilot proficient to resume instrument privileges."
     },
     {
       "id": "A.72",
@@ -1825,7 +1825,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Required before acting as PIC in a complex airplane. Documents the required ground and flight training."
+      "cardExplanation": "Required before acting as PIC in a complex airplane."
     },
     {
       "id": "A.73",
@@ -1851,7 +1851,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Required before acting as PIC in a high-performance airplane. Documents the required ground and flight training."
+      "cardExplanation": "Required before acting as PIC in a high-performance airplane."
     },
     {
       "id": "A.74",
@@ -1878,7 +1878,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Required before acting as PIC in a pressurized aircraft capable of high-altitude operations. Documents the required ground and flight training."
+      "cardExplanation": "Required before acting as PIC in a pressurized aircraft capable of high-altitude operations."
     },
     {
       "id": "A.75",
@@ -1904,7 +1904,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Required before acting as PIC in a tailwheel airplane. Documents the required ground and flight training."
+      "cardExplanation": "Required before acting as PIC in a tailwheel airplane."
     },
     {
       "id": "A.76",
@@ -1932,7 +1932,7 @@
         "recurrent",
         "solo"
       ],
-      "cardExplanation": "Authorizes a pilot to conduct solo operations in an aircraft category or class for which they do not yet hold a rating."
+      "cardExplanation": "Allows solo operation in an aircraft when the pilot does not yet hold the proper category or class rating."
     },
     {
       "id": "A.77",
@@ -1960,7 +1960,7 @@
         "checkride",
         "recurrent"
       ],
-      "cardExplanation": "Required before retaking a failed knowledge or practical test. Documents that the applicant received additional training in the deficient areas."
+      "cardExplanation": "Required before retesting after a failed knowledge or practical test. Shows added training in the deficient areas."
     },
     {
       "id": "A.78",
@@ -1994,7 +1994,7 @@
         "recurrent",
         "transition"
       ],
-      "cardExplanation": "Core endorsement for adding a new category or class rating below ATP level, typically paired with A.1 for the practical test."
+      "cardExplanation": "Core endorsement for an added category or class rating other than ATP. Usually paired with the practical test recommendation."
     },
     {
       "id": "A.79",
@@ -2019,7 +2019,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents the required training to add a type rating when the pilot already holds the appropriate category and class rating, below ATP level."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a type rating only at a non-ATP level."
     },
     {
       "id": "A.80",
@@ -2044,7 +2044,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents the required training to add a type rating and a new category or class rating at the same time, below ATP level."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a type rating taken with an added category or class rating at a non-ATP level."
     },
     {
       "id": "A.81",
@@ -2069,7 +2069,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents the required training to add a type rating when the pilot already holds the appropriate category and class rating at the ATP level."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a type rating only at the ATP level."
     },
     {
       "id": "A.82",
@@ -2094,7 +2094,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents the required training to add a type rating and a new category or class rating at the same time at the ATP level."
+      "cardExplanation": "Documents the required training, qualification, or authorization for a type rating taken with an added category or class rating at the ATP level."
     },
     {
       "id": "A.83",
@@ -2119,7 +2119,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents the required training in the specific launch procedures used for the glider being flown."
+      "cardExplanation": "Documents the required training, qualification, or authorization for glider launch procedures."
     },
     {
       "id": "A.84",
@@ -2146,7 +2146,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents that a pilot has the towing experience required to tow a glider or unpowered ultralight. Can be issued by a qualified non-instructor pilot."
+      "cardExplanation": "Documents the towing experience required to tow a glider or unpowered ultralight vehicle. May be issued by a qualified non-instructor pilot."
     },
     {
       "id": "A.85",
@@ -2172,7 +2172,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents completion of the required ground and flight training to tow gliders or unpowered ultralight vehicles."
+      "cardExplanation": "Documents the required ground and flight training for towing a glider or unpowered ultralight vehicle."
     },
     {
       "id": "A.86",
@@ -2198,7 +2198,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Confirms the applicant completed a home-study curriculum review and is prepared for the applicable knowledge test."
+      "cardExplanation": "Shows the applicant completed the required review of a home-study curriculum."
     },
     {
       "id": "A.87",
@@ -2223,7 +2223,7 @@
         "additional recurrent",
         "recurrent"
       ],
-      "cardExplanation": "Documents aeronautical experience credit granted for prior ultralight vehicle flying time."
+      "cardExplanation": "Documents the aeronautical experience credit allowed for ultralight vehicle experience."
     },
     {
       "id": "A.88",
@@ -2248,7 +2248,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents completion of the required ground training to act as PIC using night vision goggles."
+      "cardExplanation": "Documents the required ground training to act as PIC using NVGs."
     },
     {
       "id": "A.89",
@@ -2273,7 +2273,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents completion of the required flight training and confirms proficiency to act as PIC using night vision goggles."
+      "cardExplanation": "Documents the required flight training and proficiency to act as PIC using NVGs."
     },
     {
       "id": "A.90",
@@ -2298,7 +2298,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents the training and authorization required for a CFI to provide night vision goggle training to others."
+      "cardExplanation": "Documents the required qualification to provide NVG operations training."
     },
     {
       "id": "A.91",
@@ -2323,7 +2323,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents completion of the required ground training for using an enhanced flight vision system (EFVS)."
+      "cardExplanation": "Documents the required EFVS ground training."
     },
     {
       "id": "A.92",
@@ -2348,7 +2348,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents completion of the required flight training for using an EFVS."
+      "cardExplanation": "Documents the required EFVS flight training."
     },
     {
       "id": "A.93",
@@ -2373,7 +2373,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents completion of both the required ground and flight training for using an EFVS."
+      "cardExplanation": "Documents the required EFVS ground and flight training."
     },
     {
       "id": "A.94",
@@ -2398,7 +2398,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents completion of supplementary EFVS training required for a specific operation or aircraft."
+      "cardExplanation": "Documents the required EFVS supplementary training."
     },
     {
       "id": "A.95",
@@ -2423,7 +2423,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Authorizes a pilot to act as PIC in an aircraft with a simplified flight controls designation after completing the required training."
+      "cardExplanation": "Documents the required training and qualification to act as PIC in an aircraft with simplified flight controls."
     },
     {
       "id": "A.96",
@@ -2448,7 +2448,7 @@
       "tags": [
         "specialty operations"
       ],
-      "cardExplanation": "Documents completion of the initial cadre training required to instruct or operate aircraft with simplified flight controls."
+      "cardExplanation": "Documents the required training and qualification for initial cadre training in an aircraft with simplified flight controls."
     }
   ];
 })();
