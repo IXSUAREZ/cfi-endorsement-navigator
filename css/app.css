@@ -120,6 +120,10 @@ p {
   color: var(--text-strong);
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1698,35 +1702,19 @@ p {
 }
 
 /* ─────────────────────────────────────────
-   Pre-Solo View (Student Pilot Prerequisites)
+   Pre-Solo Subcategory Content
    ───────────────────────────────────────── */
 
-.pre-solo-view {
-  padding: 0 0 40px;
-}
-
 .pre-solo-body {
-  max-width: 720px;
-}
-
-.pre-solo-body h3 {
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  margin: 22px 0 8px;
-}
-
-.pre-solo-body h3:first-child {
-  margin-top: 0;
+  width: min(100%, 720px);
+  display: grid;
+  gap: 24px;
 }
 
 .pre-solo-body p {
   font-size: 0.875rem;
   line-height: 1.65;
-  color: var(--ink);
+  color: var(--text);
   margin: 0 0 10px;
 }
 
@@ -1734,135 +1722,13 @@ p {
 .pre-solo-body ol {
   font-size: 0.875rem;
   line-height: 1.65;
-  color: var(--ink);
+  color: var(--text);
   margin: 0 0 12px;
   padding-left: 1.4em;
 }
 
 .pre-solo-body li {
   margin-bottom: 5px;
-}
-
-/* Mnemonic card */
-.mnemonic-card {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 1.5rem 0;
-  background: var(--surface);
-}
-
-.mnemonic-title {
-  padding: 14px 18px 10px;
-  font-family: var(--font-display, var(--font-body));
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--ink);
-  border-bottom: 1px solid var(--border);
-}
-
-.mnemonic-disclaimer {
-  font-size: 0.78rem;
-  font-style: italic;
-  color: var(--muted);
-  padding: 8px 18px;
-  border-bottom: 1px solid var(--border);
-  background: var(--hover-bg, rgba(0,0,0,0.02));
-}
-
-.mnemonic-group {
-  padding: 12px 18px 8px;
-  border-top: 1px solid var(--border);
-}
-
-.mnemonic-group:first-of-type {
-  border-top: none;
-}
-
-.mnemonic-group-heading {
-  font-weight: 700;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.mnemonic-item {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.mnemonic-item:last-child {
-  border-bottom: none;
-}
-
-.mnemonic-letter {
-  font-family: var(--font-mono, monospace);
-  font-weight: 700;
-  font-size: 1.1rem;
-  min-width: 2.75rem;
-  color: var(--accent);
-  line-height: 1.4;
-  flex-shrink: 0;
-}
-
-.mnemonic-body {
-  flex: 1;
-}
-
-.mnemonic-label {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--ink);
-  line-height: 1.4;
-}
-
-.mnemonic-desc {
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-top: 3px;
-  line-height: 1.5;
-}
-
-/* Badges */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.18em 0.55em;
-  border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
-  line-height: 1.4;
-}
-
-.badge--prereq {
-  background: #dbeafe;
-  color: #1e40af;
-}
-
-.badge--first-solo {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.badge--additional {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.badge--optional {
-  background: var(--hover-bg, rgba(0,0,0,0.05));
-  color: var(--muted);
 }
 
 /* "Start here" badge inside sidebar subcategory button */
@@ -1906,7 +1772,102 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pre-solo-view * {
+  .pre-solo-body * {
     transition: none !important;
   }
+}
+
+.pre-solo-card-list {
+  gap: 16px;
+}
+
+.endorsement-card--prerequisite .endorsement-id {
+  font-size: 1.2rem;
+}
+
+.chip-prereq {
+  border-color: rgba(31, 119, 199, 0.16);
+  background: rgba(231, 245, 255, 0.92);
+  color: #155184;
+}
+
+/* ── Accordion Sections ── */
+.prereq-accordions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prereq-accordion {
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface-raised);
+}
+
+.prereq-accordion[open] {
+  border-color: var(--line-strong);
+}
+
+.prereq-accordion-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  gap: 12px;
+}
+
+.prereq-accordion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.prereq-accordion-summary::after {
+  content: "+";
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.prereq-accordion[open] .prereq-accordion-summary::after {
+  content: "\2212";
+}
+
+.prereq-accordion-body {
+  padding: 0 18px 16px;
+  border-top: 1px solid var(--line);
+}
+
+.prereq-accordion-body ul,
+.prereq-accordion-body ol {
+  padding-left: 1.4em;
+  margin: 8px 0;
+}
+
+.prereq-accordion-body li {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.prereq-accordion-body p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 8px 0;
+}
+
+.prereq-accordion-h4 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 14px 0 4px;
 }

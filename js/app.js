@@ -253,7 +253,6 @@
     sidebarBackdrop: document.getElementById("sidebarBackdrop"),
     railCloseBtn: document.getElementById("railCloseBtn"),
     guidanceView: document.getElementById("guidanceView"),
-    preSoloView: document.getElementById("preSoloView"),
     statusRow: document.querySelector(".status-row"),
   };
 
@@ -448,7 +447,41 @@
     return entry.subcategories.find((item) => item.id === state.subcategory) || null;
   }
 
+  function getSubcategoryContentRenderer(subcategory) {
+    return subcategory && typeof subcategory.contentRenderer === "string"
+      ? subcategory.contentRenderer
+      : null;
+  }
+
+  function getPreSoloContent() {
+    return window.PRE_SOLO_CONTENT || null;
+  }
+
+  function getPreSoloPrerequisiteCount() {
+    const content = getPreSoloContent();
+    return content && Array.isArray(content.prerequisites) ? content.prerequisites.length : 0;
+  }
+
+  function getItemNoun(subcategory) {
+    return getSubcategoryContentRenderer(subcategory) === "pre-solo"
+      ? "prerequisite"
+      : "endorsement";
+  }
+
+  function formatItemCount(count, subcategory) {
+    const noun = getItemNoun(subcategory);
+    return String(count) + " " + noun + (count === 1 ? "" : "s");
+  }
+
   function getBundleCount(subcategory) {
+    if (!subcategory) {
+      return 0;
+    }
+
+    if (getSubcategoryContentRenderer(subcategory) === "pre-solo") {
+      return getPreSoloPrerequisiteCount();
+    }
+
     const ids = new Set(Array.isArray(subcategory.primaryIds) ? subcategory.primaryIds : []);
     if (Array.isArray(subcategory.supplementalIds)) {
       subcategory.supplementalIds.forEach((id) => ids.add(id));
@@ -462,16 +495,46 @@
     }
   }
 
-  function scrollToSelectionSummary() {
-    const target = dom.selectionSummary;
+  function getStickyScrollOffset() {
+    const topbar = document.querySelector(".topbar-sticky");
+    const topbarHeight = topbar ? topbar.getBoundingClientRect().height : 0;
+    return Math.ceil(topbarHeight + 20);
+  }
+
+  function scrollToTarget(target) {
     if (!target) {
       return;
     }
 
-    const topbar = document.querySelector(".topbar");
-    const topOffset = topbar ? topbar.offsetHeight + 18 : 18;
-    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - topOffset);
+    const top = Math.max(
+      0,
+      target.getBoundingClientRect().top + window.scrollY - getStickyScrollOffset(),
+    );
     window.scrollTo({ top, behavior: "smooth" });
+  }
+
+  function queueScrollToTarget(target) {
+    if (!target) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        scrollToTarget(target);
+      });
+    });
+  }
+
+  function scrollToPageTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function queueScrollToPageTop() {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        scrollToPageTop();
+      });
+    });
   }
 
   function activateAllEndorsements(options = {}) {
@@ -495,8 +558,8 @@
     if (options.scroll !== false) {
       window.requestAnimationFrame(() => {
         focusSelectionSummary();
-        scrollToSelectionSummary();
       });
+      queueScrollToPageTop();
     }
   }
 
@@ -526,22 +589,13 @@
     if (options.scroll !== false) {
       window.requestAnimationFrame(() => {
         focusSelectionSummary();
-        scrollToSelectionSummary();
       });
+      queueScrollToPageTop();
     }
   }
 
   function activateSubcategory(categoryId, subcategoryId, options = {}) {
     if (!categoryId || !subcategoryId) {
-      return;
-    }
-
-    // Detect informational subcategories (isInfo: true) and route to their view
-    var catEntry = getCategoryEntry(categoryId);
-    var subEntry = catEntry && catEntry.subcategories && catEntry.subcategories.find(function(s) { return s.id === subcategoryId; });
-    if (subEntry && subEntry.isInfo) {
-      state.openCategory = categoryId;
-      activatePreSolo(options);
       return;
     }
 
@@ -565,8 +619,8 @@
     if (options.scroll !== false) {
       window.requestAnimationFrame(() => {
         focusSelectionSummary();
-        scrollToSelectionSummary();
       });
+      queueScrollToPageTop();
     }
   }
 
@@ -588,34 +642,7 @@
     refresh();
 
     if (options.scroll !== false) {
-      window.requestAnimationFrame(() => {
-        if (dom.guidanceView) {
-          dom.guidanceView.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
-    }
-  }
-
-  function activatePreSolo(options = {}) {
-    if (!options.preserveQuery) {
-      clearSearch();
-    }
-    state.view = "pre-solo";
-    state.category = "student-pilot";
-    state.subcategory = "pre-solo";
-    state.expandedId = null;
-    state.openCategory = "student-pilot";
-    if (options.closeSidebar !== false) {
-      closeSidebar({ returnFocus: false });
-    }
-    document.title = "Student Pilot Prerequisites \u2013 Simply Endorsed";
-    refresh();
-    if (options.scroll !== false) {
-      window.requestAnimationFrame(() => {
-        if (dom.preSoloView) {
-          dom.preSoloView.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
+      queueScrollToPageTop();
     }
   }
 
@@ -770,7 +797,9 @@
         }
         seenSubcategories.add(subcategory.id);
 
-        if (!Array.isArray(subcategory.primaryIds) || !subcategory.primaryIds.length) {
+        if (!Array.isArray(subcategory.primaryIds)) {
+          errors.push("Subcategory " + subcategory.id + " must define primaryIds as an array.");
+        } else if (!subcategory.primaryIds.length && !getSubcategoryContentRenderer(subcategory)) {
           errors.push("Subcategory " + subcategory.id + " must include at least one primary id.");
         } else {
           subcategory.primaryIds.forEach((id) => {
@@ -873,8 +902,7 @@
           "</button>" +
           subcategories.map((subcategory) => {
             const isPreSoloSub = subcategory.id === "pre-solo";
-            const isSubActive = isActive && state.subcategory === subcategory.id &&
-              (!isPreSoloSub || state.view === "pre-solo");
+            const isSubActive = isActive && state.subcategory === subcategory.id;
             const startHereBadge = isPreSoloSub
               ? '<span class="start-here-badge" aria-hidden="true">Start here</span>'
               : "";
@@ -1001,12 +1029,13 @@
       return;
     }
 
-    const scopedCount = getScopedEndorsements().length;
     const subcategory = getSelectedSubcategory();
+    const renderer = getSubcategoryContentRenderer(subcategory);
+    const scopedCount = subcategory ? getBundleCount(subcategory) : getScopedEndorsements().length;
     const chips = [
       '<span class="selection-chip selection-chip-category">' +
-      escapeHtml(String(scopedCount)) +
-      " endorsements in scope</span>",
+      escapeHtml(formatItemCount(scopedCount, subcategory)) +
+      " in scope</span>",
     ];
 
     if (state.category === "all") {
@@ -1017,15 +1046,15 @@
       );
     }
 
-    if (state.query) {
+    if (state.query && renderer !== "pre-solo") {
       chips.push('<span class="selection-chip selection-chip-accent">Search: "' + escapeHtml(state.query) + '"</span>');
     }
 
     if (subcategory) {
       chips.push(
         '<span class="selection-chip selection-chip-category">' +
-        escapeHtml(String(getBundleCount(subcategory))) +
-        " endorsements in this path</span>",
+        escapeHtml(formatItemCount(getBundleCount(subcategory), subcategory)) +
+        " in this path</span>",
       );
     }
 
@@ -1039,6 +1068,7 @@
   function renderSelectionSummary() {
     const category = CATEGORY_MAP.get(state.category) || CATEGORY_MAP.get("all");
     const subcategory = getSelectedSubcategory();
+    const renderer = getSubcategoryContentRenderer(subcategory);
     const themeCategoryId = category && category.id ? category.id : "all";
 
     applyCategoryTheme(dom.selectionSummary, themeCategoryId);
@@ -1053,9 +1083,16 @@
     }
     if (dom.selectionDescription) {
       if (subcategory) {
-        dom.selectionDescription.textContent = subcategory.note
-          ? subcategory.description + " " + subcategory.note
-          : subcategory.description;
+        if (renderer === "pre-solo") {
+          const preSoloContent = getPreSoloContent();
+          dom.selectionDescription.textContent = preSoloContent && preSoloContent.intro
+            ? preSoloContent.intro
+            : subcategory.description;
+        } else {
+          dom.selectionDescription.textContent = subcategory.note
+            ? subcategory.description + " " + subcategory.note
+            : subcategory.description;
+        }
       } else if (state.category === "all") {
         dom.selectionDescription.textContent = category.description;
       } else {
@@ -1073,7 +1110,12 @@
       return;
     }
 
-    if (!subcategory || !Array.isArray(subcategory.supplementalIds) || !subcategory.supplementalIds.length) {
+    if (
+      !subcategory ||
+      getSubcategoryContentRenderer(subcategory) ||
+      !Array.isArray(subcategory.supplementalIds) ||
+      !subcategory.supplementalIds.length
+    ) {
       dom.bundleBar.hidden = true;
       dom.bundleBar.innerHTML = "";
       return;
@@ -1103,16 +1145,18 @@
 
     const category = CATEGORY_MAP.get(state.category) || CATEGORY_MAP.get("all");
     const subcategory = getSelectedSubcategory();
+    const renderer = getSubcategoryContentRenderer(subcategory);
     const scopeLabel = subcategory
       ? category.label + " / " + subcategory.label
       : category.label;
-    const scopePrefix = (state.query ? "Searching " : "Viewing ") + scopeLabel + " — ";
-    const countLabel = state.query
-      ? visibleCount + " of " + scopeCount + " endorsements"
-      : visibleCount + " endorsements";
+    const searchApplies = Boolean(state.query) && renderer !== "pre-solo";
+    const scopePrefix = (searchApplies ? "Searching " : "Viewing ") + scopeLabel + " — ";
+    const countLabel = searchApplies
+      ? visibleCount + " of " + scopeCount + " " + getItemNoun(subcategory) + (scopeCount === 1 ? "" : "s")
+      : formatItemCount(visibleCount, subcategory);
     const parts = [countLabel];
 
-    if (state.query) {
+    if (searchApplies) {
       parts.push('search "' + state.query + '"');
     }
 
@@ -1265,12 +1309,22 @@
       return;
     }
 
+    const subcategory = getSelectedSubcategory();
+    const renderer = getSubcategoryContentRenderer(subcategory);
+
+    if (renderer === "pre-solo") {
+      const content = getPreSoloContent();
+      const count = getPreSoloPrerequisiteCount();
+      renderResultsSummary(count, count);
+      dom.endorsementList.innerHTML = renderPreSoloContent(content);
+      return;
+    }
+
     const scoped = getScopedEndorsements();
     const visible = getVisibleEndorsements();
     renderResultsSummary(visible.length, scoped.length);
 
     if (!visible.length) {
-      const subcategory = getSelectedSubcategory();
       const emptyHint = subcategory && !state.includeSupplemental && Array.isArray(subcategory.supplementalIds) && subcategory.supplementalIds.length
         ? "Try Show full bundle or clear the search."
         : "Try a broader keyword or switch to a different category.";
@@ -1289,7 +1343,6 @@
       return;
     }
 
-    const subcategory = getSelectedSubcategory();
     if (state.includeSupplemental && subcategory && Array.isArray(subcategory.supplementalIds) && subcategory.supplementalIds.length) {
       const primaryItems = visible.filter((item) => subcategory.primaryIds.includes(item.id));
       const supplementalItems = visible.filter((item) => subcategory.supplementalIds.includes(item.id) && !subcategory.primaryIds.includes(item.id));
@@ -1301,26 +1354,22 @@
 
   function refresh() {
     const isGuidance = state.view === "guidance";
-    const isPreSolo = state.view === "pre-solo";
-    const isInfo = isGuidance || isPreSolo;
+    if (!isGuidance) document.title = "Simply Endorsed";
 
-    if (!isInfo) document.title = "Simply Endorsed";
-
-    if (dom.selectionSummary) dom.selectionSummary.hidden = isInfo;
-    if (dom.statusRow) dom.statusRow.hidden = isInfo;
-    if (dom.endorsementList) dom.endorsementList.hidden = isInfo;
+    if (dom.selectionSummary) dom.selectionSummary.hidden = isGuidance;
+    if (dom.statusRow) dom.statusRow.hidden = isGuidance;
+    if (dom.endorsementList) dom.endorsementList.hidden = isGuidance;
     if (dom.featuredStrip) dom.featuredStrip.hidden = true;
 
     renderCategoryNav();
 
-    if (!isInfo) {
+    if (!isGuidance) {
       renderFeaturedStrip();
       renderSelectionSummary();
       renderEndorsements();
     }
 
     renderGuidanceView();
-    renderPreSoloView();
   }
 
   function renderGuidanceContentBlock(block) {
@@ -1401,85 +1450,98 @@
       '<div class="guidance-cards">' + cards + "</div>";
   }
 
-  function renderMnemonicBlock(block) {
+  function renderPreSoloPrerequisiteCard(item) {
     var h = escapeHtml;
-    var groupsHtml = block.groups.map(function(group) {
-      var itemsHtml = group.items.map(function(item) {
-        return (
-          '<div class="mnemonic-item">' +
-          '<div class="mnemonic-letter">' + h(item.letter) + '</div>' +
-          '<div class="mnemonic-body">' +
-          '<div class="mnemonic-label">' + h(item.label) + '</div>' +
-          '<div class="mnemonic-desc">' + h(item.description) + '</div>' +
-          '</div>' +
-          '</div>'
-        );
-      }).join("");
-      return (
-        '<div class="mnemonic-group">' +
-        '<div class="mnemonic-group-heading">' +
-        h(group.heading) +
-        ' <span class="badge ' + h(group.badgeClass) + '">' + h(group.badge) + '</span>' +
-        '</div>' +
-        itemsHtml +
-        '</div>'
-      );
-    }).join("");
+    var refs = Array.isArray(item.refs) ? item.refs.join(" | ") : "";
     return (
-      '<div class="mnemonic-card">' +
-      '<div class="mnemonic-title"><strong>' + h(block.heading) + '</strong></div>' +
-      '<div class="mnemonic-disclaimer">' + h(block.disclaimer) + '</div>' +
-      groupsHtml +
-      '</div>'
+      '<article class="endorsement-card endorsement-card--prerequisite"' +
+      getCategoryThemeStyle("student-pilot") +
+      ">" +
+      '<div class="endorsement-head">' +
+      '<div class="endorsement-id-row">' +
+      '<span class="endorsement-id mono">' + h(item.id) + "</span>" +
+      '<div class="chip-row">' +
+      '<span class="chip chip-prereq">Prerequisite</span>' +
+      '<span class="chip chip-category">Student Pilot</span>' +
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      "<h2>" + h(item.title) + "</h2>" +
+      '<p class="card-explanation">' + h(item.description) + "</p>" +
+      '<p class="card-meta mono">' + h(refs) + "</p>" +
+      "</article>"
     );
   }
 
-  function renderPreSoloContentBlock(block) {
-    var h = escapeHtml;
-    if (block.type === "mnemonic") return renderMnemonicBlock(block);
-    if (block.type === "resources") {
-      var linksHtml = block.links.map(function(link) {
-        return (
-          '<li><a class="pre-solo-resource-link" href="' + h(link.url) + '" target="_blank" rel="noopener noreferrer">' +
-          h(link.label) + ' ↗</a></li>'
-        );
-      }).join("");
-      var regsHtml = block.regs.map(function(reg) {
-        return '<li>' + h(reg) + '</li>';
-      }).join("");
-      return (
-        '<ul class="pre-solo-link-list">' + linksHtml + '</ul>' +
-        '<h3>Applicable Regulations &amp; Guidance</h3>' +
-        '<ul>' + regsHtml + '</ul>'
-      );
+  function renderPreSoloPrerequisiteCards(items) {
+    if (!Array.isArray(items) || !items.length) {
+      return "";
     }
-    return renderGuidanceContentBlock(block);
+
+    return (
+      '<div class="endorsement-list pre-solo-card-list">' +
+      items.map(renderPreSoloPrerequisiteCard).join("") +
+      "</div>"
+    );
   }
 
-  function renderPreSoloView() {
-    if (!dom.preSoloView) return;
-
-    if (state.view !== "pre-solo") {
-      dom.preSoloView.hidden = true;
-      return;
+  function renderPreSoloContent(content) {
+    if (!content) {
+      return (
+        '<article class="placeholder-card empty-state">' +
+        "<h2>Pre-solo content unavailable</h2>" +
+        "<p>The Student Pilot / Pre-Solo prerequisites could not be loaded.</p>" +
+        "</article>"
+      );
     }
 
-    dom.preSoloView.hidden = false;
+    return (
+      '<div class="pre-solo-body">' +
+      renderPreSoloPrerequisiteCards(content.prerequisites) +
+      renderAccordionSections(content.accordionSections) +
+      "</div>"
+    );
+  }
 
-    if (typeof PRE_SOLO_CONTENT === "undefined") {
-      dom.preSoloView.innerHTML = "<p>Content unavailable.</p>";
-      return;
-    }
+  function renderAccordionBodyBlocks(blocks) {
+    var h = escapeHtml;
+    return blocks.map(function(block) {
+      if (block.type === "h4") {
+        return '<h4 class="prereq-accordion-h4">' + h(block.value) + '</h4>';
+      }
+      return renderGuidanceContentBlock(block);
+    }).join("");
+  }
 
-    var bodyHtml = PRE_SOLO_CONTENT.map(renderPreSoloContentBlock).join("");
-
-    dom.preSoloView.innerHTML =
-      '<div class="guidance-header">' +
-      '<p class="selection-eyebrow">Student Pilot</p>' +
-      '<h2>Student Pilot Prerequisites</h2>' +
-      '<p class="selection-description">The foundational requirements that typically come before first solo flight. Scroll down for the TIM loves BaCoN ON Pizza roadmap.</p>' +
-      '</div>' +
-      '<div class="pre-solo-body">' + bodyHtml + '</div>';
+  function renderAccordionSections(sections) {
+    var h = escapeHtml;
+    var sectionsHtml = sections.map(function(section) {
+      var bodyHtml;
+      if (section.type === "resources") {
+        var linksHtml = section.links.map(function(link) {
+          return (
+            '<li><a class="pre-solo-resource-link" href="' + h(link.url) + '" target="_blank" rel="noopener noreferrer">' +
+            h(link.label) + ' \u2197</a></li>'
+          );
+        }).join("");
+        var regsHtml = section.regs.map(function(reg) {
+          return '<li>' + h(reg) + '</li>';
+        }).join("");
+        bodyHtml =
+          '<ul class="pre-solo-link-list">' + linksHtml + '</ul>' +
+          '<h4 class="prereq-accordion-h4">Applicable Regulations &amp; Guidance</h4>' +
+          '<ul>' + regsHtml + '</ul>';
+      } else {
+        bodyHtml = renderAccordionBodyBlocks(section.blocks);
+      }
+      return (
+        '<details class="prereq-accordion">' +
+        '<summary class="prereq-accordion-summary">' + h(section.heading) + '</summary>' +
+        '<div class="prereq-accordion-body">' + bodyHtml + '</div>' +
+        '</details>'
+      );
+    }).join("");
+    return '<div class="prereq-accordions">' + sectionsHtml + '</div>';
   }
 
   function handleCopy(endorsementId, button) {
@@ -1757,7 +1819,7 @@
               body2.hidden = false;
               if (caret2) caret2.textContent = "\u2013";
             }
-            card.scrollIntoView({ behavior: "smooth", block: "start" });
+            scrollToTarget(card);
           }
         }
       });

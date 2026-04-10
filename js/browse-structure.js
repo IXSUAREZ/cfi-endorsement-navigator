@@ -25,8 +25,9 @@
         {
           id: "pre-solo",
           label: "Pre-Solo",
-          description: "Student pilot prerequisites before first solo: certificate, medical, and the TIM BaCoN ON Pizza roadmap.",
-          isInfo: true,
+          description: "Student pilot prerequisites before first solo: TSA eligibility, student pilot certificate, and medical qualification.",
+          contentRenderer: "pre-solo",
+          primaryIds: [],
         },
         {
           id: "first-solo",

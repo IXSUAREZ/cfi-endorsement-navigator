@@ -502,221 +502,178 @@ const GUIDANCE_SECTIONS = [
 ];
 
 /* ── Student Pilot Prerequisites content ── */
-const PRE_SOLO_CONTENT = [
-  {
-    type: "p",
-    value: "Before most airplane students can act as pilot in command on a solo flight, they generally need a student pilot certificate, the required medical qualification, and the required pre-solo training and endorsements. This page covers the foundational prerequisites — the items that typically come before the solo endorsement pages in the Student Pilot section.",
-  },
-  {
-    type: "p",
-    value: "Important: dual flight instruction can begin before all of these prerequisites are fully in place. These requirements apply specifically when the student is preparing to exercise solo privileges as PIC. Exceptions exist for some operations and certificate paths (e.g., sport pilot, glider, balloon, and certain operations under 14 CFR 61.113(i)).",
-  },
-  {
-    type: "h3",
-    value: "Student Pilot Certificate",
-  },
-  {
-    type: "p",
-    value: "A student pilot certificate is required before solo flight, but it is not required to begin dual flight instruction.",
-  },
-  {
-    type: "h3",
-    value: "Eligibility",
-  },
-  {
-    type: "ul",
-    value: [
-      "Minimum age 16 for airplane (14 for glider or balloon)",
-      "Must be able to read, speak, write, and understand English",
-    ],
-  },
-  {
-    type: "h3",
-    value: "Application Process",
-  },
-  {
-    type: "ul",
-    value: [
-      "Application may be made through IACRA (iacra.faa.gov) or by paper in a form acceptable to the Administrator — 14 CFR 61.85 does not limit the method to IACRA only",
-      "An authorized person (CFI, DPE, ACR, or FSDO representative) verifies identity and processes or forwards the application as required",
-      "The FAA does not charge a fee when the certificate is processed through a FSDO; a school, examiner, or other processing entity may charge its own fee",
-    ],
-  },
-  {
-    type: "h3",
-    value: "Certificate Issuance & Duration",
-  },
-  {
-    type: "ul",
-    value: [
-      "The permanent certificate is mailed; a temporary student pilot certificate may become available in the applicant's IACRA console after processing",
-      "Student pilot certificates issued after April 1, 2016 no longer expire in the old 24/36-month way — they are generally surrendered when upgrading to a higher certificate",
-      "Solo endorsements are placed in the logbook, not printed on the student pilot certificate itself",
-    ],
-  },
-  {
-    type: "h3",
-    value: "Documents to Carry on Solo Flight",
-  },
-  {
-    type: "ul",
-    value: [
-      "Student pilot certificate",
-      "Photo identification",
-      "Medical certificate or other qualifying documentation as applicable",
-    ],
-  },
-  {
-    type: "h3",
-    value: "Medical Certificate",
-  },
-  {
-    type: "p",
-    value: "A separate medical qualification is generally required before solo flight for the normal airplane/private training path. The student pilot certificate and medical qualification are separate requirements and should not be confused.",
-  },
-  {
-    type: "ul",
-    value: [
-      "Third-class medical is the typical requirement for most student pilots training toward private or recreational airplane privileges",
-      "Medical class depends on the privileges being exercised — not simply the highest certificate a pilot may someday hold",
-      "Commercial privileges generally require at least a second-class medical when those privileges are exercised",
-      "ATP PIC privileges generally require a first-class medical when those privileges are exercised",
-      "Some students may qualify under exceptions or different pathways (sport pilot, glider/balloon, certain 61.113(i) operations)",
-    ],
-  },
-  {
-    type: "h3",
-    value: "How to Obtain a Medical",
-  },
-  {
-    type: "ol",
-    value: [
-      "Complete the MedXPress application online before your appointment",
-      "Schedule an exam with an FAA-designated Aviation Medical Examiner (AME)",
-      "Obtain the medical early — do not let it delay solo training",
-    ],
-  },
-  {
-    type: "h3",
-    value: "Where This Fits in the Solo Timeline",
-  },
-  {
-    type: "ol",
-    value: [
-      "Start dual instruction",
-      "Apply for the student pilot certificate",
-      "Complete TSA citizenship/eligibility verification if applicable",
-      "Obtain the required medical qualification",
-      "Complete pre-solo aeronautical knowledge test and flight training",
-      "Receive the appropriate solo endorsements",
-      "Exercise solo privileges only when all required elements are satisfied",
-    ],
-  },
-  {
-    type: "mnemonic",
-    heading: "TIM loves BaCoN ON Pizza",
-    disclaimer: "This mnemonic is a study aid, not an FAA-defined checklist. Always verify endorsement applicability and wording against the current regulations and AC 61-65K.",
-    groups: [
-      {
-        heading: "Before Solo Paperwork / Eligibility",
-        badge: "Prerequisite",
-        badgeClass: "badge--prereq",
-        items: [
-          {
-            letter: "T",
-            label: "TSA citizenship/eligibility verification",
-            description: "Flight training providers are subject to TSA requirements. AC 61-65 A.14 provides commonly used citizenship endorsement language if the logbook-endorsement method is used.",
-          },
-          {
-            letter: "I",
-            label: "Student pilot certificate application",
-            description: "Application via IACRA or an acceptable paper process with an authorized person (CFI, DPE, ACR, or FSDO). Not IACRA-only.",
-          },
-          {
-            letter: "M",
-            label: "Medical certificate / qualifying medical status",
-            description: "For most private-path airplane students, at least a third-class medical. Some training paths or operations have different qualification methods.",
-          },
-        ],
-      },
-      {
-        heading: "First Local Daytime Solo",
-        badge: "First Solo",
-        badgeClass: "badge--first-solo",
-        items: [
-          {
-            letter: "B",
-            label: "Pre-solo aeronautical knowledge test",
-            description: "Instructor-administered test covering applicable areas before first solo. AC 61-65 A.3 — 14 CFR 61.87(b).",
-          },
-          {
-            letter: "C",
-            label: "Pre-solo flight training and proficiency",
-            description: "Required flight training in the make and model; student must be found proficient. AC 61-65 A.4 — 14 CFR 61.87(c).",
-          },
-          {
-            letter: "N",
-            label: "90-day solo endorsement",
-            description: "Solo endorsement for the specific make & model, valid for 90 calendar days. AC 61-65 A.6 — 14 CFR 61.87(n).",
-          },
-        ],
-      },
-      {
-        heading: "Expanded / Recurring Solo Privileges",
-        badge: "Additional Solo Privilege",
-        badgeClass: "badge--additional",
-        items: [
-          {
-            letter: "O",
-            label: "Night solo endorsement",
-            description: "Separate from daytime first solo — applies only if night solo is authorized. AC 61-65 A.5 — 14 CFR 61.87(o).",
-          },
-          {
-            letter: "P",
-            label: "Additional 90-day solo endorsement",
-            description: "The standard 90-day solo endorsement must be renewed for each additional 90-calendar-day period. AC 61-65 A.7 — 14 CFR 61.87(p).",
-          },
-          {
-            letter: "Pizza",
-            label: "Solo XC / route-specific / airport-specific / Class B add-ons",
-            description: "Solo cross-country and expanded privileges are not a single endorsement. May involve separate training, route-specific review, repeated route authority, local solo privileges, and Class B endorsements as applicable. AC 61-65 A.8–A.13.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: "h3",
-    value: "Resources & Regulations",
-  },
-  {
-    type: "resources",
-    links: [
-      { label: "IACRA — Integrated Airmen Certification and Rating Application", url: "https://iacra.faa.gov" },
-      { label: "FAA Medical Certification", url: "https://www.faa.gov/pilots/medical_certification" },
-      { label: "MedXPress — FAA Medical Application", url: "https://medxpress.faa.gov" },
-      { label: "Find an Aviation Medical Examiner (AME)", url: "https://designee.faa.gov/designees/designeeLocator" },
-    ],
-    regs: [
-      "14 CFR 61.3 — Required documents",
-      "14 CFR 61.19 — Duration of pilot certificates",
-      "14 CFR 61.23 — Medical certificates: requirement and duration",
-      "14 CFR 61.83 — Eligibility requirements: student pilots",
-      "14 CFR 61.85 — Application",
-      "14 CFR 61.87 — Solo requirements for student pilots",
-      "14 CFR 61.93 — Solo cross-country flight requirements",
-      "14 CFR 61.95 — Operations in Class B airspace and at airports in Class B airspace",
-      "49 CFR 1552.7 — Flight school security awareness training",
-      "49 CFR 1552.15(c) — Citizenship verification",
-      "AC 61-65K — Certification: Pilots and Flight and Ground Instructors",
-    ],
-  },
-  {
-    type: "h3",
-    value: "Final Note",
-  },
-  {
-    type: "p",
-    value: "Obtaining the student pilot certificate and the required medical qualification is one of the first major steps toward solo flight for most airplane students. After these prerequisites are in place, the student must still complete the required pre-solo training and receive the proper solo endorsements before flying solo. The endorsement pages that follow in the Student Pilot section explain those authorization steps in more detail. Solo privileges may be exercised only when these prerequisites and applicable endorsements are satisfied.",
-  },
-];
+window.PRE_SOLO_CONTENT = {
+  intro: "Before most airplane students can exercise PIC solo privileges, they need a student pilot certificate, required medical qualification, and the pre-solo training endorsements. Dual instruction may begin before these are fully in place.",
+
+  prerequisites: [
+    {
+      id: "T",
+      title: "TSA citizenship / eligibility verification",
+      description: "Flight training providers must handle TSA citizenship or eligibility verification when applicable. If the logbook-endorsement method is used, AC 61-65K A.14 provides commonly used language.",
+      refs: [
+        "49 CFR \u00a7 1552.15(c)",
+        "AC 61-65K, A.14",
+      ],
+    },
+    {
+      id: "I",
+      title: "Student pilot certificate application",
+      description: "Apply through IACRA or an acceptable paper process with an authorized person such as a CFI, DPE, ACR, or FSDO representative. It is not an IACRA-only process.",
+      refs: [
+        "14 CFR \u00a7 61.83",
+        "14 CFR \u00a7 61.85",
+      ],
+    },
+    {
+      id: "M",
+      title: "Medical certificate / qualifying medical status",
+      description: "For most private-path airplane students, solo requires at least a third-class medical or another qualifying medical basis that fits the operation being conducted.",
+      refs: [
+        "14 CFR \u00a7 61.3(c)",
+        "14 CFR \u00a7 61.23",
+      ],
+    },
+  ],
+
+  accordionSections: [
+    {
+      id: "tsa",
+      heading: "TSA Citizenship / Eligibility",
+      blocks: [
+        {
+          type: "p",
+          value: "TSA citizenship or eligibility verification is a training-provider compliance item and is separate from the FAA student pilot certificate and separate from medical qualification.",
+        },
+        { type: "h4", value: "Key Points" },
+        {
+          type: "ul",
+          value: [
+            "Training providers must follow applicable TSA citizenship or eligibility verification procedures before providing covered flight training",
+            "If the provider uses the logbook-endorsement method for U.S. citizenship verification, AC 61-65K A.14 contains commonly used endorsement language",
+            "This step does not replace the student pilot certificate and does not replace the required medical qualification",
+          ],
+        },
+      ],
+    },
+    {
+      id: "cert",
+      heading: "Student Pilot Certificate",
+      blocks: [
+        {
+          type: "p",
+          value: "A student pilot certificate is required before solo flight, but it is not required to begin dual flight instruction.",
+        },
+        { type: "h4", value: "Eligibility" },
+        {
+          type: "ul",
+          value: [
+            "Minimum age 16 for airplane (14 for glider or balloon)",
+            "Must be able to read, speak, write, and understand English",
+          ],
+        },
+        { type: "h4", value: "Application Process" },
+        {
+          type: "ul",
+          value: [
+            "Application may be made through IACRA (iacra.faa.gov) or by paper in a form acceptable to the Administrator \u2014 14 CFR 61.85 does not limit the method to IACRA only",
+            "An authorized person (CFI, DPE, ACR, or FSDO representative) verifies identity and processes or forwards the application as required",
+            "The FAA does not charge a fee when the certificate is processed through a FSDO; a school, examiner, or other processing entity may charge its own fee",
+          ],
+        },
+        { type: "h4", value: "Certificate Issuance & Duration" },
+        {
+          type: "ul",
+          value: [
+            "The permanent certificate is mailed; a temporary student pilot certificate may become available in the applicant's IACRA console after processing",
+            "Student pilot certificates issued after April 1, 2016 no longer expire in the old 24/36-month way \u2014 they are generally surrendered when upgrading to a higher certificate",
+            "Solo endorsements are placed in the logbook, not printed on the student pilot certificate itself",
+          ],
+        },
+        { type: "h4", value: "Documents to Carry on Solo Flight" },
+        {
+          type: "ul",
+          value: [
+            "Student pilot certificate",
+            "Photo identification",
+            "Medical certificate or other qualifying documentation as applicable",
+          ],
+        },
+      ],
+    },
+    {
+      id: "medical",
+      heading: "Medical Certificate",
+      blocks: [
+        {
+          type: "p",
+          value: "A separate medical qualification is generally required before solo flight for the normal airplane/private training path. The student pilot certificate and medical qualification are separate requirements and should not be confused.",
+        },
+        {
+          type: "ul",
+          value: [
+            "Third-class medical is the typical requirement for most student pilots training toward private or recreational airplane privileges",
+            "Medical class depends on the privileges being exercised \u2014 not simply the highest certificate a pilot may someday hold",
+            "Commercial privileges generally require at least a second-class medical when those privileges are exercised",
+            "ATP PIC privileges generally require a first-class medical when those privileges are exercised",
+            "Some students may qualify under exceptions or different pathways (sport pilot, glider/balloon, certain 61.113(i) operations)",
+          ],
+        },
+        { type: "h4", value: "How to Obtain a Medical" },
+        {
+          type: "ol",
+          value: [
+            "Complete the MedXPress application online before your appointment",
+            "Schedule an exam with an FAA-designated Aviation Medical Examiner (AME)",
+            "Obtain the medical early \u2014 do not let it delay solo training",
+          ],
+        },
+      ],
+    },
+    {
+      id: "timeline",
+      heading: "Solo Timeline",
+      blocks: [
+        {
+          type: "ol",
+          value: [
+            "Start dual instruction",
+            "Apply for the student pilot certificate",
+            "Complete TSA citizenship/eligibility verification if applicable",
+            "Obtain the required medical qualification",
+            "Complete pre-solo aeronautical knowledge test and flight training",
+            "Receive the appropriate solo endorsements",
+            "Exercise solo privileges only when all required elements are satisfied",
+          ],
+        },
+        {
+          type: "p",
+          value: "Solo privileges may be exercised only when these prerequisites and applicable endorsements are satisfied.",
+        },
+      ],
+    },
+    {
+      id: "resources",
+      heading: "Resources & Regulations",
+      type: "resources",
+      links: [
+        { label: "IACRA \u2014 Integrated Airmen Certification and Rating Application", url: "https://iacra.faa.gov" },
+        { label: "FAA Medical Certification", url: "https://www.faa.gov/pilots/medical_certification" },
+        { label: "MedXPress \u2014 FAA Medical Application", url: "https://medxpress.faa.gov" },
+        { label: "Find an Aviation Medical Examiner (AME)", url: "https://designee.faa.gov/designees/designeeLocator" },
+      ],
+      regs: [
+        "14 CFR 61.3 \u2014 Required documents",
+        "14 CFR 61.19 \u2014 Duration of pilot certificates",
+        "14 CFR 61.23 \u2014 Medical certificates: requirement and duration",
+        "14 CFR 61.83 \u2014 Eligibility requirements: student pilots",
+        "14 CFR 61.85 \u2014 Application",
+        "14 CFR 61.87 \u2014 Solo requirements for student pilots",
+        "14 CFR 61.93 \u2014 Solo cross-country flight requirements",
+        "14 CFR 61.95 \u2014 Operations in Class B airspace and at airports in Class B airspace",
+        "49 CFR 1552.7 \u2014 Flight school security awareness training",
+        "49 CFR 1552.15(c) \u2014 Citizenship verification",
+        "AC 61-65K \u2014 Certification: Pilots and Flight and Ground Instructors",
+      ],
+    },
+  ],
+};
