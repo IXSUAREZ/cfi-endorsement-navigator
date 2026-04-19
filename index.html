@@ -26,12 +26,8 @@
   </head>
   <body>
     <div class="app-shell">
-      <!-- Slim sticky topbar: designer credit + browse button only -->
       <div class="topbar-sticky">
-        <div class="designer-header">
-          <div class="designer-credit">Designed By</div>
-          <div class="designer-name">Diego Suarez</div>
-        </div>
+        <div class="topbar-brand">Simply Endorsed</div>
         <button
           id="sidebarToggleBtn"
           class="icon-btn"
@@ -43,12 +39,6 @@
           <span class="icon-burger">&#9776;</span>
           <span class="icon-close">&#10005;</span>
         </button>
-      </div>
-
-      <!-- Scroll-away brand block -->
-      <div class="brand-block">
-        <h1 class="brand-title">Simply Endorsed</h1>
-        <p id="acVersionText" class="brand-sub">AC source loading...</p>
       </div>
 
       <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
@@ -82,7 +72,6 @@
           <section class="rail-section">
             <div class="rail-heading">
               <h2>Browse</h2>
-              <p>Categories with curated subcategories for common use cases.</p>
             </div>
 
             <nav id="categoryNav" class="category-nav" aria-label="Browse endorsements">
@@ -98,13 +87,14 @@
           <section id="selectionSummary" class="selection-summary" aria-live="polite" tabindex="-1">
             <nav id="selectionBreadcrumbs" class="selection-breadcrumbs" aria-label="Current browse path">
             </nav>
-            <p id="selectionEyebrow" class="selection-eyebrow">Browse</p>
             <h2 id="selectionTitle">All Endorsements</h2>
             <p id="selectionDescription" class="selection-description">
               Loading endorsement library...
             </p>
-            <div id="selectionMeta" class="selection-meta"></div>
-            <div id="selectionActions" class="selection-actions"></div>
+            <div class="selection-footer-row">
+              <div id="selectionMeta" class="selection-meta"></div>
+              <div id="selectionActions" class="selection-actions"></div>
+            </div>
             <div id="bundleBar" class="bundle-bar" hidden></div>
           </section>
 
@@ -134,6 +124,7 @@
 
     <footer class="app-footer">
       <p id="footerMeta">FAA model text source: loading...</p>
+      <p class="footer-designer">Designed by Diego Suarez</p>
       <p class="footnote">
         This tool is a reference aid. Verify endorsement applicability against the pilot's context,
         current FARs, and current FAA guidance.

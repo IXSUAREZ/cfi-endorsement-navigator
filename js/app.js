@@ -239,14 +239,12 @@
     resultsSummary: document.getElementById("resultsSummary"),
     selectionSummary: document.getElementById("selectionSummary"),
     selectionBreadcrumbs: document.getElementById("selectionBreadcrumbs"),
-    selectionEyebrow: document.getElementById("selectionEyebrow"),
     selectionTitle: document.getElementById("selectionTitle"),
     selectionDescription: document.getElementById("selectionDescription"),
     selectionMeta: document.getElementById("selectionMeta"),
     selectionActions: document.getElementById("selectionActions"),
     bundleBar: document.getElementById("bundleBar"),
     featuredStrip: document.getElementById("featuredStrip"),
-    acVersionText: document.getElementById("acVersionText"),
     footerMeta: document.getElementById("footerMeta"),
     filterRail: document.getElementById("filterRail"),
     sidebarToggleBtn: document.getElementById("sidebarToggleBtn"),
@@ -278,17 +276,7 @@
 
   function getCategoryThemeStyle(categoryId) {
     const theme = getCategoryTheme(categoryId);
-    return (
-      ' style="--category-accent: ' +
-      theme.accent +
-      "; --category-soft: " +
-      theme.soft +
-      "; --category-line: " +
-      theme.line +
-      "; --category-ink: " +
-      theme.ink +
-      ';"'
-    );
+    return ' style="--category-accent: ' + theme.accent + ';"';
   }
 
   function applyCategoryTheme(element, categoryId) {
@@ -298,9 +286,23 @@
 
     const theme = getCategoryTheme(categoryId);
     element.style.setProperty("--category-accent", theme.accent);
-    element.style.setProperty("--category-soft", theme.soft);
-    element.style.setProperty("--category-line", theme.line);
-    element.style.setProperty("--category-ink", theme.ink);
+  }
+
+  function renderMetaItem(value, classNames) {
+    const classes = ["meta-item"];
+    if (classNames) {
+      classes.push(classNames);
+    }
+    return '<span class="' + classes.join(" ") + '">' + escapeHtml(value) + "</span>";
+  }
+
+  function renderWarnMetaItem(value) {
+    return (
+      '<span class="chip-warn">' +
+      '<span class="warn-icon" aria-hidden="true"></span>' +
+      '<span>' + escapeHtml(value) + "</span>" +
+      "</span>"
+    );
   }
 
   function debounce(fn, delay) {
@@ -834,10 +836,6 @@
   }
 
   function renderMeta() {
-    if (dom.acVersionText) {
-      dom.acVersionText.textContent = APP_META.display || "AC source unavailable";
-    }
-
     if (dom.footerMeta) {
       const docLink = APP_META.documentPageUrl
         ? '<a href="' + escapeHtml(APP_META.documentPageUrl) + '" target="_blank" rel="noopener noreferrer">FAA document page</a>'
@@ -1032,37 +1030,27 @@
     const subcategory = getSelectedSubcategory();
     const renderer = getSubcategoryContentRenderer(subcategory);
     const scopedCount = subcategory ? getBundleCount(subcategory) : getScopedEndorsements().length;
-    const chips = [
-      '<span class="selection-chip selection-chip-category">' +
-      escapeHtml(formatItemCount(scopedCount, subcategory)) +
-      " in scope</span>",
-    ];
+    const items = [renderMetaItem(formatItemCount(scopedCount, subcategory) + " in scope")];
 
     if (state.category === "all") {
-      chips.push(
-        '<span class="selection-chip selection-chip-category">' +
-        escapeHtml(String(CATEGORY_DEFS.filter((category) => category.id !== "all").length)) +
-        " browse categories</span>",
-      );
+      items.push(renderMetaItem(
+        String(CATEGORY_DEFS.filter((category) => category.id !== "all").length) + " browse categories",
+      ));
     }
 
     if (state.query && renderer !== "pre-solo") {
-      chips.push('<span class="selection-chip selection-chip-accent">Search: "' + escapeHtml(state.query) + '"</span>');
+      items.push(renderMetaItem('Search "' + state.query + '"'));
     }
 
     if (subcategory) {
-      chips.push(
-        '<span class="selection-chip selection-chip-category">' +
-        escapeHtml(formatItemCount(getBundleCount(subcategory), subcategory)) +
-        " in this path</span>",
-      );
+      items.push(renderMetaItem(formatItemCount(getBundleCount(subcategory), subcategory) + " in this path"));
     }
 
     if (state.includeSupplemental && subcategory) {
-      chips.push('<span class="selection-chip selection-chip-accent">Showing full bundle</span>');
+      items.push(renderMetaItem("Showing full bundle"));
     }
 
-    dom.selectionMeta.innerHTML = chips.join("");
+    dom.selectionMeta.innerHTML = items.join("");
   }
 
   function renderSelectionSummary() {
@@ -1075,11 +1063,12 @@
 
     renderSelectionBreadcrumbs(category, subcategory);
 
-    if (dom.selectionEyebrow) {
-      dom.selectionEyebrow.textContent = subcategory ? "Subcategory" : (state.category === "all" ? "Browse" : "Category");
-    }
     if (dom.selectionTitle) {
-      dom.selectionTitle.textContent = subcategory ? subcategory.label : category.label;
+      dom.selectionTitle.innerHTML =
+        '<span class="selection-title-wrap">' +
+        '<span class="category-dot" aria-hidden="true"></span>' +
+        "<span>" + escapeHtml(subcategory ? subcategory.label : category.label) + "</span>" +
+        "</span>";
     }
     if (dom.selectionDescription) {
       if (subcategory) {
@@ -1169,24 +1158,65 @@
 
   function renderEndorsementCard(item) {
     const expanded = state.expandedId === item.id;
-    const badges = [];
-    const category = CATEGORY_MAP.get(item.category) || {};
-    const displayTags = getDisplayTags(item);
+    const metaItems = [];
+    const detailSections = [];
     const cardExplanation = getCardExplanation(item);
+    const detailTags = Array.isArray(item.tags) ? item.tags.filter(Boolean) : [];
 
     if (EXPIRATION_LABELS[item.expiration]) {
-      badges.push('<span class="chip chip-warn">Time limit: ' + escapeHtml(EXPIRATION_LABELS[item.expiration]) + "</span>");
+      metaItems.push(renderWarnMetaItem("Time limit " + EXPIRATION_LABELS[item.expiration]));
     }
     if (item.perFlight) {
-      badges.push('<span class="chip chip-warn">Every XC flight</span>');
+      metaItems.push(renderWarnMetaItem("Every XC flight"));
     }
-    if (category.label) {
-      badges.push('<span class="chip chip-category">' + escapeHtml(category.label) + "</span>");
+    if (Array.isArray(item.cfr) && item.cfr.length) {
+      metaItems.push(renderMetaItem(item.cfr.join(" | "), "mono"));
     }
-    displayTags.forEach((tag) => {
-      badges.push('<span class="chip chip-tag">' + escapeHtml(tag) + "</span>");
-    });
-    badges.push('<span class="chip chip-ghost mono">Page ' + escapeHtml(item.sourcePage) + "</span>");
+    metaItems.push(renderMetaItem("Page " + item.sourcePage, "mono"));
+
+    if (cardExplanation) {
+      detailSections.push(
+        '<section class="detail-section">' +
+        "<h4>At a glance</h4>" +
+        "<p>" + escapeHtml(cardExplanation) + "</p>" +
+        "</section>",
+      );
+    }
+    if (item.explanation) {
+      detailSections.push(
+        '<section class="detail-section">' +
+        "<h4>Why This Matters</h4>" +
+        "<p>" + escapeHtml(item.explanation).replace(/\n/g, "<br>") + "</p>" +
+        "</section>",
+      );
+    }
+    detailSections.push(
+      '<section class="detail-section">' +
+      "<h4>CFR basis</h4>" +
+      '<p class="mono">' + escapeHtml(item.cfr.join(" | ")) + "</p>" +
+      "</section>",
+    );
+    detailSections.push(
+      '<section class="detail-section">' +
+      "<h4>Source</h4>" +
+      "<p>" + escapeHtml(item.acRef) + " | Page " + escapeHtml(item.sourcePage) + "</p>" +
+      "</section>",
+    );
+    detailSections.push(
+      '<section class="detail-section">' +
+      "<h4>Who issues it</h4>" +
+      "<p>" + escapeHtml(ISSUER_LABELS[item.whoIssues] || "Standard CFI signoff") + "</p>" +
+      "<p>" + escapeHtml(SIGNATURE_DISPLAY[item.whoIssues] || SIGNATURE_DISPLAY["standard-cfi"]) + "</p>" +
+      "</section>",
+    );
+    if (detailTags.length) {
+      detailSections.push(
+        '<section class="detail-section">' +
+        "<h4>Tags</h4>" +
+        "<p>" + escapeHtml(detailTags.join(" | ")) + "</p>" +
+        "</section>",
+      );
+    }
 
     const details = expanded
       ? (
@@ -1196,25 +1226,7 @@
         '<pre class="verbatim-block mono" data-verbatim-id="' + escapeHtml(item.id) + '">' + escapeHtml(item.verbatimText) + "</pre>" +
         '<button type="button" class="inline-action" data-copy-id="' + escapeHtml(item.id) + '">Copy FAA model text</button>' +
         "</section>" +
-        '<div class="details-grid">' +
-        '<section class="detail-section">' +
-        "<h4>Why This Matters</h4>" +
-        "<p>" + escapeHtml(item.explanation).replace(/\n/g, "<br>") + "</p>" +
-        "</section>" +
-        '<section class="detail-section">' +
-        "<h4>CFR basis</h4>" +
-        '<p class="mono">' + escapeHtml(item.cfr.join(" | ")) + "</p>" +
-        "</section>" +
-        '<section class="detail-section">' +
-        "<h4>Source</h4>" +
-        "<p>" + escapeHtml(item.acRef) + " | Page " + escapeHtml(item.sourcePage) + "</p>" +
-        "</section>" +
-        '<section class="detail-section">' +
-        "<h4>Who issues it</h4>" +
-        "<p>" + escapeHtml(ISSUER_LABELS[item.whoIssues] || "Standard CFI signoff") + "</p>" +
-        "<p>" + escapeHtml(SIGNATURE_DISPLAY[item.whoIssues] || SIGNATURE_DISPLAY["standard-cfi"]) + "</p>" +
-        "</section>" +
-        "</div>" +
+        '<div class="details-grid">' + detailSections.join("") + "</div>" +
         "</div>"
       )
       : "";
@@ -1227,17 +1239,16 @@
       ">" +
       '<div class="endorsement-head">' +
       '<div class="endorsement-id-row">' +
+      '<span class="category-dot" aria-hidden="true"></span>' +
       '<span class="endorsement-id mono">' + escapeHtml(item.id) + "</span>" +
-      '<div class="chip-row">' + badges.join("") + "</div>" +
       "</div>" +
       '<button type="button" class="detail-toggle" data-toggle-id="' + escapeHtml(item.id) + '" aria-expanded="' + String(expanded) + '">' +
       '<span>' + (expanded ? "Hide details" : "View details") + "</span>" +
-      '<span class="detail-toggle-caret" aria-hidden="true">' + (expanded ? "−" : "+") + "</span>" +
+      '<span class="detail-toggle-caret" aria-hidden="true">' + (expanded ? "−" : "›") + "</span>" +
       "</button>" +
       "</div>" +
       "<h2>" + escapeHtml(item.title) + "</h2>" +
-      '<p class="card-explanation">' + escapeHtml(cardExplanation) + "</p>" +
-      '<p class="card-meta mono">' + escapeHtml(item.cfr.join(" | ")) + "</p>" +
+      '<div class="meta-line">' + metaItems.join("") + "</div>" +
       details +
       "</article>"
     );
@@ -1291,9 +1302,7 @@
           escapeHtml(item.categoryId) +
           '" data-featured-subcategory="' +
           escapeHtml(item.subcategoryId) +
-          '"' +
-          getCategoryThemeStyle(item.categoryId) +
-          ">" +
+          '">' +
           '<span class="featured-card-category">' + escapeHtml(category.label || item.categoryId) + "</span>" +
           '<span class="featured-card-title">' + escapeHtml(item.subcategory.label) + "</span>" +
           '<span class="featured-card-description">' + escapeHtml(item.subcategory.description) + "</span>" +
@@ -1440,9 +1449,9 @@
 
     dom.guidanceView.innerHTML =
       '<div class="guidance-header">' +
-      '<p class="selection-eyebrow">Instructor Resource</p>' +
+      '<p class="guidance-eyebrow">Instructor Resource</p>' +
       "<h2>Teaching &amp; Guidance</h2>" +
-      '<p class="selection-description">A structured reference for CFI lesson II.K &mdash; Endorsements &amp; Logbook Entries. Select a section to expand.</p>' +
+      '<p class="guidance-description">A structured reference for CFI lesson II.K &mdash; Endorsements &amp; Logbook Entries. Select a section to expand.</p>' +
       "</div>" +
       '<nav class="guidance-toc" aria-label="Section navigation">' +
       "<ul>" + tocItems + "</ul>" +
@@ -1459,16 +1468,17 @@
       ">" +
       '<div class="endorsement-head">' +
       '<div class="endorsement-id-row">' +
+      '<span class="category-dot" aria-hidden="true"></span>' +
       '<span class="endorsement-id mono">' + h(item.id) + "</span>" +
-      '<div class="chip-row">' +
-      '<span class="chip chip-prereq">Prerequisite</span>' +
-      '<span class="chip chip-category">Student Pilot</span>' +
-      "</div>" +
+      '<span class="pre-solo-badge">Prerequisite</span>' +
       "</div>" +
       "</div>" +
       "<h2>" + h(item.title) + "</h2>" +
-      '<p class="card-explanation">' + h(item.description) + "</p>" +
-      '<p class="card-meta mono">' + h(refs) + "</p>" +
+      '<p class="prereq-description">' + h(item.description) + "</p>" +
+      '<div class="meta-line">' +
+      '<span class="meta-item">Student Pilot</span>' +
+      '<span class="meta-item mono">' + h(refs) + "</span>" +
+      "</div>" +
       "</article>"
     );
   }
