@@ -1,6 +1,6 @@
 # Simply Endorsed
 
-Static single-page reference tool for AC 61-65K endorsements with curated browse subcategories for common instructor use cases.
+Static single-page reference tool for the current AC 61-65 endorsement set, with curated browse subcategories for common instructor use cases.
 
 ## Scope
 
@@ -45,9 +45,9 @@ Each subcategory includes:
 
 Recommended values for this project:
 
-- AC version: `AC 61-65K`
-- Date issued: `2025-11-14`
-- Source URL: FAA AC 61-65K PDF
+- AC version: current adopted AC 61-65 letter
+- Date issued: current adopted FAA issue date
+- Source URL: current adopted FAA AC 61-65 PDF
 
 ## Trust Note
 
@@ -64,7 +64,14 @@ The live site only needs:
 - `js/`
 - `.nojekyll`
 
-The app already points to the FAA-hosted AC PDF in `window.APP_META`, so local research PDFs are intentionally kept out of the deployment repo.
+The app points to the FAA-hosted AC PDF in `window.APP_META`. Local research PDFs still stay out of the repo, but adopted AC archive PDFs now live in `ac-versions/` on purpose so each revision remains reviewable.
+
+## AC Update Workflow
+
+- One-time baseline setup: `python -m scripts.ac_update.orchestrate bootstrap`
+- Future check: `python -m scripts.ac_update.orchestrate run`
+- Shortcut wrapper: `./shortcuts/check-ac-update.command`
+- Human runbook: `docs/ac-update-runbook.md`
 
 ---
 

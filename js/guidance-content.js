@@ -1,6 +1,11 @@
 "use strict";
 
 /* eslint-disable */
+const APP_META = window.APP_META || {};
+const AC_VERSION_LABEL = APP_META.acVersion || "AC 61-65";
+const AC_REFERENCE_TITLE = `${AC_VERSION_LABEL} – Certification: Pilots and Flight and Ground Instructors`;
+const A14_REFERENCE = `${AC_VERSION_LABEL}, A.14`;
+
 const GUIDANCE_SECTIONS = [
   {
     id: "objectives",
@@ -11,7 +16,7 @@ const GUIDANCE_SECTIONS = [
         type: "ul",
         value: [
           "14 CFR Part 61",
-          "AC 61-65 – Certification: Pilots and Flight and Ground Instructors",
+          AC_REFERENCE_TITLE,
           "AC 61-98 – Currency Requirements and Guidance for the Flight Review and Instrument Proficiency Check",
           "AC 61-83 – Flight Instructor Refresher Course",
           "AC 61-91 – WINGS Pilot Proficiency Program",
@@ -478,7 +483,7 @@ const GUIDANCE_SECTIONS = [
       {
         type: "p",
         value:
-          "Before endorsing a student or recommending an applicant for a practical test, verify that all required training has been completed, appropriate time limits are satisfied, and endorsement language matches current AC 61-65K model text.",
+          `Before endorsing a student or recommending an applicant for a practical test, verify that all required training has been completed, appropriate time limits are satisfied, and endorsement language matches current ${AC_VERSION_LABEL} model text.`,
       },
       { type: "h3", value: "Important Reminder" },
       {
@@ -490,7 +495,7 @@ const GUIDANCE_SECTIONS = [
       {
         type: "ul",
         value: [
-          "AC 61-65K – Certification: Pilots and Flight and Ground Instructors",
+          AC_REFERENCE_TITLE,
           "AC 61-98 – Currency Requirements and Guidance for the Flight Review and IPC",
           "AC 61-83 – Flight Instructor Refresher Course",
           "AC 61-91 – WINGS Pilot Proficiency Program",
@@ -509,10 +514,10 @@ window.PRE_SOLO_CONTENT = {
     {
       id: "T",
       title: "TSA citizenship / eligibility verification",
-      description: "Flight training providers must handle TSA citizenship or eligibility verification when applicable. If the logbook-endorsement method is used, AC 61-65K A.14 provides commonly used language.",
+      description: `Flight training providers must handle TSA citizenship or eligibility verification when applicable. If the logbook-endorsement method is used, ${AC_VERSION_LABEL} A.14 provides commonly used language.`,
       refs: [
         "49 CFR \u00a7 1552.15(c)",
-        "AC 61-65K, A.14",
+        A14_REFERENCE,
       ],
     },
     {
@@ -549,7 +554,7 @@ window.PRE_SOLO_CONTENT = {
           type: "ul",
           value: [
             "Training providers must follow applicable TSA citizenship or eligibility verification procedures before providing covered flight training",
-            "If the provider uses the logbook-endorsement method for U.S. citizenship verification, AC 61-65K A.14 contains commonly used endorsement language",
+            `If the provider uses the logbook-endorsement method for U.S. citizenship verification, ${AC_VERSION_LABEL} A.14 contains commonly used endorsement language`,
             "This step does not replace the student pilot certificate and does not replace the required medical qualification",
           ],
         },
@@ -672,7 +677,7 @@ window.PRE_SOLO_CONTENT = {
         "14 CFR 61.95 \u2014 Operations in Class B airspace and at airports in Class B airspace",
         "49 CFR 1552.7 \u2014 Flight school security awareness training",
         "49 CFR 1552.15(c) \u2014 Citizenship verification",
-        "AC 61-65K \u2014 Certification: Pilots and Flight and Ground Instructors",
+        AC_REFERENCE_TITLE,
       ],
     },
   ],

@@ -2,6 +2,7 @@
 
 (() => {
   const APP_META = window.APP_META || {};
+  const AC_VERSION_LABEL = APP_META.acVersion || "AC 61-65";
   const ENDORSEMENTS = Array.isArray(window.ENDORSEMENTS) ? window.ENDORSEMENTS.slice() : [];
   const BROWSE_STRUCTURE = Array.isArray(window.BROWSE_STRUCTURE)
     ? window.BROWSE_STRUCTURE.slice()
@@ -11,7 +12,7 @@
     {
       id: "all",
       label: "All Endorsements",
-      description: "Search the full AC 61-65K endorsement library or open a category for a narrower view.",
+      description: "Search the full " + AC_VERSION_LABEL + " endorsement library or open a category for a narrower view.",
     },
     {
       id: "practical-test-prereqs",
@@ -682,6 +683,16 @@
     return item.cardExplanation || item.explanation || "";
   }
 
+  function getAcRef(item) {
+    if (item && typeof item.acRef === "string" && item.acRef.trim()) {
+      return item.acRef;
+    }
+    if (item && item.id) {
+      return AC_VERSION_LABEL + ", " + item.id;
+    }
+    return AC_VERSION_LABEL;
+  }
+
   function getCfrSearchPhrases(cfrValue) {
     const clean = String(cfrValue || "").replace(/^§\s*/, "").trim();
     if (!clean) {
@@ -705,7 +716,7 @@
         getCardExplanation(item),
         item.explanation,
         item.verbatimText,
-        item.acRef,
+        getAcRef(item),
         cfrPhrases.join(" "),
         Array.isArray(item.aliases) ? item.aliases.join(" ") : "",
         Array.isArray(item.tags) ? item.tags.join(" ") : "",
@@ -1218,7 +1229,6 @@
       "title",
       "category",
       "cfr",
-      "acRef",
       "sourcePage",
       "explanation",
       "verbatimText",
@@ -1734,7 +1744,7 @@
         if (Array.isArray(item.cfr) && item.cfr.length) {
           lines.push("CFR: " + item.cfr.join(" | "));
         }
-        lines.push("Source: " + item.acRef + " | Page " + item.sourcePage);
+        lines.push("Source: " + getAcRef(item) + " | Page " + item.sourcePage);
         if (item.explanation) {
           lines.push("Instructor summary: " + item.explanation);
         }
@@ -2063,7 +2073,7 @@
     detailSections.push(
       '<section class="detail-section">' +
       "<h4>Source</h4>" +
-      "<p>" + escapeHtml(item.acRef) + " | Page " + escapeHtml(item.sourcePage) + "</p>" +
+      "<p>" + escapeHtml(getAcRef(item)) + " | Page " + escapeHtml(item.sourcePage) + "</p>" +
       (
         sourcePageUrl
           ? '<p><a class="detail-link" href="' + escapeHtml(sourcePageUrl) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(getSourceLinkLabel(item.sourcePage)) + "</a></p>"

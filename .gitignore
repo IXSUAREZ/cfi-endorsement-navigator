@@ -1,6 +1,8 @@
 .DS_Store
 .playwright-cli/
 .venv/
+__pycache__/
+*.pyc
 SOURCE-PDFs/
 endorsements.txt
 custom-gpt-ac61-65k-training.txt

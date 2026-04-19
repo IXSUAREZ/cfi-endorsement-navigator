@@ -26,6 +26,28 @@ def parse_candidate_links(html: str) -> list[dict[str, str]]:
     soup = BeautifulSoup(html, "html.parser")
     seen: dict[str, dict[str, str]] = {}
 
+    for row in soup.find_all("tr"):
+        cells = row.find_all("td")
+        if len(cells) < 2:
+            continue
+
+        number_text = " ".join(cells[0].get_text(" ", strip=True).split())
+        match = re.fullmatch(r"61-65([A-Z])", number_text)
+        if not match:
+            continue
+
+        link = cells[1].find("a", href=True)
+        if link is None:
+            continue
+
+        version_letter = match.group(1)
+        document_page_url = urljoin(FAA_BASE_URL, link["href"])
+        seen[version_letter] = {
+            "acNumber": f"61-65{version_letter}",
+            "versionLetter": version_letter,
+            "documentPageUrl": document_page_url,
+        }
+
     for anchor in soup.find_all("a", href=True):
         text = " ".join(anchor.get_text(" ", strip=True).split())
         match = re.fullmatch(r"61-65([A-Z])", text)
@@ -51,10 +73,21 @@ def parse_document_information(html: str, document_page_url: str) -> dict[str, A
         if line.strip()
     ]
 
+    if "Document Information" in lines:
+        lines = lines[lines.index("Document Information") + 1 :]
+
+    info_lines: list[str] = []
+    for line in lines:
+        if line in {"Description", "Content"}:
+            break
+        info_lines.append(line)
+
     values: dict[str, str] = {}
-    for index, line in enumerate(lines[:-1]):
-        if line in {"Number", "Status", "Date issued", "Title"}:
-            values[line] = lines[index + 1]
+    for label in ("Number", "Title", "Status", "Date issued"):
+        if label in info_lines:
+            label_index = info_lines.index(label)
+            if label_index + 1 < len(info_lines):
+                values[label] = info_lines[label_index + 1]
 
     source_url = ""
     number = values.get("Number", "")
@@ -70,7 +103,7 @@ def parse_document_information(html: str, document_page_url: str) -> dict[str, A
         "acNumber": number,
         "versionLetter": version_letter,
         "title": values.get("Title", ""),
-        "status": values.get("Status", ""),
+        "documentStatus": values.get("Status", ""),
         "dateIssued": values.get("Date issued", ""),
         "sourceUrl": source_url,
         "documentPageUrl": document_page_url,
@@ -95,7 +128,7 @@ def probe_for_next_letter(current_version: str, session=None) -> dict[str, Any] 
                 "acNumber": f"61-65{version_letter}",
                 "versionLetter": version_letter,
                 "title": "Certification: Pilots and Flight and Ground Instructors",
-                "status": "Active",
+                "documentStatus": "Active",
                 "dateIssued": "",
                 "sourceUrl": pdf_url,
                 "documentPageUrl": "",
@@ -120,7 +153,7 @@ def detect_new_ac(current_version: str | None = None, session=None) -> dict[str,
         detail_response = request_session.get(candidate["documentPageUrl"], timeout=60)
         detail_response.raise_for_status()
         details = parse_document_information(detail_response.text, candidate["documentPageUrl"])
-        if details.get("status", "").lower() == "active":
+        if details.get("documentStatus", "").lower() == "active":
             active_candidates.append(details)
 
     latest = None

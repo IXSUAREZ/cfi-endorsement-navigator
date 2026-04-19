@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 
-const sourceTextPath = path.join(repoRoot, "endorsements-plain-english-source.txt");
+const sourceTextPath = path.join(repoRoot, "endorse-condensed-card-text");
 const dataPath = path.join(repoRoot, "js", "endorsements-data.js");
 
 function toAsciiJson(value) {
@@ -32,8 +32,8 @@ function loadData() {
 }
 
 function parseCardExplanationSource(text) {
-  const body = text.split(/\r?\n/).slice(2).join("\n").trim();
-  const pattern = /^(A\.\d+)\s-\s(.+)\nPlain-English explanation:\n([\s\S]*?)(?=\n{2}A\.\d+\s-\s|\s*$)/gm;
+  const body = text.trim();
+  const pattern = /^(A\.\d+)\s-\s(.+)\n([\s\S]*?)(?=\n{2}A\.\d+\s-\s|\s*$)/gm;
   const entries = [];
   const seenIds = new Set();
   let match;
@@ -41,7 +41,11 @@ function parseCardExplanationSource(text) {
   while ((match = pattern.exec(body)) !== null) {
     const id = match[1];
     const title = match[2].trim();
-    const cardExplanation = match[3].trim();
+    const cardExplanation = match[3]
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .join(" ");
 
     if (seenIds.has(id)) {
       throw new Error("Duplicate source entry for " + id + ".");
@@ -56,7 +60,7 @@ function parseCardExplanationSource(text) {
   }
 
   const unmatched = body.replace(
-    /^(A\.\d+)\s-\s(.+)\nPlain-English explanation:\n([\s\S]*?)(?=\n{2}A\.\d+\s-\s|\s*$)/gm,
+    /^(A\.\d+)\s-\s(.+)\n([\s\S]*?)(?=\n{2}A\.\d+\s-\s|\s*$)/gm,
     "",
   ).trim();
 
