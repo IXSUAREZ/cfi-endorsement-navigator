@@ -1395,8 +1395,8 @@ p {
 .featured-strip {
   display: grid;
   border-radius: 24px;
-  padding: 20px;
-  gap: 16px;
+  padding: 18px;
+  gap: 14px;
 }
 
 .featured-strip-label {
@@ -1419,16 +1419,27 @@ p {
   line-height: 1.08;
 }
 
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
+.featured-grid,
 .task-mode-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .featured-grid,
+  .task-mode-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .featured-grid,
+  .task-mode-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
 }
 
 .task-mode-card,
@@ -1436,10 +1447,10 @@ p {
   appearance: none;
   position: relative;
   overflow: hidden;
-  min-height: 116px;
-  padding: 14px;
+  min-height: 104px;
+  padding: 12px;
   border: 1px solid var(--category-line);
-  border-radius: 20px;
+  border-radius: 18px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62)),
     var(--category-soft);
@@ -1447,8 +1458,9 @@ p {
   text-align: left;
   cursor: pointer;
   display: grid;
+  height: 100%;
   align-content: start;
-  gap: 8px;
+  gap: 6px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
   transition:
     border-color 180ms ease,
@@ -1470,9 +1482,9 @@ p {
 .task-mode-swatch,
 .featured-card-swatch {
   display: block;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0)),
     var(--category-accent);
@@ -1640,6 +1652,11 @@ p {
   outline-offset: 3px;
 }
 
+.task-mode-card:focus-visible,
+.featured-card:focus-visible {
+  outline-color: var(--category-accent);
+}
+
 @media (min-width: 901px) {
   .rail-close,
   #sidebarToggleBtn {
@@ -1653,11 +1670,6 @@ p {
     gap: 18px;
   }
 
-  .featured-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .task-mode-grid,
   .decision-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1715,8 +1727,6 @@ p {
     align-items: flex-start;
   }
 
-  .featured-grid,
-  .task-mode-grid,
   .details-grid,
   .decision-grid {
     grid-template-columns: 1fr;
@@ -1738,18 +1748,38 @@ p {
   }
 
   .endorsement-head {
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 12px;
+    row-gap: 6px;
   }
 
   .card-head-actions {
-    width: 100%;
-    justify-content: space-between;
+    width: auto;
+    min-width: max-content;
+    gap: 6px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-self: start;
   }
 
   .detail-toggle {
-    width: 100%;
-    justify-content: space-between;
+    width: auto;
+    justify-content: flex-start;
+  }
+
+  .endorsement-id-row {
+    flex-wrap: nowrap;
+  }
+
+  .endorsement-card h2 {
+    margin-top: 10px;
+  }
+
+  .save-toggle {
+    padding-left: 6px;
+    padding-right: 6px;
   }
 
   .selection-summary,
@@ -1760,7 +1790,11 @@ p {
     padding-right: 18px;
   }
 
-  .featured-strip,
+  .featured-strip {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
   .app-footer {
     padding-top: 20px;
     padding-bottom: 20px;
