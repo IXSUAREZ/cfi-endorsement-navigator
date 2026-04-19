@@ -54,8 +54,9 @@
                 id="searchInput"
                 class="search-input"
                 type="search"
-                placeholder="Search endorsements..."
+                placeholder="Search by task, ID, CFR, alias, or keyword..."
                 autocomplete="off"
+                aria-describedby="searchHelperText"
               >
               <button
                 id="clearSearchBtn"
@@ -67,6 +68,8 @@
                 Clear
               </button>
             </div>
+            <p id="searchHelperText" class="search-helper">Try `BFR`, `tailwheel`, `61.87`, or `first solo`.</p>
+            <div id="searchSuggestions" class="search-suggestions" aria-live="polite"></div>
           </div>
 
           <section class="rail-section">
@@ -95,6 +98,7 @@
               <div id="selectionMeta" class="selection-meta"></div>
               <div id="selectionActions" class="selection-actions"></div>
             </div>
+            <div id="scopeControls" class="scope-controls"></div>
             <div id="bundleBar" class="bundle-bar" hidden></div>
           </section>
 
@@ -102,7 +106,7 @@
             <p id="resultsSummary">Loading endorsements...</p>
           </section>
 
-          <section id="featuredStrip" class="featured-strip" hidden aria-label="Common starting points">
+          <section id="featuredStrip" class="featured-strip" hidden aria-label="Instructor quick starts">
           </section>
 
           <section

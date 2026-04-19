@@ -82,88 +82,88 @@
 
   const CATEGORY_THEMES = {
     all: {
-      accent: "#1f5ed6",
-      soft: "#e8f0ff",
-      line: "#bfd4ff",
-      ink: "#163b84",
+      accent: "#475569",
+      soft: "#f0f1f3",
+      line: "#d1d5da",
+      ink: "#313b4a",
     },
     "practical-test-prereqs": {
-      accent: "#2f6fed",
-      soft: "#eaf2ff",
-      line: "#bfd3ff",
-      ink: "#1d4ba8",
+      accent: "#4f46e5",
+      soft: "#f1f0fd",
+      line: "#d3d1f9",
+      ink: "#1d13be",
     },
     "student-pilot": {
-      accent: "#1f77c7",
-      soft: "#e7f5ff",
-      line: "#b9def7",
-      ink: "#155184",
+      accent: "#f59e0b",
+      soft: "#fef7eb",
+      line: "#fde7c2",
+      ink: "#b37000",
     },
     "sport-pilot": {
-      accent: "#0f8a83",
-      soft: "#e7faf7",
-      line: "#ade5df",
-      ink: "#0d5f5a",
+      accent: "#16a34a",
+      soft: "#ecf8f1",
+      line: "#c5e8d2",
+      ink: "#0b7633",
     },
     "recreational-pilot": {
-      accent: "#2c9b6a",
-      soft: "#eaf9ef",
-      line: "#bfe6cb",
-      ink: "#1f6a49",
+      accent: "#65a30d",
+      soft: "#f3f8ec",
+      line: "#d9e8c3",
+      ink: "#477605",
     },
     "private-pilot": {
-      accent: "#4867d6",
-      soft: "#eef1ff",
-      line: "#c8d2ff",
-      ink: "#2f46a8",
+      accent: "#0ea5e9",
+      soft: "#ecf8fd",
+      line: "#c3e9fa",
+      ink: "#0476a9",
     },
     "commercial-pilot": {
-      accent: "#265f9f",
-      soft: "#ebf4fd",
-      line: "#bdd4ee",
-      ink: "#1a4677",
+      accent: "#ca8a04",
+      soft: "#fbf6eb",
+      line: "#f2e2c0",
+      ink: "#906200",
     },
     atp: {
-      accent: "#5b6b88",
-      soft: "#eef2f8",
-      line: "#ccd7e6",
-      ink: "#3b4a63",
+      accent: "#1f2937",
+      soft: "#edeeef",
+      line: "#c7cacd",
+      ink: "#151d27",
     },
     "instrument-rating": {
-      accent: "#0f7ea8",
-      soft: "#e8f7fc",
-      line: "#b7e4f1",
-      ink: "#0d5875",
+      accent: "#64748b",
+      soft: "#f3f4f6",
+      line: "#d8dce2",
+      ink: "#455162",
     },
     "flight-instructor": {
-      accent: "#b7791f",
-      soft: "#fff5e8",
-      line: "#f1d1aa",
-      ink: "#8a5610",
+      accent: "#dc2626",
+      soft: "#fceeee",
+      line: "#f6c9c9",
+      ink: "#a11414",
     },
     "sport-pilot-instructor": {
-      accent: "#c46a35",
-      soft: "#fff1e8",
-      line: "#f2c8ad",
-      ink: "#8c4720",
+      accent: "#ea580c",
+      soft: "#fdf2ec",
+      line: "#fad5c2",
+      ink: "#aa3c02",
     },
     "additional-recurrent": {
-      accent: "#4d8b46",
-      soft: "#edf7eb",
-      line: "#c7e2c3",
-      ink: "#2d6128",
+      accent: "#0d9488",
+      soft: "#ecf6f5",
+      line: "#c3e4e1",
+      ink: "#056b62",
     },
     "robinson-sfar73": {
-      accent: "#b14e6b",
-      soft: "#fff0f4",
-      line: "#efc2cf",
-      ink: "#7d3148",
+      accent: "#db2777",
+      soft: "#fceef4",
+      line: "#f6c9dd",
+      ink: "#a01553",
     },
     "specialty-operations": {
-      accent: "#7a5aa6",
-      soft: "#f4effb",
-      line: "#d8c7ef",
-      ink: "#53377a",
+      accent: "#7c3aed",
+      soft: "#f5effe",
+      line: "#decefb",
+      ink: "#4f0ac4",
     },
   };
 
@@ -198,6 +198,96 @@
       : []
   ));
 
+  const TASK_MODES = [
+    {
+      id: "first-solo-today",
+      label: "First solo today",
+      helper: "Student pilot solo package",
+      categoryId: "student-pilot",
+      subcategoryId: "first-solo",
+    },
+    {
+      id: "private-checkride",
+      label: "Private checkride",
+      helper: "Initial airplane checkride bundle",
+      categoryId: "private-pilot",
+      subcategoryId: "private-airplane-initial-checkride-bundle",
+    },
+    {
+      id: "instrument-checkride",
+      label: "Instrument checkride",
+      helper: "Instrument bundle plus practical-test prereqs",
+      categoryId: "instrument-rating",
+      subcategoryId: "instrument-checkride-bundle",
+    },
+    {
+      id: "flight-review",
+      label: "Flight review",
+      helper: "Flight review and WINGS signoffs",
+      categoryId: "additional-recurrent",
+      subcategoryId: "flight-review-and-wings",
+    },
+    {
+      id: "tailwheel",
+      label: "Tailwheel",
+      helper: "Jump straight to the aircraft endorsement group",
+      categoryId: "additional-recurrent",
+      subcategoryId: "aircraft-endorsements",
+    },
+    {
+      id: "retest-after-disapproval",
+      label: "Retest after disapproval",
+      helper: "Find the retraining signoff fast",
+      categoryId: "additional-recurrent",
+      subcategoryId: "retest-after-disapproval",
+    },
+  ];
+
+  const STORAGE_KEYS = {
+    favorites: "simply-endorsed:favorites",
+    recentEndorsements: "simply-endorsed:recent-endorsements",
+    recentSearches: "simply-endorsed:recent-searches",
+  };
+
+  const MAX_RECENTS = 8;
+  const MAX_RECENT_SEARCHES = 8;
+  const MAX_SUGGESTIONS = 7;
+
+  const FILTER_GROUPS = [
+    {
+      id: "issuer",
+      label: "Signer",
+      options: [
+        { id: "all", label: "Any" },
+        { id: "standard-cfi", label: "Standard CFI" },
+        { id: "special", label: "Special issuer" },
+      ],
+    },
+    {
+      id: "validity",
+      label: "Validity",
+      options: [
+        { id: "all", label: "Any" },
+        { id: "time-limit", label: "Time limit" },
+        { id: "per-flight", label: "Per-flight" },
+      ],
+    },
+  ];
+
+  const SEARCH_SYNONYMS = {
+    bfr: "flight review",
+    "checkride signoff": "practical test recommendation",
+    "checkride endorsement": "practical test recommendation",
+    "add on": "additional category class",
+    addon: "additional category class",
+    "add-on": "additional category class",
+    hp: "high performance",
+    hpa: "high performance",
+    ipc: "instrument proficiency check",
+    aktr: "knowledge test deficiency review",
+    "8710": "practical test recommendation",
+  };
+
   const ISSUER_LABELS = {
     "standard-cfi": "Standard CFI signoff",
     "examiner-only": "Examiner only",
@@ -220,20 +310,46 @@
     none: "",
   };
 
+  function loadStoredArray(key) {
+    try {
+      const value = window.localStorage.getItem(key);
+      const parsed = value ? JSON.parse(value) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveStoredArray(key, values) {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(values));
+    } catch (error) {
+      // Ignore storage write failures so the app still works in private mode.
+    }
+  }
+
   const state = {
     query: "",
     category: "all",
     subcategory: null,
     includeSupplemental: false,
-    expandedId: null,
+    expandedIds: new Set(),
     openCategory: null,
     sidebarOpen: false,
     view: "browse",
+    filters: {
+      issuer: "all",
+      validity: "all",
+    },
+    favorites: loadStoredArray(STORAGE_KEYS.favorites),
+    recentEndorsements: loadStoredArray(STORAGE_KEYS.recentEndorsements),
+    recentSearches: loadStoredArray(STORAGE_KEYS.recentSearches),
   };
 
   const dom = {
     clearSearchBtn: document.getElementById("clearSearchBtn"),
     searchInput: document.getElementById("searchInput"),
+    searchSuggestions: document.getElementById("searchSuggestions"),
     categoryNav: document.getElementById("categoryNav"),
     endorsementList: document.getElementById("endorsementList"),
     resultsSummary: document.getElementById("resultsSummary"),
@@ -243,6 +359,7 @@
     selectionDescription: document.getElementById("selectionDescription"),
     selectionMeta: document.getElementById("selectionMeta"),
     selectionActions: document.getElementById("selectionActions"),
+    scopeControls: document.getElementById("scopeControls"),
     bundleBar: document.getElementById("bundleBar"),
     featuredStrip: document.getElementById("featuredStrip"),
     footerMeta: document.getElementById("footerMeta"),
@@ -270,13 +387,141 @@
       .trim();
   }
 
+  function dedupeStrings(values) {
+    const seen = new Set();
+    return values.filter((value) => {
+      const normalized = String(value || "").trim();
+      if (!normalized || seen.has(normalized)) {
+        return false;
+      }
+      seen.add(normalized);
+      return true;
+    });
+  }
+
+  function setStoredArray(key, values, maxItems) {
+    const nextValues = dedupeStrings(values).slice(0, maxItems);
+    saveStoredArray(key, nextValues);
+    return nextValues;
+  }
+
+  function pushStoredValue(key, currentValues, value, maxItems) {
+    const normalized = String(value || "").trim();
+    if (!normalized) {
+      return currentValues.slice();
+    }
+    return setStoredArray(key, [normalized].concat(currentValues), maxItems);
+  }
+
+  function getPdfPageUrl(pageNumber) {
+    if (!APP_META.sourceUrl) {
+      return "";
+    }
+
+    const normalized = String(pageNumber || "").trim();
+    if (!normalized) {
+      return APP_META.sourceUrl;
+    }
+
+    return /^\d+$/.test(normalized)
+      ? APP_META.sourceUrl + "#page=" + encodeURIComponent(normalized)
+      : APP_META.sourceUrl;
+  }
+
+  function getSourceLinkLabel(pageNumber) {
+    const normalized = String(pageNumber || "").trim();
+    if (/^\d+$/.test(normalized)) {
+      return "Open FAA PDF to page " + normalized;
+    }
+    return normalized
+      ? "Open FAA PDF (source page " + normalized + ")"
+      : "Open FAA PDF";
+  }
+
+  function getExpirationPlainText(expiration) {
+    if (expiration === "90-calendar-days") {
+      return "Valid for 90 calendar days from the date of the endorsement.";
+    }
+    if (expiration === "2-calendar-months") {
+      return "Valid for 2 calendar months from the date of the endorsement.";
+    }
+    return "No built-in expiration in the model endorsement text.";
+  }
+
+  function getUsageCaution(item) {
+    if (item.perFlight) {
+      return "Required for each individual flight, not as a one-time signoff.";
+    }
+    if (item.whoIssues === "examiner-only" || item.whoIssues === "dpe-or-asi-only") {
+      return "Do not plan this as a standard instructor signoff; the signer is limited by rule.";
+    }
+    if (item.whoIssues === "approved-institution") {
+      return "This endorsement comes from an approved institution, not a typical instructor workflow.";
+    }
+    if (item.whoIssues === "non-instructor") {
+      return "Confirm the rule path before using this because a qualified non-instructor may issue it.";
+    }
+    return "";
+  }
+
+  function getSpecialIssuerLabel(item) {
+    if (item.whoIssues === "standard-cfi") {
+      return "Standard CFI";
+    }
+    return ISSUER_LABELS[item.whoIssues] || "Special issuer";
+  }
+
+  function updateFavorites(nextValues) {
+    state.favorites = setStoredArray(STORAGE_KEYS.favorites, nextValues, ENDORSEMENTS.length);
+  }
+
+  function recordRecentEndorsement(endorsementId) {
+    state.recentEndorsements = pushStoredValue(
+      STORAGE_KEYS.recentEndorsements,
+      state.recentEndorsements,
+      endorsementId,
+      MAX_RECENTS,
+    );
+  }
+
+  function recordRecentSearch(query) {
+    const normalized = String(query || "").trim();
+    if (!normalized) {
+      return;
+    }
+    state.recentSearches = pushStoredValue(
+      STORAGE_KEYS.recentSearches,
+      state.recentSearches,
+      normalized,
+      MAX_RECENT_SEARCHES,
+    );
+  }
+
+  function toggleFavorite(endorsementId) {
+    if (!endorsementId) {
+      return;
+    }
+
+    if (state.favorites.includes(endorsementId)) {
+      updateFavorites(state.favorites.filter((id) => id !== endorsementId));
+      return;
+    }
+
+    updateFavorites([endorsementId].concat(state.favorites));
+  }
+
   function getCategoryTheme(categoryId) {
     return CATEGORY_THEMES[categoryId] || CATEGORY_THEMES.all;
   }
 
   function getCategoryThemeStyle(categoryId) {
     const theme = getCategoryTheme(categoryId);
-    return ' style="--category-accent: ' + theme.accent + ';"';
+    return (
+      ' style="--category-accent: ' + theme.accent + "; " +
+      "--category-soft: " + theme.soft + "; " +
+      "--category-line: " + theme.line + "; " +
+      "--category-ink: " + theme.ink + ';"'
+    );
   }
 
   function applyCategoryTheme(element, categoryId) {
@@ -286,6 +531,9 @@
 
     const theme = getCategoryTheme(categoryId);
     element.style.setProperty("--category-accent", theme.accent);
+    element.style.setProperty("--category-soft", theme.soft);
+    element.style.setProperty("--category-line", theme.line);
+    element.style.setProperty("--category-ink", theme.ink);
   }
 
   function renderMetaItem(value, classNames) {
@@ -332,11 +580,124 @@
     setSearchQuery("");
   }
 
+  function resetExpandedCards() {
+    state.expandedIds = new Set();
+  }
+
+  function getUrlState() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      view: params.get("view") || "browse",
+      category: params.get("category") || "all",
+      subcategory: params.get("subcategory") || null,
+      query: params.get("q") || "",
+      includeSupplemental: params.get("bundle") === "full",
+      expandedIds: (params.get("expanded") || "")
+        .split(",")
+        .map((value) => value.trim())
+        .filter(Boolean),
+      issuerFilter: params.get("issuer") || "all",
+      validityFilter: params.get("validity") || "all",
+    };
+  }
+
+  function applyUrlState() {
+    const nextState = getUrlState();
+
+    state.view = nextState.view === "guidance" ? "guidance" : "browse";
+    state.category = CATEGORY_MAP.has(nextState.category) ? nextState.category : "all";
+    state.subcategory = nextState.subcategory;
+    state.query = nextState.query;
+    state.includeSupplemental = nextState.includeSupplemental;
+    state.openCategory = state.category === "all" ? null : state.category;
+    state.filters.issuer = FILTER_GROUPS[0].options.some((option) => option.id === nextState.issuerFilter)
+      ? nextState.issuerFilter
+      : "all";
+    state.filters.validity = FILTER_GROUPS[1].options.some((option) => option.id === nextState.validityFilter)
+      ? nextState.validityFilter
+      : "all";
+    state.expandedIds = new Set(nextState.expandedIds.filter((id) => ENDORSEMENT_MAP.has(id)));
+
+    if (state.view !== "guidance") {
+      const entry = getCategoryEntry(state.category);
+      if (state.category === "all") {
+        state.subcategory = null;
+      } else if (state.subcategory) {
+        const subcategories = entry && Array.isArray(entry.subcategories) ? entry.subcategories : [];
+        if (!subcategories.some((item) => item.id === state.subcategory)) {
+          state.subcategory = null;
+        }
+      }
+    } else {
+      state.category = "all";
+      state.subcategory = null;
+      state.includeSupplemental = false;
+      state.query = "";
+    }
+
+    syncSearchInput();
+  }
+
+  function syncUrlState() {
+    const params = new URLSearchParams();
+
+    if (state.view === "guidance") {
+      params.set("view", "guidance");
+    }
+
+    if (state.category !== "all") {
+      params.set("category", state.category);
+    }
+
+    if (state.subcategory) {
+      params.set("subcategory", state.subcategory);
+    }
+
+    if (state.query) {
+      params.set("q", state.query);
+    }
+
+    if (state.includeSupplemental) {
+      params.set("bundle", "full");
+    }
+
+    if (state.filters.issuer !== "all") {
+      params.set("issuer", state.filters.issuer);
+    }
+
+    if (state.filters.validity !== "all") {
+      params.set("validity", state.filters.validity);
+    }
+
+    if (state.expandedIds.size) {
+      params.set("expanded", Array.from(state.expandedIds).join(","));
+    }
+
+    const queryString = params.toString();
+    const nextUrl = window.location.pathname + (queryString ? "?" + queryString : "") + window.location.hash;
+    window.history.replaceState(null, "", nextUrl);
+  }
+
   function getCardExplanation(item) {
     return item.cardExplanation || item.explanation || "";
   }
 
+  function getCfrSearchPhrases(cfrValue) {
+    const clean = String(cfrValue || "").replace(/^§\s*/, "").trim();
+    if (!clean) {
+      return [];
+    }
+    return [
+      clean,
+      "14 CFR " + clean,
+      "section " + clean,
+    ];
+  }
+
   function buildSearchIndex(item) {
+    const cfrPhrases = Array.isArray(item.cfr)
+      ? item.cfr.flatMap((value) => [value].concat(getCfrSearchPhrases(value)))
+      : [];
     return normalizeText(
       [
         item.id,
@@ -345,11 +706,144 @@
         item.explanation,
         item.verbatimText,
         item.acRef,
-        Array.isArray(item.cfr) ? item.cfr.join(" ") : "",
+        cfrPhrases.join(" "),
         Array.isArray(item.aliases) ? item.aliases.join(" ") : "",
         Array.isArray(item.tags) ? item.tags.join(" ") : "",
+        getSpecialIssuerLabel(item),
+        getExpirationPlainText(item.expiration),
+        item.perFlight ? "per flight every flight" : "",
       ].join(" "),
     );
+  }
+
+  function getExpandedQueryVariants(query) {
+    const normalized = normalizeText(query);
+    if (!normalized) {
+      return [];
+    }
+
+    const variants = [normalized];
+    const synonym = SEARCH_SYNONYMS[normalized];
+    if (synonym) {
+      variants.push(normalizeText(synonym));
+    }
+
+    Object.keys(SEARCH_SYNONYMS).forEach((key) => {
+      if (normalized.indexOf(key) !== -1) {
+        variants.push(normalizeText(normalized.replace(key, SEARCH_SYNONYMS[key])));
+      }
+    });
+
+    const cfrMatch = normalized.match(/(?:14 cfr |section )?(\d+\s+\d+[a-z]?(?:\s+[a-z0-9]+)*)/);
+    if (cfrMatch && cfrMatch[1]) {
+      variants.push(normalizeText(cfrMatch[1]));
+    }
+
+    return dedupeStrings(variants);
+  }
+
+  function itemMatchesQuery(item, query) {
+    const variants = getExpandedQueryVariants(query);
+    if (!variants.length) {
+      return true;
+    }
+
+    if (!item._searchIndex) {
+      item._searchIndex = buildSearchIndex(item);
+    }
+
+    return variants.some((variant) => variant && item._searchIndex.indexOf(variant) !== -1);
+  }
+
+  function getMatchReasons(item, query) {
+    const variants = getExpandedQueryVariants(query);
+    if (!variants.length) {
+      return [];
+    }
+
+    const fields = [
+      { label: "ID", value: item.id },
+      { label: "title", value: item.title },
+      { label: "summary", value: getCardExplanation(item) },
+      { label: "CFR", value: Array.isArray(item.cfr) ? item.cfr.join(" ") : "" },
+      { label: "alias", value: Array.isArray(item.aliases) ? item.aliases.join(" ") : "" },
+      { label: "tag", value: Array.isArray(item.tags) ? item.tags.join(" ") : "" },
+      { label: "issuer", value: getSpecialIssuerLabel(item) },
+    ];
+
+    return fields
+      .filter((field) => variants.some((variant) => normalizeText(field.value).indexOf(variant) !== -1))
+      .map((field) => field.label)
+      .filter((label, index, labels) => labels.indexOf(label) === index);
+  }
+
+  function getMatchScore(item, query) {
+    const variants = getExpandedQueryVariants(query);
+    const rawQuery = normalizeText(query);
+    if (!variants.length) {
+      return 0;
+    }
+
+    const fields = {
+      id: normalizeText(item.id),
+      title: normalizeText(item.title),
+      summary: normalizeText(getCardExplanation(item)),
+      explanation: normalizeText(item.explanation),
+      verbatim: normalizeText(item.verbatimText),
+      cfr: normalizeText(Array.isArray(item.cfr) ? item.cfr.join(" ") : ""),
+      aliases: normalizeText(Array.isArray(item.aliases) ? item.aliases.join(" ") : ""),
+      tags: normalizeText(Array.isArray(item.tags) ? item.tags.join(" ") : ""),
+    };
+
+    let score = 0;
+
+    if (rawQuery) {
+      if (fields.id === rawQuery) {
+        score = Math.max(score, 240);
+      }
+      if (fields.aliases.indexOf(rawQuery) !== -1) {
+        score = Math.max(score, 225);
+      }
+      if (fields.title.indexOf(rawQuery) !== -1) {
+        score = Math.max(score, 210);
+      }
+    }
+
+    variants.forEach((variant) => {
+      if (!variant) {
+        return;
+      }
+
+      if (fields.id === variant) {
+        score = Math.max(score, 220);
+      }
+      if (fields.title === variant) {
+        score = Math.max(score, 200);
+      }
+      if (fields.aliases.indexOf(variant) !== -1) {
+        score = Math.max(score, 180);
+      }
+      if (fields.title.indexOf(variant) !== -1) {
+        score = Math.max(score, 170);
+      }
+      if (fields.tags.indexOf(variant) !== -1) {
+        score = Math.max(score, 145);
+      }
+      if (fields.summary.indexOf(variant) !== -1) {
+        score = Math.max(score, 130);
+      }
+      if (fields.cfr.indexOf(variant) !== -1) {
+        score = Math.max(score, 120);
+      }
+      if (fields.explanation.indexOf(variant) !== -1) {
+        score = Math.max(score, 100);
+      }
+      if (fields.verbatim.indexOf(variant) !== -1) {
+        score = Math.max(score, 70);
+      }
+    });
+
+    return score;
   }
 
   function getTagPriority(tag) {
@@ -416,17 +910,14 @@
   }
 
   function getCategoryMatchMap() {
-    const query = normalizeText(state.query);
+    const query = state.query;
     const matches = {};
     if (!query) {
       return matches;
     }
 
     ENDORSEMENTS.forEach((item) => {
-      if (!item._searchIndex) {
-        item._searchIndex = buildSearchIndex(item);
-      }
-      if (item._searchIndex.indexOf(query) !== -1) {
+      if (itemMatchesQuery(item, query)) {
         matches[item.category] = true;
       }
     });
@@ -548,7 +1039,7 @@
     state.category = "all";
     state.subcategory = null;
     state.includeSupplemental = false;
-    state.expandedId = null;
+    resetExpandedCards();
     state.openCategory = null;
 
     if (options.closeSidebar !== false) {
@@ -579,7 +1070,7 @@
     state.category = categoryId;
     state.subcategory = null;
     state.includeSupplemental = false;
-    state.expandedId = null;
+    resetExpandedCards();
     state.openCategory = categoryId;
 
     if (options.closeSidebar !== false) {
@@ -609,7 +1100,7 @@
     state.category = categoryId;
     state.subcategory = subcategoryId;
     state.includeSupplemental = false;
-    state.expandedId = null;
+    resetExpandedCards();
     state.openCategory = categoryId;
 
     if (options.closeSidebar !== false) {
@@ -634,7 +1125,7 @@
     state.view = "guidance";
     state.category = "all";
     state.subcategory = null;
-    state.expandedId = null;
+    resetExpandedCards();
 
     if (options.closeSidebar !== false) {
       closeSidebar({ returnFocus: false });
@@ -664,6 +1155,26 @@
     return ids;
   }
 
+  function itemMatchesFilters(item) {
+    if (state.filters.issuer === "standard-cfi" && item.whoIssues !== "standard-cfi") {
+      return false;
+    }
+
+    if (state.filters.issuer === "special" && item.whoIssues === "standard-cfi") {
+      return false;
+    }
+
+    if (state.filters.validity === "time-limit" && item.expiration === "none") {
+      return false;
+    }
+
+    if (state.filters.validity === "per-flight" && !item.perFlight) {
+      return false;
+    }
+
+    return true;
+  }
+
   function getScopedEndorsements() {
     const selectedSubcategory = getSelectedSubcategory();
     if (selectedSubcategory) {
@@ -679,17 +1190,22 @@
     return scoped;
   }
 
+  function getSearchMatchedEndorsements() {
+    const query = state.query;
+    const matched = getScopedEndorsements().filter((item) => itemMatchesQuery(item, query));
+
+    if (!query) {
+      return matched;
+    }
+
+    return matched.sort((left, right) => (
+      getMatchScore(right, query) - getMatchScore(left, query) ||
+      left.order - right.order
+    ));
+  }
+
   function getVisibleEndorsements() {
-    const query = normalizeText(state.query);
-    return getScopedEndorsements().filter((item) => {
-      if (!query) {
-        return true;
-      }
-      if (!item._searchIndex) {
-        item._searchIndex = buildSearchIndex(item);
-      }
-      return item._searchIndex.indexOf(query) !== -1;
-    });
+    return getSearchMatchedEndorsements().filter(itemMatchesFilters);
   }
 
   function validateData() {
@@ -999,6 +1515,9 @@
 
     const actions = [];
     const category = CATEGORY_MAP.get(state.category);
+    const visible = getVisibleEndorsements();
+    const allExpanded = visible.length > 0 && visible.every((item) => state.expandedIds.has(item.id));
+    const subcategory = getSelectedSubcategory();
 
     if (state.subcategory && category) {
       actions.push(
@@ -1019,7 +1538,31 @@
       actions.push('<button type="button" class="selection-reset" data-action="clear-search">Clear search</button>');
     }
 
+    if (visible.length > 1 && visible.length <= 12) {
+      actions.push(
+        '<button type="button" class="selection-reset" data-action="' +
+        (allExpanded ? "collapse-all" : "expand-all") +
+        '">' +
+        (allExpanded ? "Collapse all" : "Expand all") +
+        "</button>",
+      );
+    }
+
+    if (visible.length && (subcategory || state.query || visible.length <= 6)) {
+      actions.push(
+        '<button type="button" class="selection-reset" data-action="copy-visible-faa">' +
+        escapeHtml(subcategory && !state.query ? (state.includeSupplemental ? "Copy full bundle" : "Copy path text") : "Copy visible FAA text") +
+        "</button>",
+      );
+      actions.push('<button type="button" class="selection-reset" data-action="copy-visible-packet">Copy instructor packet</button>');
+      actions.push('<button type="button" class="selection-reset" data-action="print-scope">Print / save PDF</button>');
+    }
+
     dom.selectionActions.innerHTML = actions.join("");
+  }
+
+  function hasActiveFilters() {
+    return state.filters.issuer !== "all" || state.filters.validity !== "all";
   }
 
   function renderSelectionMeta() {
@@ -1030,6 +1573,8 @@
     const subcategory = getSelectedSubcategory();
     const renderer = getSubcategoryContentRenderer(subcategory);
     const scopedCount = subcategory ? getBundleCount(subcategory) : getScopedEndorsements().length;
+    const matchedCount = getSearchMatchedEndorsements().length;
+    const visibleCount = getVisibleEndorsements().length;
     const items = [renderMetaItem(formatItemCount(scopedCount, subcategory) + " in scope")];
 
     if (state.category === "all") {
@@ -1040,6 +1585,7 @@
 
     if (state.query && renderer !== "pre-solo") {
       items.push(renderMetaItem('Search "' + state.query + '"'));
+      items.push(renderMetaItem(String(matchedCount) + " matched"));
     }
 
     if (subcategory) {
@@ -1050,7 +1596,41 @@
       items.push(renderMetaItem("Showing full bundle"));
     }
 
+    if (hasActiveFilters()) {
+      items.push(renderMetaItem(String(visibleCount) + " shown after filters"));
+    }
+
     dom.selectionMeta.innerHTML = items.join("");
+  }
+
+  function renderScopeControls() {
+    if (!dom.scopeControls) {
+      return;
+    }
+
+    if (state.view === "guidance") {
+      dom.scopeControls.innerHTML = "";
+      return;
+    }
+
+    dom.scopeControls.innerHTML = FILTER_GROUPS.map((group) => (
+      '<div class="scope-filter-group">' +
+      '<span class="scope-filter-label">' + escapeHtml(group.label) + "</span>" +
+      '<div class="scope-filter-options">' +
+      group.options.map((option) => (
+        '<button type="button" class="scope-filter-button' +
+        (state.filters[group.id] === option.id ? " is-active" : "") +
+        '" data-filter-group="' +
+        escapeHtml(group.id) +
+        '" data-filter-value="' +
+        escapeHtml(option.id) +
+        '">' +
+        escapeHtml(option.label) +
+        "</button>"
+      )).join("") +
+      "</div>" +
+      "</div>"
+    )).join("");
   }
 
   function renderSelectionSummary() {
@@ -1091,6 +1671,7 @@
 
     renderSelectionMeta();
     renderSelectionActions();
+    renderScopeControls();
     renderBundleBar(subcategory);
   }
 
@@ -1127,6 +1708,257 @@
       "</button>";
   }
 
+  function getScopeLabel() {
+    const category = CATEGORY_MAP.get(state.category) || CATEGORY_MAP.get("all");
+    const subcategory = getSelectedSubcategory();
+    return subcategory ? subcategory.label : category.label;
+  }
+
+  function getPrintableScopeItems() {
+    return getVisibleEndorsements();
+  }
+
+  function buildScopeCopyText(mode) {
+    const items = getPrintableScopeItems();
+    const includePacketMeta = mode === "packet";
+
+    return items.map((item) => {
+      const lines = [item.id + " — " + item.title];
+
+      if (includePacketMeta) {
+        lines.push("Signer: " + getSpecialIssuerLabel(item));
+        lines.push("Validity: " + getExpirationPlainText(item.expiration));
+        if (item.perFlight) {
+          lines.push("Use caution: Required for each individual flight.");
+        }
+        if (Array.isArray(item.cfr) && item.cfr.length) {
+          lines.push("CFR: " + item.cfr.join(" | "));
+        }
+        lines.push("Source: " + item.acRef + " | Page " + item.sourcePage);
+        if (item.explanation) {
+          lines.push("Instructor summary: " + item.explanation);
+        }
+      }
+
+      lines.push(item.verbatimText);
+      return lines.join("\n");
+    }).join("\n\n" + "=".repeat(72) + "\n\n");
+  }
+
+  function copyTextToClipboard(text, button, successLabel) {
+    if (!text || !button) {
+      return;
+    }
+
+    const prior = button.textContent;
+    const showCopied = () => {
+      button.textContent = successLabel || "Copied";
+      button.setAttribute("aria-live", "polite");
+      window.setTimeout(() => {
+        button.textContent = prior;
+      }, 1200);
+    };
+
+    const fallbackCopy = () => {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "readonly");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        showCopied();
+      } catch (error) {
+        // Fallback selection still leaves the text available if execCommand is blocked.
+      }
+      document.body.removeChild(textarea);
+    };
+
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
+      return;
+    }
+
+    fallbackCopy();
+  }
+
+  function printCurrentScope() {
+    const priorExpanded = new Set(state.expandedIds);
+    state.expandedIds = new Set(getVisibleEndorsements().map((item) => item.id));
+    refresh();
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        let restored = false;
+        const restore = () => {
+          if (restored) {
+            return;
+          }
+          restored = true;
+          state.expandedIds = priorExpanded;
+          refresh();
+        };
+
+        window.addEventListener("afterprint", restore, { once: true });
+        window.print();
+        window.setTimeout(restore, 800);
+      });
+    });
+  }
+
+  function openEndorsementById(endorsementId, options = {}) {
+    const item = ENDORSEMENT_MAP.get(endorsementId);
+    if (!item) {
+      return;
+    }
+
+    const alreadyVisible = getVisibleEndorsements().some((candidate) => candidate.id === endorsementId);
+
+    if (!alreadyVisible) {
+      state.view = "browse";
+      state.category = item.category;
+      state.subcategory = null;
+      state.includeSupplemental = false;
+      state.openCategory = item.category;
+      if (!itemMatchesFilters(item)) {
+        state.filters.issuer = "all";
+        state.filters.validity = "all";
+      }
+      if (!options.preserveQuery) {
+        clearSearch();
+      }
+    }
+
+    state.expandedIds.add(endorsementId);
+    recordRecentEndorsement(endorsementId);
+    refresh();
+
+    const target = dom.endorsementList
+      ? dom.endorsementList.querySelector('[data-endorsement-id="' + CSS.escape(endorsementId) + '"]')
+      : null;
+    queueScrollToTarget(target || dom.selectionSummary);
+  }
+
+  function getRelatedEndorsements(item) {
+    const currentSubcategory = getSelectedSubcategory();
+    const related = [];
+    const seen = new Set([item.id]);
+
+    if (currentSubcategory) {
+      getBundleIds(currentSubcategory).forEach((id) => {
+        if (!seen.has(id) && ENDORSEMENT_MAP.has(id)) {
+          seen.add(id);
+          related.push(ENDORSEMENT_MAP.get(id));
+        }
+      });
+    }
+
+    const baseTags = new Set(
+      (Array.isArray(item.tags) ? item.tags : [])
+        .map((tag) => normalizeText(tag))
+        .filter(Boolean),
+    );
+
+    ENDORSEMENTS
+      .filter((candidate) => candidate.id !== item.id && !seen.has(candidate.id))
+      .map((candidate) => {
+        const sharedTags = (Array.isArray(candidate.tags) ? candidate.tags : [])
+          .map((tag) => normalizeText(tag))
+          .filter((tag) => baseTags.has(tag)).length;
+        const sameCategory = candidate.category === item.category ? 1 : 0;
+        return {
+          candidate,
+          score: sharedTags * 3 + sameCategory,
+        };
+      })
+      .filter((entry) => entry.score > 0)
+      .sort((left, right) => right.score - left.score || left.candidate.order - right.candidate.order)
+      .slice(0, 4)
+      .forEach((entry) => {
+        seen.add(entry.candidate.id);
+        related.push(entry.candidate);
+      });
+
+    return related.slice(0, 4);
+  }
+
+  function getSearchSuggestions() {
+    const query = state.query.trim();
+    const suggestions = [];
+
+    if (!query) {
+      return state.recentSearches.slice(0, MAX_SUGGESTIONS).map((value) => ({
+        type: "search",
+        label: value,
+        meta: "Recent search",
+        query: value,
+      }));
+    }
+
+    state.recentSearches
+      .filter((value) => normalizeText(value).indexOf(normalizeText(query)) !== -1)
+      .slice(0, 2)
+      .forEach((value) => {
+        suggestions.push({
+          type: "search",
+          label: value,
+          meta: "Recent search",
+          query: value,
+        });
+      });
+
+    ENDORSEMENTS
+      .filter((item) => itemMatchesQuery(item, query))
+      .sort((left, right) => (
+        getMatchScore(right, query) - getMatchScore(left, query) ||
+        left.order - right.order
+      ))
+      .slice(0, MAX_SUGGESTIONS)
+      .forEach((item) => {
+        suggestions.push({
+          type: "endorsement",
+          label: item.id + " — " + item.title,
+          meta: getMatchReasons(item, query).slice(0, 2).join(" · ") || getSpecialIssuerLabel(item),
+          endorsementId: item.id,
+        });
+      });
+
+    return suggestions.slice(0, MAX_SUGGESTIONS);
+  }
+
+  function renderSearchSuggestions() {
+    if (!dom.searchSuggestions) {
+      return;
+    }
+
+    if (!state.query && document.activeElement !== dom.searchInput) {
+      dom.searchSuggestions.innerHTML = "";
+      return;
+    }
+
+    const suggestions = getSearchSuggestions();
+    if (!suggestions.length) {
+      dom.searchSuggestions.innerHTML = "";
+      return;
+    }
+
+    dom.searchSuggestions.innerHTML =
+      '<div class="search-suggestion-row">' +
+      suggestions.map((suggestion) => (
+        '<button type="button" class="search-suggestion" ' +
+        (suggestion.type === "endorsement"
+          ? 'data-open-id="' + escapeHtml(suggestion.endorsementId) + '"'
+          : 'data-suggestion-query="' + escapeHtml(suggestion.query) + '"') +
+        ">" +
+        '<span class="search-suggestion-label">' + escapeHtml(suggestion.label) + "</span>" +
+        '<span class="search-suggestion-meta">' + escapeHtml(suggestion.meta) + "</span>" +
+        "</button>"
+      )).join("") +
+      "</div>";
+  }
+
   function renderResultsSummary(visibleCount, scopeCount) {
     if (!dom.resultsSummary) {
       return;
@@ -1153,21 +1985,53 @@
       parts.push("full bundle");
     }
 
+    if (hasActiveFilters()) {
+      parts.push("filters active");
+    }
+
     dom.resultsSummary.textContent = scopePrefix + parts.join("  |  ");
   }
 
   function renderEndorsementCard(item) {
-    const expanded = state.expandedId === item.id;
+    const expanded = state.expandedIds.has(item.id);
+    const isFavorite = state.favorites.includes(item.id);
     const metaItems = [];
     const detailSections = [];
     const cardExplanation = getCardExplanation(item);
     const detailTags = Array.isArray(item.tags) ? item.tags.filter(Boolean) : [];
+    const matchReasons = state.query ? getMatchReasons(item, state.query) : [];
+    const caution = getUsageCaution(item);
+    const relatedItems = getRelatedEndorsements(item);
+    const sourcePageUrl = getPdfPageUrl(item.sourcePage);
+    const decisionCards = [
+      '<section class="decision-card">' +
+      "<h4>Who can sign this?</h4>" +
+      "<p>" + escapeHtml(getSpecialIssuerLabel(item)) + "</p>" +
+      '<p class="decision-note">' + escapeHtml(SIGNATURE_DISPLAY[item.whoIssues] || SIGNATURE_DISPLAY["standard-cfi"]) + "</p>" +
+      "</section>",
+      '<section class="decision-card">' +
+      "<h4>Validity</h4>" +
+      "<p>" + escapeHtml(getExpirationPlainText(item.expiration)) + "</p>" +
+      "</section>",
+    ];
+
+    if (caution) {
+      decisionCards.push(
+        '<section class="decision-card decision-card--caution">' +
+        "<h4>Use caution</h4>" +
+        "<p>" + escapeHtml(caution) + "</p>" +
+        "</section>",
+      );
+    }
 
     if (EXPIRATION_LABELS[item.expiration]) {
       metaItems.push(renderWarnMetaItem("Time limit " + EXPIRATION_LABELS[item.expiration]));
     }
     if (item.perFlight) {
       metaItems.push(renderWarnMetaItem("Every XC flight"));
+    }
+    if (item.whoIssues !== "standard-cfi") {
+      metaItems.push(renderMetaItem(getSpecialIssuerLabel(item)));
     }
     if (Array.isArray(item.cfr) && item.cfr.length) {
       metaItems.push(renderMetaItem(item.cfr.join(" | "), "mono"));
@@ -1200,13 +2064,11 @@
       '<section class="detail-section">' +
       "<h4>Source</h4>" +
       "<p>" + escapeHtml(item.acRef) + " | Page " + escapeHtml(item.sourcePage) + "</p>" +
-      "</section>",
-    );
-    detailSections.push(
-      '<section class="detail-section">' +
-      "<h4>Who issues it</h4>" +
-      "<p>" + escapeHtml(ISSUER_LABELS[item.whoIssues] || "Standard CFI signoff") + "</p>" +
-      "<p>" + escapeHtml(SIGNATURE_DISPLAY[item.whoIssues] || SIGNATURE_DISPLAY["standard-cfi"]) + "</p>" +
+      (
+        sourcePageUrl
+          ? '<p><a class="detail-link" href="' + escapeHtml(sourcePageUrl) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(getSourceLinkLabel(item.sourcePage)) + "</a></p>"
+          : ""
+      ) +
       "</section>",
     );
     if (detailTags.length) {
@@ -1221,12 +2083,35 @@
     const details = expanded
       ? (
         '<div class="endorsement-details">' +
+        '<div class="decision-grid">' + decisionCards.join("") + "</div>" +
         '<section class="detail-section detail-section-wide">' +
         "<h4>FAA model text</h4>" +
         '<pre class="verbatim-block mono" data-verbatim-id="' + escapeHtml(item.id) + '">' + escapeHtml(item.verbatimText) + "</pre>" +
+        '<div class="detail-actions-inline">' +
         '<button type="button" class="inline-action" data-copy-id="' + escapeHtml(item.id) + '">Copy FAA model text</button>' +
+        (
+          sourcePageUrl
+            ? '<a class="inline-action detail-link" href="' + escapeHtml(sourcePageUrl) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(getSourceLinkLabel(item.sourcePage)) + "</a>"
+            : ""
+        ) +
+        "</div>" +
         "</section>" +
         '<div class="details-grid">' + detailSections.join("") + "</div>" +
+        (
+          relatedItems.length
+            ? '<section class="detail-section detail-section-wide">' +
+              "<h4>Related endorsements</h4>" +
+              '<div class="related-row">' +
+              relatedItems.map((related) => (
+                '<button type="button" class="related-chip" data-open-id="' + escapeHtml(related.id) + '">' +
+                '<span class="mono">' + escapeHtml(related.id) + "</span>" +
+                '<span>' + escapeHtml(related.title) + "</span>" +
+                "</button>"
+              )).join("") +
+              "</div>" +
+              "</section>"
+            : ""
+        ) +
         "</div>"
       )
       : "";
@@ -1242,13 +2127,24 @@
       '<span class="category-dot" aria-hidden="true"></span>' +
       '<span class="endorsement-id mono">' + escapeHtml(item.id) + "</span>" +
       "</div>" +
+      '<div class="card-head-actions">' +
+      '<button type="button" class="save-toggle' + (isFavorite ? " is-active" : "") + '" data-favorite-id="' + escapeHtml(item.id) + '" aria-pressed="' + String(isFavorite) + '" aria-label="' + escapeHtml(isFavorite ? "Remove from saved endorsements" : "Save endorsement") + '">' +
+      '<span aria-hidden="true">' + (isFavorite ? "★" : "☆") + "</span>" +
+      '<span class="save-toggle-label">' + (isFavorite ? "Saved" : "Save") + "</span>" +
+      "</button>" +
       '<button type="button" class="detail-toggle" data-toggle-id="' + escapeHtml(item.id) + '" aria-expanded="' + String(expanded) + '">' +
       '<span>' + (expanded ? "Hide details" : "View details") + "</span>" +
       '<span class="detail-toggle-caret" aria-hidden="true">' + (expanded ? "−" : "›") + "</span>" +
       "</button>" +
       "</div>" +
+      "</div>" +
       "<h2>" + escapeHtml(item.title) + "</h2>" +
       '<div class="meta-line">' + metaItems.join("") + "</div>" +
+      (
+        matchReasons.length
+          ? '<p class="match-reasons">Matched on ' + escapeHtml(matchReasons.join(" · ")) + "</p>"
+          : ""
+      ) +
       details +
       "</article>"
     );
@@ -1275,13 +2171,21 @@
     }
 
     const strip = dom.featuredStrip;
+    const favoriteItems = state.favorites
+      .map((id) => ENDORSEMENT_MAP.get(id))
+      .filter(Boolean)
+      .slice(0, 4);
+    const recentItems = state.recentEndorsements
+      .map((id) => ENDORSEMENT_MAP.get(id))
+      .filter(Boolean)
+      .slice(0, 4);
 
     if (state.category !== "all" || state.query !== "") {
       strip.hidden = true;
       return;
     }
 
-    if (!FEATURED_SUBCATEGORIES.length) {
+    if (!FEATURED_SUBCATEGORIES.length && !favoriteItems.length && !recentItems.length) {
       strip.hidden = true;
       strip.innerHTML = "";
       return;
@@ -1290,27 +2194,83 @@
     strip.hidden = false;
     strip.innerHTML =
       '<div class="featured-intro">' +
-      '<p class="featured-strip-label">Quick Starts</p>' +
-      "<h3>Jump into the endorsement paths instructors reach for most often.</h3>" +
-      "<p>Use a curated path instead of scanning the entire library.</p>" +
+      '<p class="featured-strip-label">Instructor Quick Starts</p>' +
+      "<h3>Common paths instructors reach for.</h3>" +
+      "</div>" +
+      '<div class="task-mode-grid">' +
+      TASK_MODES.map((mode) => {
+        const category = CATEGORY_MAP.get(mode.categoryId) || {};
+        const categoryLabel = category.label || mode.categoryId;
+        const entry = getCategoryEntry(mode.categoryId);
+        const subcategory = entry && Array.isArray(entry.subcategories)
+          ? entry.subcategories.find((item) => item.id === mode.subcategoryId)
+          : null;
+        return (
+          '<button type="button" class="task-mode-card" data-featured-category="' +
+          escapeHtml(mode.categoryId) +
+          '" data-featured-subcategory="' +
+          escapeHtml(mode.subcategoryId) +
+          '"' +
+          getCategoryThemeStyle(mode.categoryId) +
+          ">" +
+          '<span class="task-mode-swatch" aria-hidden="true"></span>' +
+          '<span class="task-mode-title">' + escapeHtml(mode.label) + "</span>" +
+          '<span class="task-mode-meta">' +
+          escapeHtml(categoryLabel + (subcategory ? " · " + getBundleCount(subcategory) + " endorsements" : "")) +
+          "</span>" +
+          "</button>"
+        );
+      }).join("") +
       "</div>" +
       '<div class="featured-grid">' +
       FEATURED_SUBCATEGORIES.map((item) => {
         const category = CATEGORY_MAP.get(item.categoryId) || {};
+        const categoryLabel = category.label || item.categoryId;
         return (
           '<button type="button" class="featured-card" data-featured-category="' +
           escapeHtml(item.categoryId) +
           '" data-featured-subcategory="' +
           escapeHtml(item.subcategoryId) +
-          '">' +
-          '<span class="featured-card-category">' + escapeHtml(category.label || item.categoryId) + "</span>" +
+          '"' +
+          getCategoryThemeStyle(item.categoryId) +
+          ">" +
+          '<span class="featured-card-swatch" aria-hidden="true"></span>' +
           '<span class="featured-card-title">' + escapeHtml(item.subcategory.label) + "</span>" +
-          '<span class="featured-card-description">' + escapeHtml(item.subcategory.description) + "</span>" +
-          '<span class="featured-card-meta">' + escapeHtml(String(getBundleCount(item.subcategory))) + ' endorsements in path</span>' +
+          '<span class="featured-card-meta">' + escapeHtml(categoryLabel + " · " + getBundleCount(item.subcategory) + " endorsements") + "</span>" +
           "</button>"
         );
       }).join("") +
-      "</div>";
+      "</div>" +
+      (
+        favoriteItems.length
+          ? '<div class="quick-access-panel">' +
+            "<h4>Saved endorsements</h4>" +
+            '<div class="quick-access-row">' +
+            favoriteItems.map((item) => (
+              '<button type="button" class="quick-access-chip" data-open-id="' + escapeHtml(item.id) + '">' +
+              '<span class="mono">' + escapeHtml(item.id) + "</span>" +
+              '<span>' + escapeHtml(item.title) + "</span>" +
+              "</button>"
+            )).join("") +
+            "</div>" +
+            "</div>"
+          : ""
+      ) +
+      (
+        recentItems.length
+          ? '<div class="quick-access-panel">' +
+            "<h4>Recent endorsements</h4>" +
+            '<div class="quick-access-row">' +
+            recentItems.map((item) => (
+              '<button type="button" class="quick-access-chip" data-open-id="' + escapeHtml(item.id) + '">' +
+              '<span class="mono">' + escapeHtml(item.id) + "</span>" +
+              '<span>' + escapeHtml(item.title) + "</span>" +
+              "</button>"
+            )).join("") +
+            "</div>" +
+            "</div>"
+          : ""
+      );
   }
 
   function renderEndorsements() {
@@ -1330,13 +2290,16 @@
     }
 
     const scoped = getScopedEndorsements();
+    const searched = getSearchMatchedEndorsements();
     const visible = getVisibleEndorsements();
-    renderResultsSummary(visible.length, scoped.length);
+    renderResultsSummary(visible.length, state.query ? searched.length : scoped.length);
 
     if (!visible.length) {
       const emptyHint = subcategory && !state.includeSupplemental && Array.isArray(subcategory.supplementalIds) && subcategory.supplementalIds.length
         ? "Try Show full bundle or clear the search."
-        : "Try a broader keyword or switch to a different category.";
+        : hasActiveFilters()
+          ? "Try clearing one of the active filters or use a broader keyword."
+          : "Try a broader keyword or switch to a different category.";
 
       let additionalButton = "";
       if (state.query !== "" && state.category !== "all") {
@@ -1371,6 +2334,7 @@
     if (dom.featuredStrip) dom.featuredStrip.hidden = true;
 
     renderCategoryNav();
+    renderSearchSuggestions();
 
     if (!isGuidance) {
       renderFeaturedStrip();
@@ -1379,6 +2343,7 @@
     }
 
     renderGuidanceView();
+    syncUrlState();
   }
 
   function renderGuidanceContentBlock(block) {
@@ -1559,37 +2524,8 @@
     if (!endorsement || !button) {
       return;
     }
-
-    const text = endorsement.verbatimText;
-    const showCopied = () => {
-      const prior = button.textContent;
-      button.textContent = "Copied";
-      window.setTimeout(() => {
-        button.textContent = prior;
-      }, 900);
-    };
-
-    const fallbackCopy = () => {
-      const block = dom.endorsementList
-        ? dom.endorsementList.querySelector('[data-verbatim-id="' + CSS.escape(endorsementId) + '"]')
-        : null;
-      if (!block) {
-        return;
-      }
-
-      const selection = window.getSelection();
-      const range = document.createRange();
-      range.selectNodeContents(block);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    };
-
-    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
-      navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
-      return;
-    }
-
-    fallbackCopy();
+    recordRecentEndorsement(endorsementId);
+    copyTextToClipboard(endorsement.verbatimText, button, "Copied");
   }
 
   function isMobileLayout() {
@@ -1647,12 +2583,49 @@
     }
   }
 
+  function isTypingField(target) {
+    if (!target) {
+      return false;
+    }
+
+    const tagName = target.tagName ? target.tagName.toLowerCase() : "";
+    return tagName === "input" || tagName === "textarea" || target.isContentEditable;
+  }
+
+  function registerServiceWorker() {
+    if (!("serviceWorker" in navigator) || window.location.protocol === "file:") {
+      return;
+    }
+
+    navigator.serviceWorker.register("./sw.js").catch(() => {
+      // Ignore registration failures in local or constrained environments.
+    });
+  }
+
   function attachEvents() {
     if (dom.searchInput) {
       dom.searchInput.addEventListener("input", debounce((event) => {
         setSearchQuery(event.target.value || "");
+        resetExpandedCards();
         refresh();
       }, 150));
+
+      dom.searchInput.addEventListener("focus", () => {
+        renderSearchSuggestions();
+      });
+
+      dom.searchInput.addEventListener("blur", () => {
+        window.setTimeout(() => {
+          renderSearchSuggestions();
+        }, 120);
+      });
+
+      dom.searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && String(event.target.value || "").trim().length >= 2) {
+          recordRecentSearch(event.target.value || "");
+          renderSearchSuggestions();
+        }
+      });
     }
 
     if (dom.clearSearchBtn) {
@@ -1661,6 +2634,25 @@
         refresh();
         if (dom.searchInput) {
           dom.searchInput.focus();
+        }
+      });
+    }
+
+    if (dom.searchSuggestions) {
+      dom.searchSuggestions.addEventListener("click", (event) => {
+        const searchButton = event.target.closest("[data-suggestion-query]");
+        if (searchButton) {
+          const value = searchButton.getAttribute("data-suggestion-query") || "";
+          setSearchQuery(value);
+          recordRecentSearch(value);
+          resetExpandedCards();
+          refresh();
+          return;
+        }
+
+        const openButton = event.target.closest("[data-open-id]");
+        if (openButton) {
+          openEndorsementById(openButton.getAttribute("data-open-id"));
         }
       });
     }
@@ -1740,11 +2732,58 @@
 
         if (action === "clear-search") {
           clearSearch();
+          resetExpandedCards();
           refresh();
           if (dom.searchInput) {
             dom.searchInput.focus();
           }
+          return;
         }
+
+        if (action === "expand-all") {
+          state.expandedIds = new Set(getVisibleEndorsements().map((item) => item.id));
+          refresh();
+          return;
+        }
+
+        if (action === "collapse-all") {
+          resetExpandedCards();
+          refresh();
+          return;
+        }
+
+        if (action === "copy-visible-faa") {
+          copyTextToClipboard(buildScopeCopyText("faa"), button, "Scope copied");
+          return;
+        }
+
+        if (action === "copy-visible-packet") {
+          copyTextToClipboard(buildScopeCopyText("packet"), button, "Packet copied");
+          return;
+        }
+
+        if (action === "print-scope") {
+          printCurrentScope();
+        }
+      });
+    }
+
+    if (dom.scopeControls) {
+      dom.scopeControls.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-filter-group]");
+        if (!button) {
+          return;
+        }
+
+        const groupId = button.getAttribute("data-filter-group");
+        const value = button.getAttribute("data-filter-value");
+        if (!groupId || !value || !state.filters.hasOwnProperty(groupId)) {
+          return;
+        }
+
+        state.filters[groupId] = value;
+        resetExpandedCards();
+        refresh();
       });
     }
 
@@ -1755,7 +2794,7 @@
           return;
         }
         state.includeSupplemental = !state.includeSupplemental;
-        state.expandedId = null;
+        resetExpandedCards();
         refresh();
       });
     }
@@ -1765,14 +2804,32 @@
         const toggleButton = event.target.closest("[data-toggle-id]");
         if (toggleButton) {
           const id = toggleButton.getAttribute("data-toggle-id");
-          state.expandedId = state.expandedId === id ? null : id;
-          renderEndorsements();
+          if (state.expandedIds.has(id)) {
+            state.expandedIds.delete(id);
+          } else {
+            state.expandedIds.add(id);
+            recordRecentEndorsement(id);
+          }
+          refresh();
           return;
         }
 
         const copyButton = event.target.closest("[data-copy-id]");
         if (copyButton) {
           handleCopy(copyButton.getAttribute("data-copy-id"), copyButton);
+          return;
+        }
+
+        const favoriteButton = event.target.closest("[data-favorite-id]");
+        if (favoriteButton) {
+          toggleFavorite(favoriteButton.getAttribute("data-favorite-id"));
+          refresh();
+          return;
+        }
+
+        const openButton = event.target.closest("[data-open-id]");
+        if (openButton) {
+          openEndorsementById(openButton.getAttribute("data-open-id"));
           return;
         }
 
@@ -1786,6 +2843,12 @@
 
     if (dom.featuredStrip) {
       dom.featuredStrip.addEventListener("click", (event) => {
+        const openButton = event.target.closest("[data-open-id]");
+        if (openButton) {
+          openEndorsementById(openButton.getAttribute("data-open-id"));
+          return;
+        }
+
         const button = event.target.closest("[data-featured-subcategory]");
         if (!button) {
           return;
@@ -1838,6 +2901,32 @@
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         closeSidebar();
+        return;
+      }
+
+      if (event.key === "/" && !event.metaKey && !event.ctrlKey && !event.altKey && !isTypingField(event.target)) {
+        event.preventDefault();
+        if (dom.searchInput) {
+          dom.searchInput.focus();
+          dom.searchInput.select();
+        }
+        return;
+      }
+
+      if (event.key.toLowerCase() === "g" && !event.metaKey && !event.ctrlKey && !event.altKey && !isTypingField(event.target)) {
+        event.preventDefault();
+        activateGuidance({ closeSidebar: false });
+        return;
+      }
+
+      if (event.key.toLowerCase() === "e" && !event.metaKey && !event.ctrlKey && !event.altKey && !isTypingField(event.target)) {
+        const visible = getVisibleEndorsements();
+        if (visible.length > 1 && visible.length <= 12) {
+          event.preventDefault();
+          const allExpanded = visible.every((item) => state.expandedIds.has(item.id));
+          state.expandedIds = allExpanded ? new Set() : new Set(visible.map((item) => item.id));
+          refresh();
+        }
       }
     });
 
@@ -1847,16 +2936,23 @@
       }
       syncSidebarAccessibility();
     });
+
+    window.addEventListener("popstate", () => {
+      applyUrlState();
+      refresh();
+    });
   }
 
   function boot() {
     validateData();
     validateBrowseStructure();
+    applyUrlState();
     renderMeta();
     syncSearchInput();
     refresh();
     syncSidebarAccessibility();
     attachEvents();
+    registerServiceWorker();
   }
 
   if (document.readyState === "loading") {
