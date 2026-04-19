@@ -209,12 +209,50 @@ p {
 
 .topbar-brand {
   margin: 0;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 0.3rem 0.82rem;
+  min-width: 0;
+  max-width: 100%;
   font-family: var(--display);
   font-size: clamp(1.05rem, 1.8vw, 1.35rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.05em;
   color: var(--text-strong);
+  text-wrap: balance;
+}
+
+.topbar-brand-main {
+  display: inline-block;
+  color: inherit;
+  line-height: 0.96;
+}
+
+.topbar-brand-credit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0.82rem;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 0.56em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.topbar-brand-credit::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 0.92em;
+  transform: translateY(-50%);
+  background: var(--line-strong);
 }
 
 .icon-btn {
@@ -1738,13 +1776,27 @@ p {
     padding: 9px 10px 9px 14px;
   }
 
+  .topbar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.16rem;
+    font-size: 1.02rem;
+  }
+
+  .topbar-brand-credit {
+    padding-left: 0;
+    font-size: 0.64em;
+    white-space: normal;
+  }
+
+  .topbar-brand-credit::before {
+    display: none;
+  }
+
   .layout,
   .app-footer {
     width: calc(100% - 20px);
-  }
-
-  .topbar-brand {
-    font-size: 1.08rem;
   }
 
   .endorsement-head {
